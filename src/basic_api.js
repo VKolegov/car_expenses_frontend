@@ -1,7 +1,7 @@
 import storageHelper, {TOKEN_KEY} from "@/local_storage.js";
 import HttpError from "@/errors.js";
 
-export const baseURL = 'http://85.193.90.208:4646';
+export const baseURL = 'https://car-expenses.vkolegov.ru/api';
 
 
 const basicHeaders ={
