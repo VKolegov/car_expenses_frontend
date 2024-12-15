@@ -5,6 +5,9 @@ import 'vuetify/styles'
 import {createVuetify} from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import {aliases, mdi} from "vuetify/iconsets/mdi-svg";
+import {mdiAccount, mdiHistory} from '@mdi/js'
+
 
 import {createApp} from 'vue'
 
@@ -17,6 +20,13 @@ import {useUserStore} from "@/store.js";
 const vuetify = createVuetify({
     components,
     directives,
+    icons: {
+        defaultSet: 'mdi',
+        aliases,
+        sets: {
+            mdi,
+        }
+    }
 });
 
 const router = createRouter({
@@ -33,6 +43,7 @@ router.beforeEach(async (to, from, next) => {
 
         if (legit) {
             await next();
+            return;
         }
 
         if (!window.Telegram?.WebApp?.initData) {
@@ -52,6 +63,7 @@ router.beforeEach(async (to, from, next) => {
             await next({
                 name: 'login',
             });
+            return;
         }
     }
 

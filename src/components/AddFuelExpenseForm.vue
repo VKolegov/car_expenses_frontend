@@ -104,10 +104,11 @@ function onSaveClick() {
 
 <template>
   <v-form @submit.prevent style="width: 100%;">
+    <h1>Adding fuel expense</h1>
     <v-select
         v-model="selectedCar"
         return-object
-        label="Select car"
+        label="Select car to add fuel expense"
         :items="cars"
         :item-title="car => `${car.brand} ${car.model}`"
     ></v-select>
