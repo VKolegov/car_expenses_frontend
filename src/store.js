@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {defineStore} from "pinia";
-import {login, me} from "@/api.js";
+import {login, me, telegramLogin} from "@/api.js";
 import storageHelper, {TOKEN_KEY} from "@/local_storage.js";
 
 export const useUserStore = defineStore('user', () => {
@@ -29,6 +29,23 @@ export const useUserStore = defineStore('user', () => {
        return false;
    }
 
+   async function telegramAuth(initData) {
+
+      try {
+          const response = await telegramLogin(initData);
+
+          setUser(response.user);
+
+          storageHelper.set(TOKEN_KEY, response.token);
+
+          return true;
+      } catch (error) {
+          console.error('Telegram auth error', error);
+      }
+
+      return false;
+   }
+
     async function authIsLegit() {
         let token = storageHelper.get(TOKEN_KEY);
 
@@ -48,5 +65,5 @@ export const useUserStore = defineStore('user', () => {
         return false;
     }
 
-   return {user, auth, authIsLegit, setUser};
+   return {user, auth, telegramAuth, authIsLegit, setUser};
 });

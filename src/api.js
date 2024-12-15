@@ -1,10 +1,16 @@
 import {baseURL, getRequest, postRequest} from "@/basic_api.js";
 
 /**
+ * @typedef {Object} LoginResponse
+ * @property {string} token
+ * @property {Object} user
+ */
+
+/**
  *
  * @param phone
  * @param password
- * @returns {Promise<{user: Object, token: string}>}
+ * @returns {Promise<LoginResponse>}
  */
 export async function login(phone, password) {
     const r = await postRequest(`${baseURL}/login`, {
@@ -13,6 +19,17 @@ export async function login(phone, password) {
     });
 
     return r;
+}
+
+/**
+ *
+ * @param {string} initData telegram app init data
+ * @returns {Promise<LoginResponse>}
+ */
+export async function telegramLogin(initData)  {
+    return await postRequest(`${baseURL}/telegram/auth`, {
+        tgRawData: initData
+    })
 }
 
 export async function me() {

@@ -31,10 +31,27 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.auth && !store.user) {
         const legit = await store.authIsLegit();
 
-        if (!legit) {
+        if (legit) {
+            await next();
+        }
+
+        if (!window.Telegram?.WebApp?.initData) {
             await next({
                 name: 'login',
-            })
+            });
+            return;
+        }
+
+        console.log('Telegram auth detected', window.Telegram.WebApp.initData);
+
+        try {
+            await store.telegramAuth(window.Telegram.WebApp.initData);
+            await next();
+        } catch (error) {
+            console.error('Telegram auth error', error);
+            await next({
+                name: 'login',
+            });
         }
     }
 

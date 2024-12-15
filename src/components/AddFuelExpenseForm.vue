@@ -56,6 +56,16 @@ watch(selectedCar, async (newValue) => {
   }
 });
 
+const latestRefill = computed(() => {
+  if (!selectedCar.value) {
+    return null;
+  }
+
+  return fuelExpensesHistory.value.find(
+      expense => expense.car_id = selectedCar.value.id
+  );
+})
+
 
 const canBeSaved = computed(() => {
   return selectedCar.value
@@ -93,7 +103,7 @@ function onSaveClick() {
 </script>
 
 <template>
-  <v-form @submit.prevent style="min-width: 400px;">
+  <v-form @submit.prevent style="width: 100%;">
     <v-select
         v-model="selectedCar"
         return-object
@@ -109,19 +119,25 @@ function onSaveClick() {
         label="Enter current mileage"
     ></v-text-field>
 
-    <v-select
-        v-if="selectedCar"
-        v-model="fuel"
-        :items="Object.values(FUEL_TYPES)"
-        label="Select fuel type"
-    />
+    <v-row>
+      <v-col>
+        <v-select
+            v-if="selectedCar"
+            v-model="fuel"
+            :items="Object.values(FUEL_TYPES)"
+            label="Select fuel type"
+        />
+      </v-col>
 
-    <v-text-field
-        v-if="selectedCar"
-        v-model="liters"
-        type="number"
-        label="Enter liters"
-    ></v-text-field>
+      <v-col>
+        <v-text-field
+            v-if="selectedCar"
+            v-model="liters"
+            type="number"
+            label="Enter liters"
+        ></v-text-field>
+      </v-col>
+    </v-row>
 
     <v-text-field
         v-if="selectedCar"
