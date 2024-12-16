@@ -1,8 +1,7 @@
 import TheWelcome from "@/components/TheWelcome.vue";
 import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
 import Login from "@/components/Login.vue";
-import {Static} from "vue";
-import Statistics from "@/components/Statistics.vue";
+import RefillHistory from "@/components/RefillHistory.vue";
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -19,12 +18,12 @@ const routes = [
         component: Login,
     },
     {
-        name: 'statistics',
-        path: '/statistics',
+        name: 'refill_history',
+        path: '/refill_history',
         meta: {
             auth: true,
         },
-        component: Statistics,
+        component: RefillHistory,
     },
     {
         name: 'add_fuel_expense',

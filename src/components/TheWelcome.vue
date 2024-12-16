@@ -6,6 +6,5 @@ const {user} = useUserStore();
 
 <template>
   <h1>Hello, {{ user.firstName }}!</h1>
-
-  <router-link :to="{name: 'add_fuel_expense'}">Add expense</router-link>
+  <h2>This app is currently under lazy development</h2>
 </template>

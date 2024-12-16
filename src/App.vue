@@ -1,5 +1,5 @@
 <script setup>
-import {mdiChartBar, mdiGasStation} from "@mdi/js";
+import {mdiChartBar, mdiGasStation, mdiHistory} from "@mdi/js";
 </script>
 
 <template>
@@ -12,10 +12,10 @@ import {mdiChartBar, mdiGasStation} from "@mdi/js";
 
 
     <v-bottom-navigation>
-      <v-btn value="statistics" :to="{name: 'statistics'}">
-        <v-icon :icon="mdiChartBar"></v-icon>
+      <v-btn value="refill_history" :to="{name: 'refill_history'}">
+        <v-icon :icon="mdiHistory"></v-icon>
 
-        <span>Statistics</span>
+        <span>Refill history</span>
       </v-btn>
 
       <v-btn

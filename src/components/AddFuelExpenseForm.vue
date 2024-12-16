@@ -4,27 +4,22 @@ import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 
 import {VTimePicker} from 'vuetify/labs/VTimePicker'
 import {useDate} from "vuetify";
-
-
-const FUEL_TYPES = {
-  GASOLINE_80: "gasoline-80",
-  GASOLINE_92: "gasoline-92",
-  GASOLINE_95: "gasoline-95",
-  GASOLINE_95_PLUS: "gasoline-95+",
-  GASOLINE_98: "gasoline-98",
-  GASOLINE_100: "gasoline-100",
-  DIESEL: "diesel",
-};
+import {FUEL_TYPES} from "@/constants/fuel.js";
 
 const fuelExpensesHistory = ref([]);
 
 const cars = ref([]);
+const selectedCar = ref(null);
+
 onMounted(async () => {
   cars.value = await fetchCars();
+
+  if (cars.value.length === 1) {
+    selectedCar.value = cars.value[0];
+  }
 })
 
 
-const selectedCar = ref(null);
 const mileage = ref(0);
 const fuel = ref(null);
 const liters = ref(0);
@@ -126,6 +121,8 @@ function onSaveClick() {
             v-if="selectedCar"
             v-model="fuel"
             :items="Object.values(FUEL_TYPES)"
+            item-title="title"
+            item-value="value"
             label="Select fuel type"
         />
       </v-col>
@@ -140,18 +137,19 @@ function onSaveClick() {
       </v-col>
     </v-row>
 
-    <v-text-field
-        v-if="selectedCar"
-        v-model="cost"
-        type="number"
-        label="Enter cost"
-    ></v-text-field>
 
     <v-switch
         v-if="selectedCar"
         v-model="fullTank"
         label="Full tank"
     ></v-switch>
+    
+    <v-text-field
+        v-if="selectedCar"
+        v-model="cost"
+        type="number"
+        label="Enter cost"
+    ></v-text-field>
 
     <v-date-picker
         v-if="selectedCar"
