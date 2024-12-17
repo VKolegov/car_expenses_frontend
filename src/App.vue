@@ -1,5 +1,9 @@
 <script setup>
 import {mdiChartBar, mdiGasStation, mdiHistory} from "@mdi/js";
+import {VApp} from "vuetify/components";
+import {VMain} from "vuetify/components";
+import {VContainer} from "vuetify/components";
+import {VBottomNavigation} from "vuetify/components";
 </script>
 
 <template>

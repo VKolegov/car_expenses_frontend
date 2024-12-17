@@ -3,10 +3,7 @@ import './assets/main.css'
 // Vuetify
 import 'vuetify/styles'
 import {createVuetify} from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import {aliases, mdi} from "vuetify/iconsets/mdi-svg";
-import {mdiAccount, mdiHistory} from '@mdi/js'
 
 
 import {createApp} from 'vue'
@@ -16,10 +13,12 @@ import routes from "@/routes.js";
 import {createRouter, createWebHistory} from "vue-router";
 import {createPinia} from "pinia";
 import {useUserStore} from "@/store.js";
+import {VBtn, VCol, VForm, VIcon, VRow, VTextField} from "vuetify/components";
 
 const vuetify = createVuetify({
-    components,
-    directives,
+    components: {
+        VIcon, VRow, VCol, VForm, VTextField, VBtn,
+    },
     icons: {
         defaultSet: 'mdi',
         aliases,

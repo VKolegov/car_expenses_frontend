@@ -1,5 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
+
+import {VSelect, VDataTable} from "vuetify/components";
+
 import {fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES_MAP} from "@/constants/fuel.js";
 import {CURRENCY_SYMBOLS} from "@/constants/currency.js";

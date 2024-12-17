@@ -1,9 +1,11 @@
 <script setup>
 import {computed, onMounted, ref, watch} from "vue";
-import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
-
-import {VTimePicker} from 'vuetify/labs/VTimePicker'
 import {useDate} from "vuetify";
+
+import {VSelect, VSwitch, VDatePicker} from "vuetify/components";
+import {VTimePicker} from 'vuetify/labs/VTimePicker'
+
+import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES} from "@/constants/fuel.js";
 
 const fuelExpensesHistory = ref([]);
