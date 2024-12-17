@@ -1,19 +1,20 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
+import {useUserStore} from "@/store.js";
 
 import {VSelect, VDataTable, VFab} from "vuetify/components";
 
-import {fetchCars, fetchFuelExpensesHistory} from "@/api.js";
+import {fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES_MAP} from "@/constants/fuel.js";
 import {CURRENCY_SYMBOLS} from "@/constants/currency.js";
 import {mdiPlus} from "@mdi/js";
 
-const cars = ref([]);
+const store = useUserStore();
+
+const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
 
 onMounted(async () => {
-  cars.value = await fetchCars();
-
   if (cars.value.length === 1) {
     selectedCar.value = cars.value[0];
   }

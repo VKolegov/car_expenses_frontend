@@ -41,6 +41,7 @@ router.beforeEach(async (to, from, next) => {
         const legit = await store.authIsLegit();
 
         if (legit) {
+            await store.fetchUserCars();
             await next();
             return;
         }
@@ -64,6 +65,10 @@ router.beforeEach(async (to, from, next) => {
             });
             return;
         }
+    }
+
+    if (store.userCars.length === 0) {
+        await store.fetchUserCars();
     }
 
 

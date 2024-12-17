@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {defineStore} from "pinia";
-import {login, me, telegramLogin} from "@/api.js";
+import {fetchCars, login, me, telegramLogin} from "@/api.js";
 import storageHelper, {TOKEN_KEY} from "@/local_storage.js";
 
 export const useUserStore = defineStore('user', () => {
@@ -65,5 +65,20 @@ export const useUserStore = defineStore('user', () => {
         return false;
     }
 
-   return {user, auth, telegramAuth, authIsLegit, setUser};
+
+    const userCars = ref([]);
+
+   function setCars(cars = []) {
+       userCars.value = cars;
+   }
+
+   async function fetchUserCars() {
+       setCars(await fetchCars());
+   }
+
+   return {
+       user, auth, telegramAuth, authIsLegit, setUser,
+
+       userCars, fetchUserCars,
+   };
 });

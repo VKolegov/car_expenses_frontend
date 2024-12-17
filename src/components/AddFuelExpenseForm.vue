@@ -2,24 +2,24 @@
 import {computed, onMounted, ref, watch} from "vue";
 import {useDate} from "vuetify";
 import {useRouter} from "vue-router";
+import {useUserStore} from "@/store.js";
 
 import {VSelect, VSwitch, VDatePicker} from "vuetify/components";
 import {VTimePicker} from 'vuetify/labs/VTimePicker'
 
-import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
+import {createFuelExpense, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES} from "@/constants/fuel.js";
 
+const store = useUserStore();
 const router = useRouter();
 
 /** @type {import('vue').Ref<FuelExpense[]>} */
 const fuelExpensesHistory = ref([]);
 
-const cars = ref([]);
+const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
 
 onMounted(async () => {
-  cars.value = await fetchCars();
-
   if (cars.value.length === 1) {
     selectedCar.value = cars.value[0];
   }
