@@ -18,6 +18,7 @@ onMounted(async () => {
   }
 });
 
+/** @type {import('vue').Ref<FuelExpense[]>} */
 const fuelExpensesHistory = ref([]);
 
 watch(selectedCar, async (newValue) => {
@@ -26,7 +27,7 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  fuelExpensesHistory.value = await fetchFuelExpensesHistory();
+  fuelExpensesHistory.value = await fetchFuelExpensesHistory(selectedCar.value.id);
 });
 
 const headers = [

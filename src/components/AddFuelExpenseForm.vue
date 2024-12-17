@@ -8,6 +8,7 @@ import {VTimePicker} from 'vuetify/labs/VTimePicker'
 import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES} from "@/constants/fuel.js";
 
+/** @type {import('vue').Ref<FuelExpense[]>} */
 const fuelExpensesHistory = ref([]);
 
 const cars = ref([]);
@@ -42,26 +43,12 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  fuelExpensesHistory.value = await fetchFuelExpensesHistory();
+  fuelExpensesHistory.value = await fetchFuelExpensesHistory(selectedCar.value.id);
 
-  const latestCarFuelExpense = fuelExpensesHistory.value.find(
-      expense => expense.car_id = newValue.id
-  );
-
-  if (latestCarFuelExpense) {
-    mileage.value = latestCarFuelExpense.mileage;
+  if (fuelExpensesHistory.value.length > 0) {
+    mileage.value = fuelExpensesHistory.value[0].mileage;
   }
 });
-
-const latestRefill = computed(() => {
-  if (!selectedCar.value) {
-    return null;
-  }
-
-  return fuelExpensesHistory.value.find(
-      expense => expense.car_id = selectedCar.value.id
-  );
-})
 
 
 const canBeSaved = computed(() => {

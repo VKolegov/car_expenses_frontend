@@ -42,10 +42,31 @@ export async function fetchCars(){
     return r;
 }
 
-export async function fetchFuelExpensesHistory() {
-    return await getRequest(`${baseURL}/fuel_expenses`);
+/**
+ * @param {number|null} carId
+ * @returns {Promise<FuelExpense[]>}
+ */
+export async function fetchFuelExpensesHistory(carId = null) {
+    const url = `${baseURL}/fuel_expenses`;
+
+    if (carId) {
+        return await getRequest(url, {
+            car_id: carId
+        });
+    }
+
+    return await getRequest(url);
 }
 
 export async function createFuelExpense(data) {
     return await postRequest(`${baseURL}/fuel_expenses`, data);
+}
+
+/**
+ *
+ * @param {number} carId
+ * @returns {Promise<TotalCarStats>}
+ */
+export async function fetchCarStats(carId) {
+    return await getRequest(`${baseURL}/stats/for_car/${carId}`);
 }
