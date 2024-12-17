@@ -11,8 +11,10 @@ const basicHeaders ={
 
 export async function makeRequest(method, url, data) {
 
-    if (method === 'GET' && data) {
-        url = url + (new URLSearchParams(data)).toString();
+    const isGetRequest = method === 'GET';
+
+    if (isGetRequest && data) {
+        url = url + '?' + (new URLSearchParams(data)).toString();
     }
 
     const headers = basicHeaders;
@@ -25,7 +27,7 @@ export async function makeRequest(method, url, data) {
 
     const request = new Request(url, {
         method: method,
-        body: data ? JSON.stringify(data) : null,
+        body: !isGetRequest && data ? JSON.stringify(data) : null,
         headers: headers,
     });
 
