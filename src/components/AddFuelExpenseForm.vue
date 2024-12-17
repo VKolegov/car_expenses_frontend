@@ -1,12 +1,15 @@
 <script setup>
 import {computed, onMounted, ref, watch} from "vue";
 import {useDate} from "vuetify";
+import {useRouter} from "vue-router";
 
 import {VSelect, VSwitch, VDatePicker} from "vuetify/components";
 import {VTimePicker} from 'vuetify/labs/VTimePicker'
 
 import {createFuelExpense, fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES} from "@/constants/fuel.js";
+
+const router = useRouter();
 
 /** @type {import('vue').Ref<FuelExpense[]>} */
 const fuelExpensesHistory = ref([]);
@@ -81,6 +84,8 @@ function onSaveClick() {
     fuelExpensesHistory.value.push(fuelExpense);
 
     alert('Fuel expense added!');
+
+    router.push({name: 'refills'});
   });
 }
 

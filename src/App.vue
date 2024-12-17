@@ -16,19 +16,13 @@ import {VBottomNavigation} from "vuetify/components";
 
 
     <v-bottom-navigation>
-      <v-btn value="refill_history" :to="{name: 'refill_history'}">
-        <v-icon :icon="mdiHistory"></v-icon>
-
-        <span>Refill history</span>
-      </v-btn>
-
       <v-btn
-          value="add-refill"
-          :to="{name: 'add_fuel_expense'}"
+          value="refills"
+          :to="{name: 'refills'}"
       >
         <v-icon :icon="mdiGasStation"></v-icon>
 
-        <span>Add refill</span>
+        <span>Refills</span>
       </v-btn>
     </v-bottom-navigation>
   </v-app>

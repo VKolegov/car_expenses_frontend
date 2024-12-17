@@ -2,6 +2,7 @@ import TheWelcome from "@/components/TheWelcome.vue";
 import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
 import Login from "@/components/Login.vue";
 import RefillHistory from "@/components/RefillHistory.vue";
+import Refills from "@/pages/Refills.vue";
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -18,21 +19,30 @@ const routes = [
         component: Login,
     },
     {
-        name: 'refill_history',
-        path: '/refill_history',
+        path: '/refills',
         meta: {
             auth: true,
         },
-        component: RefillHistory,
+        component: Refills,
+        children: [
+            {
+                name: 'refills',
+                path: '',
+                meta: {
+                    auth: true,
+                },
+                component: RefillHistory,
+            },
+            {
+                name: 'add_refill',
+                path: 'add',
+                meta: {
+                    auth: true,
+                },
+                component: AddFuelExpenseForm
+            }
+        ]
     },
-    {
-        name: 'add_fuel_expense',
-        path: '/fuel_expenses/add',
-        meta: {
-            auth: true,
-        },
-        component: AddFuelExpenseForm
-    }
 ]
 
 export default routes;

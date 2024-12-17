@@ -1,11 +1,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 
-import {VSelect, VDataTable} from "vuetify/components";
+import {VSelect, VDataTable, VFab} from "vuetify/components";
 
 import {fetchCars, fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES_MAP} from "@/constants/fuel.js";
 import {CURRENCY_SYMBOLS} from "@/constants/currency.js";
+import {mdiPlus} from "@mdi/js";
 
 const cars = ref([]);
 const selectedCar = ref(null);
@@ -83,8 +84,19 @@ const headers = [
       :items="fuelExpensesHistory"
       :headers="headers"
   ></v-data-table>
+
+  <v-fab
+      :icon="mdiPlus"
+      :to="{name: 'add_refill'}"
+      offset
+      class="fixed"
+  ></v-fab>
 </template>
 
 <style scoped>
-
+.fixed {
+  position: fixed;
+  right: 55px;
+  bottom: 90px;
+}
 </style>
