@@ -1,6 +1,6 @@
 export interface FuelExpense {
     id: number;
-    date: Date;
+    date: string;
     car_id: number;
     fuel_type: FuelType;
     liters: number;

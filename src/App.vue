@@ -1,9 +1,6 @@
 <script setup>
-import {mdiChartBar, mdiGasStation, mdiHistory} from "@mdi/js";
-import {VApp} from "vuetify/components";
-import {VMain} from "vuetify/components";
-import {VContainer} from "vuetify/components";
-import {VBottomNavigation} from "vuetify/components";
+import {mdiChartLine, mdiGasStation} from "@mdi/js";
+import {VApp, VBottomNavigation, VContainer, VMain} from "vuetify/components";
 </script>
 
 <template>
@@ -23,6 +20,14 @@ import {VBottomNavigation} from "vuetify/components";
         <v-icon :icon="mdiGasStation"></v-icon>
 
         <span>Refills</span>
+      </v-btn>
+      <v-btn
+          value="charts"
+          :to="{name: 'fuel_charts'}"
+      >
+        <v-icon :icon="mdiChartLine"></v-icon>
+
+        <span>Charts</span>
       </v-btn>
     </v-bottom-navigation>
   </v-app>

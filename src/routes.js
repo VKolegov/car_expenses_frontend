@@ -3,6 +3,7 @@ import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
 import Login from "@/components/Login.vue";
 import RefillHistory from "@/components/RefillHistory.vue";
 import Refills from "@/pages/Refills.vue";
+import FuelCharts from "@/components/FuelCharts.vue";
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
             }
         ]
     },
+    {
+        name: 'fuel_charts',
+        path: '/fuel_charts',
+        component: FuelCharts,
+    }
 ]
 
 export default routes;
