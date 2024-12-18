@@ -1,8 +1,10 @@
-import Login from "@/pages/Login.vue";
+const Login = () => import('@/pages/Login.vue');
 import TheWelcome from "@/pages/TheWelcome.vue";
 import Refills from "@/pages/Refills.vue";
 
-import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
+
+const AddFuelExpenseForm = () => import('@/components/AddFuelExpenseForm.vue');
+
 import RefillHistory from "@/components/RefillHistory.vue";
 import FuelCharts from "@/components/FuelCharts.vue";
 
