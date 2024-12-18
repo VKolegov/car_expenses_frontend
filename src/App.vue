@@ -2,7 +2,6 @@
 import {mdiChartLine, mdiGasStation} from "@mdi/js";
 import {VApp, VBottomNavigation, VContainer, VMain} from "vuetify/components";
 
-
 if (window.Telegram?.WebApp) {
   window.Telegram.WebApp.disableVerticalSwipes();
 }
@@ -39,4 +38,12 @@ if (window.Telegram?.WebApp) {
 </template>
 
 <style>
+.v-application__wrap {
+  max-height: var(--tg-viewport-height, 100dvh);
+}
+
+.v-main {
+  height: 100%;
+  overflow-y: auto;
+}
 </style>
