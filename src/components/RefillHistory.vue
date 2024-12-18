@@ -99,6 +99,6 @@ const headers = [
 .fixed {
   position: fixed;
   right: 55px;
-  bottom: 90px;
+  bottom: 105px;
 }
 </style>
