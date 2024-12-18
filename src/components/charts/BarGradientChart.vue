@@ -6,7 +6,7 @@ import { Bar } from 'vue-chartjs';
 const props = defineProps({
   title: {
     type: String,
-    default: 'Line Gradient Chart',
+    default: 'Bar Gradient Chart',
   },
   yLabels: {
     type: Array,

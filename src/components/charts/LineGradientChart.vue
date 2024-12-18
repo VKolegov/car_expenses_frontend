@@ -57,7 +57,7 @@ const options = {
     datalabels: {
       align: 'top',
       font: {
-        size: '16px',
+        size: 'var(--text-size, 12px)',
         weight: '500',
         family: 'Inter',
       },
