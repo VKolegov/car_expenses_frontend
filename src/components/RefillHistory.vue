@@ -8,6 +8,7 @@ import {fetchFuelExpensesHistory} from "@/api.js";
 import {FUEL_TYPES_MAP} from "@/constants/fuel.js";
 import {CURRENCY_SYMBOLS} from "@/constants/currency.js";
 import {mdiPlus} from "@mdi/js";
+import {round} from "lodash";
 
 const store = useUserStore();
 
@@ -54,12 +55,12 @@ const headers = [
   {
     title: 'Fuel price',
     key: 'fuel_price',
-    value: item => item.fuel_price + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => round(item.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
   },
   {
     title: 'Total',
     key: 'total',
-    value: item => item.total + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => round(item.total, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
   },
   {
     title: 'Full tank',
