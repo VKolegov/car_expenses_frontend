@@ -1,6 +1,11 @@
 <script setup>
 import {mdiChartLine, mdiGasStation} from "@mdi/js";
 import {VApp, VBottomNavigation, VContainer, VMain} from "vuetify/components";
+
+
+if (window.Telegram?.WebApp) {
+  window.Telegram.WebApp.disableVerticalSwipes();
+}
 </script>
 
 <template>
