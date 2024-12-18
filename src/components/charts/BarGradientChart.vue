@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 
 import { Bar } from 'vue-chartjs';
+import { fontSize } from '@/responsiveness.js';
 
 const props = defineProps({
   title: {
@@ -21,7 +22,6 @@ const props = defineProps({
     default: (value, index, ticks) => value,
   },
 });
-
 
 const data = computed(() => ({
   labels: props.yLabels,
@@ -57,7 +57,7 @@ const options = {
     datalabels: {
       align: 'top',
       font: {
-        size: '16px',
+        size: fontSize,
         weight: '500',
         family: 'Inter',
       },

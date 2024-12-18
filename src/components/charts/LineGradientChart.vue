@@ -2,6 +2,9 @@
 import { computed } from 'vue';
 
 import { Line } from 'vue-chartjs';
+import { max, min } from 'lodash';
+
+import { fontSize } from '@/responsiveness.js';
 
 const props = defineProps({
   title: {
@@ -45,7 +48,8 @@ const options = {
   responsive: true,
   scales: {
     y: {
-      suggestedMin: 0,
+      suggestedMin: min(props.yValues)*0.5,
+      suggestedMax: max(props.yValues)*1.3,
       ticks: {
         callback: props.tickFormatter
       },
@@ -57,7 +61,7 @@ const options = {
     datalabels: {
       align: 'top',
       font: {
-        size: 'var(--text-size, 12px)',
+        size: fontSize,
         weight: '500',
         family: 'Inter',
       },
