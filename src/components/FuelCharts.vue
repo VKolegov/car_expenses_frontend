@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { round } from 'lodash';
-import { VSelect, VSparkline } from 'vuetify/components';
+import { VSelect } from 'vuetify/components';
 
 /* chart.js */
 import {
@@ -9,6 +9,7 @@ import {
   Chart as ChartJS,
   Legend,
   LinearScale,
+  BarElement,
   LineElement,
   PointElement,
   Title,
@@ -22,6 +23,7 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend,
@@ -42,6 +44,7 @@ import { fetchFuelExpensesHistory } from '@/api.js';
 
 
 import LineGradientChart from '@/components/LineGradientChart.vue';
+import BarGradientChart from '@/components/BarGradientChart.vue';
 
 
 const store = useUserStore();
@@ -138,9 +141,6 @@ watch(fuelExpensesHistory, newVal => {
   console.log(groupedData);
 });
 
-const gradient = ['red', 'orange', 'yellow', 'green'];
-const barWidth = 10;
-const lineWidth = 3;
 </script>
 
 <template>
@@ -153,17 +153,7 @@ const lineWidth = 3;
   ></v-select>
 
   <h2>Expenses by month</h2>
-  <v-sparkline
-      v-if="selectedCar && expensesByMonth"
-      :model-value="expensesByMonth"
-      :line-width="barWidth"
-      :gradient="gradient"
-      type="bar"
-      auto-draw
-      show-labels
-  ></v-sparkline>
-
-  <LineGradientChart
+  <BarGradientChart
       v-if="expensesByMonth.length"
       title="Expenses per month"
       :y-values="expensesByMonth"
