@@ -54,6 +54,7 @@ const groupByMonth = (data) => {
 const expensesByMonth = ref([]);
 const pricePerLiterByMonth = ref([]);
 const mileageByMonth = ref([]);
+const litersByMonth = ref([]);
 
 watch(fuelExpensesHistory, newVal => {
 
@@ -82,9 +83,9 @@ watch(fuelExpensesHistory, newVal => {
     return lastMileageCurrentMonth - lastMileagePreviousMonth;
   });
 
-  const litersByMonth = groups.map(items =>
+  litersByMonth.value = groups.map(items =>
       items.reduce((sum, item) => sum + item.liters, 0)
-  );
+  ).map(v => round(v, 2));
 
   pricePerLiterByMonth.value = groups.map(items => {
     const totalLiters = items.reduce((sum, item) => sum + item.liters, 0);
@@ -94,10 +95,6 @@ watch(fuelExpensesHistory, newVal => {
 
 // Вывод результатов
   console.log(groupedData);
-  console.log("Траты по месяцам:", expensesByMonth.value);
-  console.log("Количество литров по месяцам:", litersByMonth);
-  console.log("Стоимость 1 литра бензина по месяцам:", pricePerLiterByMonth);
-
 });
 
 
@@ -127,10 +124,10 @@ const lineWidth = 3;
       show-labels
   ></v-sparkline>
 
-  <h2>Price per liter by month</h2>
+  <h2>Mileage by month</h2>
   <v-sparkline
-      v-if="selectedCar && pricePerLiterByMonth"
-      :model-value="pricePerLiterByMonth"
+      v-if="selectedCar && mileageByMonth"
+      :model-value="mileageByMonth"
       :line-width="lineWidth"
       type="trend"
       :gradient="gradient"
@@ -139,10 +136,22 @@ const lineWidth = 3;
       show-labels
   ></v-sparkline>
 
-  <h2>Mileage by month</h2>
+  <h2>Liters per month</h2>
   <v-sparkline
-      v-if="selectedCar && mileageByMonth"
-      :model-value="mileageByMonth"
+      v-if="selectedCar && litersByMonth"
+      :model-value="litersByMonth"
+      :line-width="lineWidth"
+      type="trend"
+      :gradient="gradient"
+      smooth
+      auto-draw
+      show-labels
+  ></v-sparkline>
+
+  <h2>Price per liter by month</h2>
+  <v-sparkline
+      v-if="selectedCar && pricePerLiterByMonth"
+      :model-value="pricePerLiterByMonth"
       :line-width="lineWidth"
       type="trend"
       :gradient="gradient"
