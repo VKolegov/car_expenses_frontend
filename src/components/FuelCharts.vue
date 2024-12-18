@@ -1,7 +1,8 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {round} from "lodash";
-import {VSelect, VSparkline} from "vuetify/components";
+import { computed, onMounted, ref, watch } from 'vue';
+import { round } from 'lodash';
+import { VSelect, VSparkline } from 'vuetify/components';
+
 /* chart.js */
 import {
   CategoryScale,
@@ -14,8 +15,6 @@ import {
   Tooltip,
 } from 'chart.js';
 
-import {useUserStore} from "@/store.js";
-import {fetchFuelExpensesHistory} from "@/api.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(
@@ -29,9 +28,21 @@ ChartJS.register(
     ChartDataLabels,
 );
 
-const currencyFormatter = (value) => Intl.NumberFormat().format(value) + ' руб.';
+const numberFormatter = Intl.NumberFormat();
+
+const currencyFormatter = (value) => numberFormatter.format(value) + ' руб.';
+const distanceFormatter = (value) => numberFormatter.format(value) + ' км';
+const fuelFormatter = (value) => numberFormatter.format(value) + ' л';
 
 /* end chart.js */
+
+
+import { useUserStore } from '@/store.js';
+import { fetchFuelExpensesHistory } from '@/api.js';
+
+
+import LineGradientChart from '@/components/LineGradientChart.vue';
+
 
 const store = useUserStore();
 const cars = computed(() => store.userCars);
@@ -55,7 +66,6 @@ watch(selectedCar, async (newValue) => {
   // order date desc
   fuelExpensesHistory.value = await fetchFuelExpensesHistory(selectedCar.value.id);
 });
-
 
 // --------------
 
@@ -83,6 +93,8 @@ const pricePerLiterByMonth = ref([]);
 const mileageByMonth = ref([]);
 const litersByMonth = ref([]);
 
+const yLabels= ref([]);
+
 watch(fuelExpensesHistory, newVal => {
 
   // Группировка всех данных
@@ -91,10 +103,12 @@ watch(fuelExpensesHistory, newVal => {
 
 // Генерация массивов из сгруппированных данных
   expensesByMonth.value = groups.map(items =>
-      items.reduce((sum, item) => sum + round(item.total), 0)
+      items.reduce((sum, item) => sum + round(item.total), 0),
   ).map(v => round(v, 2));
 
   const months = Object.keys(groupedData);
+  yLabels.value = months;
+
   mileageByMonth.value = months.map((month, index) => {
     const currentMonthData = groupedData[month];
     const lastMileageCurrentMonth = currentMonthData[currentMonthData.length - 1].mileage;
@@ -111,7 +125,7 @@ watch(fuelExpensesHistory, newVal => {
   });
 
   litersByMonth.value = groups.map(items =>
-      items.reduce((sum, item) => sum + item.liters, 0)
+      items.reduce((sum, item) => sum + item.liters, 0),
   ).map(v => round(v, 2));
 
   pricePerLiterByMonth.value = groups.map(items => {
@@ -123,7 +137,6 @@ watch(fuelExpensesHistory, newVal => {
 // Вывод результатов
   console.log(groupedData);
 });
-
 
 const gradient = ['red', 'orange', 'yellow', 'green'];
 const barWidth = 10;
@@ -139,7 +152,6 @@ const lineWidth = 3;
       :item-title="car => `${car.brand} ${car.model}`"
   ></v-select>
 
-
   <h2>Expenses by month</h2>
   <v-sparkline
       v-if="selectedCar && expensesByMonth"
@@ -151,41 +163,40 @@ const lineWidth = 3;
       show-labels
   ></v-sparkline>
 
+  <LineGradientChart
+      v-if="expensesByMonth.length"
+      title="Expenses per month"
+      :y-values="expensesByMonth"
+      :y-labels="yLabels"
+      :tick-formatter="currencyFormatter"
+  />
+
   <h2>Mileage by month</h2>
-  <v-sparkline
-      v-if="selectedCar && mileageByMonth"
-      :model-value="mileageByMonth"
-      :line-width="lineWidth"
-      type="trend"
-      :gradient="gradient"
-      smooth
-      auto-draw
-      show-labels
-  ></v-sparkline>
+  <LineGradientChart
+      v-if="mileageByMonth.length"
+      title="Mileage by month"
+      :y-values="mileageByMonth"
+      :y-labels="yLabels"
+      :tick-formatter="distanceFormatter"
+  />
 
   <h2>Liters per month</h2>
-  <v-sparkline
-      v-if="selectedCar && litersByMonth"
-      :model-value="litersByMonth"
-      :line-width="lineWidth"
-      type="trend"
-      :gradient="gradient"
-      smooth
-      auto-draw
-      show-labels
-  ></v-sparkline>
+  <LineGradientChart
+      v-if="litersByMonth.length"
+      title="Liters per month"
+      :y-values="litersByMonth"
+      :y-labels="yLabels"
+      :tick-formatter="fuelFormatter"
+  />
 
   <h2>Price per liter by month</h2>
-  <v-sparkline
-      v-if="selectedCar && pricePerLiterByMonth"
-      :model-value="pricePerLiterByMonth"
-      :line-width="lineWidth"
-      type="trend"
-      :gradient="gradient"
-      smooth
-      auto-draw
-      show-labels
-  ></v-sparkline>
+  <LineGradientChart
+      v-if="pricePerLiterByMonth.length"
+      title="Price per liter by month"
+      :y-values="pricePerLiterByMonth"
+      :y-labels="yLabels"
+      :tick-formatter="currencyFormatter"
+  />
 </template>
 
 <style scoped>
