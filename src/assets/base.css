@@ -58,8 +58,13 @@
   font-weight: normal;
 }
 
+html {
+  overflow-y: hidden;
+  max-height: var(--tg-viewport-height, 100dvh);
+}
+
 body {
-  height: var(--tg-viewport-height, 100dvh);
+  height: 100%;
   color: var(--color-text);
   background: var(--color-background);
   transition:
