@@ -17,12 +17,12 @@ if (window.Telegram?.WebApp) {
     </v-main>
 
 
-    <v-bottom-navigation>
+    <v-bottom-navigation style="height: 75px;">
       <v-btn
           value="refills"
           :to="{name: 'refills'}"
       >
-        <v-icon :icon="mdiGasStation"></v-icon>
+        <v-icon :icon="mdiGasStation" size="x-large"></v-icon>
 
         <span>Refills</span>
       </v-btn>
@@ -30,7 +30,7 @@ if (window.Telegram?.WebApp) {
           value="charts"
           :to="{name: 'fuel_charts'}"
       >
-        <v-icon :icon="mdiChartLine"></v-icon>
+        <v-icon :icon="mdiChartLine" size="x-large"></v-icon>
 
         <span>Charts</span>
       </v-btn>
