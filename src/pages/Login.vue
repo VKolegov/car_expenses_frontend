@@ -1,19 +1,19 @@
 <script setup>
-import {ref} from "vue";
-import {useRouter} from "vue-router";
-import {useUserStore} from "@/store.js";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store.js';
 
 const router = useRouter();
 
 const phone = ref('');
 const password = ref('');
 
-async function attemptLogin() {
+async function attemptLogin () {
   const userStore = useUserStore();
 
   const success = await userStore.auth(phone.value, password.value);
   if (success) {
-    await router.push({name: 'refills'});
+    await router.push({ name: 'refills' });
   }
 }
 </script>

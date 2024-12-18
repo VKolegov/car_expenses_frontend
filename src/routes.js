@@ -1,12 +1,10 @@
 const Login = () => import('@/pages/Login.vue');
-import TheWelcome from "@/pages/TheWelcome.vue";
-import Refills from "@/pages/Refills.vue";
-
+import TheWelcome from '@/pages/TheWelcome.vue';
+import Refills from '@/pages/Refills.vue';
+import RefillHistory from '@/components/RefillHistory.vue';
+import FuelCharts from '@/components/FuelCharts.vue';
 
 const AddFuelExpenseForm = () => import('@/components/AddFuelExpenseForm.vue');
-
-import RefillHistory from "@/components/RefillHistory.vue";
-import FuelCharts from "@/components/FuelCharts.vue";
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -43,15 +41,15 @@ const routes = [
                 meta: {
                     auth: true,
                 },
-                component: AddFuelExpenseForm
-            }
-        ]
+                component: AddFuelExpenseForm,
+            },
+        ],
     },
     {
         name: 'fuel_charts',
         path: '/fuel_charts',
         component: FuelCharts,
-    }
-]
+    },
+];
 
 export default routes;

@@ -1,4 +1,4 @@
-import {baseURL, getRequest, postRequest} from "@/basic_api.js";
+import { baseURL, getRequest, postRequest } from '@/basic_api.js';
 
 /**
  * @typedef {Object} LoginResponse
@@ -12,10 +12,10 @@ import {baseURL, getRequest, postRequest} from "@/basic_api.js";
  * @param password
  * @returns {Promise<LoginResponse>}
  */
-export async function login(phone, password) {
+export async function login (phone, password) {
     const r = await postRequest(`${baseURL}/login`, {
         phone,
-        password
+        password,
     });
 
     return r;
@@ -26,17 +26,17 @@ export async function login(phone, password) {
  * @param {string} initData telegram app init data
  * @returns {Promise<LoginResponse>}
  */
-export async function telegramLogin(initData)  {
+export async function telegramLogin (initData) {
     return await postRequest(`${baseURL}/telegram/auth`, {
-        tgRawData: initData
-    })
+        tgRawData: initData,
+    });
 }
 
-export async function me() {
+export async function me () {
     return await getRequest(`${baseURL}/me`);
 }
 
-export async function fetchCars(){
+export async function fetchCars () {
     const r = await getRequest(`${baseURL}/cars`);
 
     return r;
@@ -46,19 +46,19 @@ export async function fetchCars(){
  * @param {number|null} carId
  * @returns {Promise<FuelExpense[]>}
  */
-export async function fetchFuelExpensesHistory(carId = null) {
+export async function fetchFuelExpensesHistory (carId = null) {
     const url = `${baseURL}/fuel_expenses`;
 
     if (carId) {
         return await getRequest(url, {
-            car_id: carId
+            car_id: carId,
         });
     }
 
     return await getRequest(url);
 }
 
-export async function createFuelExpense(data) {
+export async function createFuelExpense (data) {
     return await postRequest(`${baseURL}/fuel_expenses`, data);
 }
 
@@ -67,6 +67,6 @@ export async function createFuelExpense(data) {
  * @param {number} carId
  * @returns {Promise<TotalCarStats>}
  */
-export async function fetchCarStats(carId) {
+export async function fetchCarStats (carId) {
     return await getRequest(`${baseURL}/stats/for_car/${carId}`);
 }

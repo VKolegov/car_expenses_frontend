@@ -1,15 +1,14 @@
-import storageHelper, {TOKEN_KEY} from "@/local_storage.js";
-import HttpError from "@/errors.js";
+import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
+import HttpError from '@/errors.js';
 
 export const baseURL = 'https://car-expenses.vkolegov.ru/api';
 
-
-const basicHeaders ={
+const basicHeaders = {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
 };
 
-export async function makeRequest(method, url, data) {
+export async function makeRequest (method, url, data) {
 
     const isGetRequest = method === 'GET';
 
@@ -37,13 +36,14 @@ export async function makeRequest(method, url, data) {
         return await response.json();
     }
 
-    throw new HttpError(`error: ${response.status}` + await response.text(), response.status);
+    throw new HttpError(`error: ${response.status}` + await response.text(),
+        response.status);
 }
 
-export async function getRequest(url, params) {
+export async function getRequest (url, params) {
     return await makeRequest('GET', url, params);
 }
 
-export async function postRequest(url, data) {
+export async function postRequest (url, data) {
     return await makeRequest('POST', url, data);
 }

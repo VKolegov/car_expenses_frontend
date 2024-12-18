@@ -5,11 +5,11 @@ import { VSelect } from 'vuetify/components';
 
 /* chart.js */
 import {
+  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
   LinearScale,
-  BarElement,
   LineElement,
   PointElement,
   Title,
@@ -17,6 +17,11 @@ import {
 } from 'chart.js';
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { useUserStore } from '@/store.js';
+import { fetchFuelExpensesHistory } from '@/api.js';
+
+import LineGradientChart from '@/components/charts/LineGradientChart.vue';
+import BarGradientChart from '@/components/charts/BarGradientChart.vue';
 
 ChartJS.register(
     CategoryScale,
@@ -37,15 +42,6 @@ const distanceFormatter = (value) => numberFormatter.format(value) + ' км';
 const fuelFormatter = (value) => numberFormatter.format(value) + ' л';
 
 /* end chart.js */
-
-
-import { useUserStore } from '@/store.js';
-import { fetchFuelExpensesHistory } from '@/api.js';
-
-
-import LineGradientChart from '@/components/charts/LineGradientChart.vue';
-import BarGradientChart from '@/components/charts/BarGradientChart.vue';
-
 
 const store = useUserStore();
 const cars = computed(() => store.userCars);
@@ -96,7 +92,7 @@ const pricePerLiterByMonth = ref([]);
 const mileageByMonth = ref([]);
 const litersByMonth = ref([]);
 
-const yLabels= ref([]);
+const yLabels = ref([]);
 
 watch(fuelExpensesHistory, newVal => {
 

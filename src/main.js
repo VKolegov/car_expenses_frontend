@@ -1,19 +1,16 @@
-
 // Vuetify
-import 'vuetify/styles'
-import {createVuetify} from 'vuetify'
-import {aliases, mdi} from "vuetify/iconsets/mdi-svg";
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import './assets/main.css'; // override vuetify
+import { createApp } from 'vue';
 
-
-import {createApp} from 'vue'
-
-import App from './App.vue'
-import routes from "@/routes.js";
-import {createRouter, createWebHistory} from "vue-router";
-import {createPinia} from "pinia";
-import {useUserStore} from "@/store.js";
-import {VBtn, VCol, VForm, VIcon, VRow, VTextField} from "vuetify/components";
+import App from './App.vue';
+import routes from '@/routes.js';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createPinia } from 'pinia';
+import { useUserStore } from '@/store.js';
+import { VBtn, VCol, VForm, VIcon, VRow, VTextField } from 'vuetify/components';
 
 const vuetify = createVuetify({
     components: {
@@ -24,15 +21,14 @@ const vuetify = createVuetify({
         aliases,
         sets: {
             mdi,
-        }
-    }
+        },
+    },
 });
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
 
 router.beforeEach(async (to, from, next) => {
     const store = useUserStore();
@@ -71,16 +67,11 @@ router.beforeEach(async (to, from, next) => {
         await store.fetchUserCars();
     }
 
-
     await next();
 
 });
 
 const pinia = createPinia();
 
-createApp(App)
-    .use(vuetify)
-    .use(router)
-    .use(pinia)
-    .mount('#app');
+createApp(App).use(vuetify).use(router).use(pinia).mount('#app');
 

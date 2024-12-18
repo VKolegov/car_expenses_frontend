@@ -1,14 +1,14 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {useDate} from "vuetify";
-import {useRouter} from "vue-router";
-import {useUserStore} from "@/store.js";
+import { computed, onMounted, ref, watch } from 'vue';
+import { useDate } from 'vuetify';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store.js';
 
-import {VSelect, VSwitch, VDatePicker} from "vuetify/components";
-import {VTimePicker} from 'vuetify/labs/VTimePicker'
+import { VDatePicker, VSelect, VSwitch } from 'vuetify/components';
+import { VTimePicker } from 'vuetify/labs/VTimePicker';
 
-import {createFuelExpense, fetchFuelExpensesHistory} from "@/api.js";
-import {FUEL_TYPES} from "@/constants/fuel.js";
+import { createFuelExpense, fetchFuelExpensesHistory } from '@/api.js';
+import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -23,8 +23,7 @@ onMounted(async () => {
   if (cars.value.length === 1) {
     selectedCar.value = cars.value[0];
   }
-})
-
+});
 
 const mileage = ref(0);
 const fuel = ref(null);
@@ -53,20 +52,18 @@ watch(selectedCar, async (newValue) => {
   }
 });
 
-
 const canBeSaved = computed(() => {
   return selectedCar.value
       && date.value
       && fuel.value
       && liters.value > 0
       && cost.value > 0
-      && mileage.value > 0 // TODO
+      && mileage.value > 0; // TODO
 });
-
 
 const adapter = useDate();
 
-function onSaveClick() {
+function onSaveClick () {
   const data = {
     car_id: selectedCar.value.id,
     date: datetime.value,
@@ -85,7 +82,7 @@ function onSaveClick() {
 
     alert('Fuel expense added!');
 
-    router.push({name: 'refills'});
+    router.push({ name: 'refills' });
   });
 }
 
@@ -137,7 +134,7 @@ function onSaveClick() {
         v-model="fullTank"
         label="Full tank"
     ></v-switch>
-    
+
     <v-text-field
         v-if="selectedCar"
         v-model="cost"

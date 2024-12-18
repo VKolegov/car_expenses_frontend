@@ -1,52 +1,52 @@
-import {ref} from "vue";
-import {defineStore} from "pinia";
-import {fetchCars, login, me, telegramLogin} from "@/api.js";
-import storageHelper, {TOKEN_KEY} from "@/local_storage.js";
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
+import { fetchCars, login, me, telegramLogin } from '@/api.js';
+import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
 
 export const useUserStore = defineStore('user', () => {
-   const user = ref(null);
+    const user = ref(null);
 
-   function setUser(data) {
-       user.value = data;
-   }
+    function setUser (data) {
+        user.value = data;
+    }
 
-   async function auth(phone, password) {
-       try {
-           const response = await login(phone, password);
+    async function auth (phone, password) {
+        try {
+            const response = await login(phone, password);
 
-           if (response.token) {
-               storageHelper.set(TOKEN_KEY, response.token);
-           }
-           if (response.user) {
-               setUser(response.user);
-           }
+            if (response.token) {
+                storageHelper.set(TOKEN_KEY, response.token);
+            }
+            if (response.user) {
+                setUser(response.user);
+            }
 
-           return true;
-       } catch (e) {
-           console.error(e);
-       }
+            return true;
+        } catch (e) {
+            console.error(e);
+        }
 
-       return false;
-   }
+        return false;
+    }
 
-   async function telegramAuth(initData) {
+    async function telegramAuth (initData) {
 
-      try {
-          const response = await telegramLogin(initData);
+        try {
+            const response = await telegramLogin(initData);
 
-          setUser(response.user);
+            setUser(response.user);
 
-          storageHelper.set(TOKEN_KEY, response.token);
+            storageHelper.set(TOKEN_KEY, response.token);
 
-          return true;
-      } catch (error) {
-          console.error('Telegram auth error', error);
-      }
+            return true;
+        } catch (error) {
+            console.error('Telegram auth error', error);
+        }
 
-      return false;
-   }
+        return false;
+    }
 
-    async function authIsLegit() {
+    async function authIsLegit () {
         let token = storageHelper.get(TOKEN_KEY);
 
         if (!token) {
@@ -65,20 +65,19 @@ export const useUserStore = defineStore('user', () => {
         return false;
     }
 
-
     const userCars = ref([]);
 
-   function setCars(cars = []) {
-       userCars.value = cars;
-   }
+    function setCars (cars = []) {
+        userCars.value = cars;
+    }
 
-   async function fetchUserCars() {
-       setCars(await fetchCars());
-   }
+    async function fetchUserCars () {
+        setCars(await fetchCars());
+    }
 
-   return {
-       user, auth, telegramAuth, authIsLegit, setUser,
+    return {
+        user, auth, telegramAuth, authIsLegit, setUser,
 
-       userCars, fetchUserCars,
-   };
+        userCars, fetchUserCars,
+    };
 });

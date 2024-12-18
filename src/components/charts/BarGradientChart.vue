@@ -25,20 +25,21 @@ const props = defineProps({
 
 const data = computed(() => ({
   labels: props.yLabels,
-  datasets: [{
-    label: props.title,
-    data: props.yValues,
-    backgroundColor: function (context) {
-      const chart = context.chart;
-      const { ctx, chartArea } = chart;
+  datasets: [
+    {
+      label: props.title,
+      data: props.yValues,
+      backgroundColor: function (context) {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
 
-      if (!chartArea) {
-        // This case happens on initial chart load
-        return;
-      }
-      return getGradient(ctx, chartArea);
-    },
-  }]
+        if (!chartArea) {
+          // This case happens on initial chart load
+          return;
+        }
+        return getGradient(ctx, chartArea);
+      },
+    }],
 }));
 
 const options = {
@@ -47,7 +48,7 @@ const options = {
     y: {
       suggestedMin: 0,
       ticks: {
-        callback: props.tickFormatter
+        callback: props.tickFormatter,
       },
     },
   },
@@ -68,9 +69,9 @@ const options = {
       labels: {
         boxWidth: 0,
         boxHeight: 0,
-      }
+      },
     },
-  }
+  },
 };
 
 let width, height, gradient;
@@ -95,11 +96,11 @@ function getGradient (ctx, chartArea) {
 </script>
 
 <template>
-<Bar
-    v-if="yLabels.length && yValues.length"
-    :data="data"
-    :options="options"
-/>
+  <Bar
+      v-if="yLabels.length && yValues.length"
+      :data="data"
+      :options="options"
+  />
 </template>
 
 <style scoped>

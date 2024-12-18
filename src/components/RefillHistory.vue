@@ -1,14 +1,14 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {useUserStore} from "@/store.js";
+import { computed, onMounted, ref, watch } from 'vue';
+import { useUserStore } from '@/store.js';
 
-import {VSelect, VDataTable, VFab} from "vuetify/components";
+import { VDataTable, VFab, VSelect } from 'vuetify/components';
 
-import {fetchFuelExpensesHistory} from "@/api.js";
-import {FUEL_TYPES_MAP} from "@/constants/fuel.js";
-import {CURRENCY_SYMBOLS} from "@/constants/currency.js";
-import {mdiPlus} from "@mdi/js";
-import {round} from "lodash";
+import { fetchFuelExpensesHistory } from '@/api.js';
+import { FUEL_TYPES_MAP } from '@/constants/fuel.js';
+import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
+import { mdiPlus } from '@mdi/js';
+import { round } from 'lodash';
 
 const store = useUserStore();
 
@@ -50,7 +50,7 @@ const headers = [
   },
   {
     title: 'Refill mileage, km',
-    key: 'mileage'
+    key: 'mileage',
   },
   {
     title: 'Fuel price',
@@ -66,12 +66,12 @@ const headers = [
     title: 'Full tank',
     key: 'full_tank',
     value: item => item.full_tank === 1 ? 'Yes' : 'No',
-  }
+  },
 ];
 </script>
 
 <template>
-<h1>WIP</h1>
+  <h1>WIP</h1>
 
   <v-select
       v-model="selectedCar"

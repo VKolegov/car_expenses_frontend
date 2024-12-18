@@ -25,33 +25,33 @@ const props = defineProps({
   },
 });
 
-
 const data = computed(() => ({
   labels: props.yLabels,
-  datasets: [{
-    label: props.title,
-    data: props.yValues,
-    borderColor: function (context) {
-      const chart = context.chart;
-      const { ctx, chartArea } = chart;
+  datasets: [
+    {
+      label: props.title,
+      data: props.yValues,
+      borderColor: function (context) {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
 
-      if (!chartArea) {
-        // This case happens on initial chart load
-        return;
-      }
-      return getGradient(ctx, chartArea);
-    },
-  }]
+        if (!chartArea) {
+          // This case happens on initial chart load
+          return;
+        }
+        return getGradient(ctx, chartArea);
+      },
+    }],
 }));
 
 const options = {
   responsive: true,
   scales: {
     y: {
-      suggestedMin: min(props.yValues)*0.5,
-      suggestedMax: max(props.yValues)*1.3,
+      suggestedMin: min(props.yValues) * 0.5,
+      suggestedMax: max(props.yValues) * 1.3,
       ticks: {
-        callback: props.tickFormatter
+        callback: props.tickFormatter,
       },
     },
   },
@@ -72,9 +72,9 @@ const options = {
       labels: {
         boxWidth: 0,
         boxHeight: 0,
-      }
+      },
     },
-  }
+  },
 };
 
 let width, height, gradient;
@@ -99,11 +99,11 @@ function getGradient (ctx, chartArea) {
 </script>
 
 <template>
-<Line
-    v-if="yLabels.length && yValues.length"
-    :data="data"
-    :options="options"
-/>
+  <Line
+      v-if="yLabels.length && yValues.length"
+      :data="data"
+      :options="options"
+  />
 </template>
 
 <style scoped>
