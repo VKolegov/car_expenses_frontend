@@ -38,6 +38,9 @@ if (window.Telegram?.WebApp) {
   </v-app>
 </template>
 
-<style scoped>
-
+<style>
+.v-application__wrap {
+  min-height: var(--tg-viewport-height, 100%);
+  height: var(--tg-viewport-height, 100%);
+}
 </style>
