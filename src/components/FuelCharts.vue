@@ -2,9 +2,36 @@
 import {computed, onMounted, ref, watch} from "vue";
 import {round} from "lodash";
 import {VSelect, VSparkline} from "vuetify/components";
+/* chart.js */
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js';
 
 import {useUserStore} from "@/store.js";
 import {fetchFuelExpensesHistory} from "@/api.js";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    ChartDataLabels,
+);
+
+const currencyFormatter = (value) => Intl.NumberFormat().format(value) + ' руб.';
+
+/* end chart.js */
 
 const store = useUserStore();
 const cars = computed(() => store.userCars);
