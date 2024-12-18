@@ -43,8 +43,8 @@ import { useUserStore } from '@/store.js';
 import { fetchFuelExpensesHistory } from '@/api.js';
 
 
-import LineGradientChart from '@/components/LineGradientChart.vue';
-import BarGradientChart from '@/components/BarGradientChart.vue';
+import LineGradientChart from '@/components/charts/LineGradientChart.vue';
+import BarGradientChart from '@/components/charts/BarGradientChart.vue';
 
 
 const store = useUserStore();

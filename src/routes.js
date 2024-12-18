@@ -1,8 +1,9 @@
-import TheWelcome from "@/components/TheWelcome.vue";
-import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
-import Login from "@/components/Login.vue";
-import RefillHistory from "@/components/RefillHistory.vue";
+import Login from "@/pages/Login.vue";
+import TheWelcome from "@/pages/TheWelcome.vue";
 import Refills from "@/pages/Refills.vue";
+
+import AddFuelExpenseForm from "@/components/AddFuelExpenseForm.vue";
+import RefillHistory from "@/components/RefillHistory.vue";
 import FuelCharts from "@/components/FuelCharts.vue";
 
 /** @type {import('vue-router').RouteLocation[]} */
