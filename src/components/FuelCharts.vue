@@ -153,6 +153,7 @@ watch(fuelExpensesHistory, newVal => {
 
   <v-carousel
       height="auto"
+      :show-arrows="false"
       hide-delimiters
   >
     <v-carousel-item>
@@ -164,8 +165,6 @@ watch(fuelExpensesHistory, newVal => {
           :y-labels="yLabels"
           :tick-formatter="currencyFormatter"
       />
-    </v-carousel-item>
-    <v-carousel-item>
       <h2>Mileage by month</h2>
       <LineGradientChart
           v-if="mileageByMonth.length"
@@ -174,8 +173,6 @@ watch(fuelExpensesHistory, newVal => {
           :y-labels="yLabels"
           :tick-formatter="distanceFormatter"
       />
-    </v-carousel-item>
-    <v-carousel-item>
       <h2>Liters per month</h2>
       <LineGradientChart
           v-if="litersByMonth.length"
