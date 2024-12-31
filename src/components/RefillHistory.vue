@@ -47,6 +47,7 @@ const headers = [
   {
     title: 'Refill volume, l',
     key: 'liters',
+    value: item => item.type_data.liters,
   },
   {
     title: 'Refill mileage, km',
