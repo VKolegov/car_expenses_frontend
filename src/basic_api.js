@@ -1,7 +1,7 @@
 import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
 import HttpError from '@/errors.js';
 
-export const baseURL = 'https://car-expenses.vkolegov.ru/api';
+export const baseURL = import.meta.env.VITE_API_URL;
 
 const basicHeaders = {
     'Content-Type': 'application/json',
