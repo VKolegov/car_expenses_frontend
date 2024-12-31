@@ -21,7 +21,7 @@ onMounted(async () => {
   }
 });
 
-/** @type {import('vue').Ref<FuelExpense[]>} */
+/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
 const fuelExpensesHistory = ref([]);
 
 watch(selectedCar, async (newValue) => {
@@ -42,7 +42,7 @@ const headers = [
   {
     title: 'Fuel type',
     key: 'fuel_type',
-    value: item => FUEL_TYPES_MAP[item.fuel_type].title,
+    value: item => FUEL_TYPES_MAP[item.type_data.fuel_type].title,
   },
   {
     title: 'Refill volume, l',
@@ -55,23 +55,23 @@ const headers = [
   {
     title: 'Fuel price',
     key: 'fuel_price',
-    value: item => round(item.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => round(item.type_data.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.type_data.currency],
   },
   {
     title: 'Total',
     key: 'total',
-    value: item => round(item.total, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => round(item.type_data.total, 2) + ' ' + CURRENCY_SYMBOLS[item.type_data.currency],
   },
   {
     title: 'Full tank',
     key: 'full_tank',
-    value: item => item.full_tank === 1 ? 'Yes' : 'No',
+    value: item => item.type_data.full_tank === 1 ? 'Yes' : 'No',
   },
 ];
 </script>
 
 <template>
-  <h1>WIP</h1>
+  <h1>History records (WIP)</h1>
 
   <v-select
       v-model="selectedCar"

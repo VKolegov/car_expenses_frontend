@@ -54,7 +54,7 @@ onMounted(async () => {
   }
 });
 
-/** @type {import('vue').Ref<FuelExpense[]>} */
+/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
 const fuelExpensesHistory = ref([]);
 
 watch(selectedCar, async (newValue) => {
@@ -70,9 +70,11 @@ watch(selectedCar, async (newValue) => {
 
 // Группировка всех данных по месяцам
 /**
+ * Группирует массив записей истории по месяцам в обратном хронологическом порядке.
  *
- * @param {FuelExpense[]} data
- * @returns {{}}
+ * @param {HistoryRecord<HistoryRefillData>[]} data - Массив записей истории, содержащих данные о заправках.
+ * @returns {Object<string, HistoryRecord<HistoryRefillData>[]>} Объект, где ключи — это месяцы в формате "YYYY-MM",
+ * а значения — массивы записей истории, относящиеся к этим месяцам.
  */
 const groupByMonth = (data) => {
   const grouped = {};
@@ -97,7 +99,8 @@ const yLabels = ref([]);
 watch(fuelExpensesHistory, newVal => {
 
   // Группировка всех данных
-  const groupedData = groupByMonth(fuelExpensesHistory.value);
+  const groupedData = groupByMonth(newVal);
+  /** @type {Array<HistoryRecord<HistoryRefillData>[]>} */
   const groups = Object.values(groupedData);
 
 // Генерация массивов из сгруппированных данных
@@ -124,11 +127,11 @@ watch(fuelExpensesHistory, newVal => {
   });
 
   litersByMonth.value = groups.map(items =>
-      items.reduce((sum, item) => sum + item.liters, 0),
+      items.reduce((sum, item) => sum + item.type_data.liters, 0),
   ).map(v => round(v, 2));
 
   pricePerLiterByMonth.value = groups.map(items => {
-    const totalLiters = items.reduce((sum, item) => sum + item.liters, 0);
+    const totalLiters = items.reduce((sum, item) => sum + item.type_data.liters, 0);
     const totalCost = items.reduce((sum, item) => sum + item.total, 0);
     return round(totalCost / totalLiters, 2);
   });

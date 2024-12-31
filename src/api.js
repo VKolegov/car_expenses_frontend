@@ -44,7 +44,7 @@ export async function fetchCars () {
 
 /**
  * @param {number|null} carId
- * @returns {Promise<FuelExpense[]>}
+ * @returns {Promise<HistoryRecord<HistoryRefillData>[]>}
  */
 export async function fetchFuelExpensesHistory (carId = null) {
     const url = `${baseURL}/fuel_expenses`;
@@ -58,6 +58,11 @@ export async function fetchFuelExpensesHistory (carId = null) {
     return await getRequest(url);
 }
 
+/**
+ *
+ * @param {Object} data TODO
+ * @returns {Promise<HistoryRecord<HistoryRefillData>>}
+ */
 export async function createFuelExpense (data) {
     return await postRequest(`${baseURL}/fuel_expenses`, data);
 }
