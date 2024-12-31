@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { round } from 'lodash';
-import { VSelect } from 'vuetify/components';
+import { VCarousel, VCarouselItem, VSelect } from 'vuetify/components';
 
 /* chart.js */
 import {
@@ -151,41 +151,52 @@ watch(fuelExpensesHistory, newVal => {
       :item-title="car => `${car.brand} ${car.model}`"
   ></v-select>
 
-  <h2>Expenses by month</h2>
-  <BarGradientChart
-      v-if="expensesByMonth.length"
-      title="Expenses per month"
-      :y-values="expensesByMonth"
-      :y-labels="yLabels"
-      :tick-formatter="currencyFormatter"
-  />
+  <v-carousel
+      height="auto"
+      hide-delimiters
+  >
+    <v-carousel-item>
+      <h2>Expenses by month</h2>
+      <BarGradientChart
+          v-if="expensesByMonth.length"
+          title="Expenses per month"
+          :y-values="expensesByMonth"
+          :y-labels="yLabels"
+          :tick-formatter="currencyFormatter"
+      />
+    </v-carousel-item>
+    <v-carousel-item>
+      <h2>Mileage by month</h2>
+      <LineGradientChart
+          v-if="mileageByMonth.length"
+          title="Mileage by month"
+          :y-values="mileageByMonth"
+          :y-labels="yLabels"
+          :tick-formatter="distanceFormatter"
+      />
+    </v-carousel-item>
+    <v-carousel-item>
+      <h2>Liters per month</h2>
+      <LineGradientChart
+          v-if="litersByMonth.length"
+          title="Liters per month"
+          :y-values="litersByMonth"
+          :y-labels="yLabels"
+          :tick-formatter="fuelFormatter"
+      />
+    </v-carousel-item>
+    <v-carousel-item>
+      <h2>Price per liter by month</h2>
+      <LineGradientChart
+          v-if="pricePerLiterByMonth.length"
+          title="Price per liter by month"
+          :y-values="pricePerLiterByMonth"
+          :y-labels="yLabels"
+          :tick-formatter="currencyFormatter"
+      />
+    </v-carousel-item>
+  </v-carousel>
 
-  <h2>Mileage by month</h2>
-  <LineGradientChart
-      v-if="mileageByMonth.length"
-      title="Mileage by month"
-      :y-values="mileageByMonth"
-      :y-labels="yLabels"
-      :tick-formatter="distanceFormatter"
-  />
-
-  <h2>Liters per month</h2>
-  <LineGradientChart
-      v-if="litersByMonth.length"
-      title="Liters per month"
-      :y-values="litersByMonth"
-      :y-labels="yLabels"
-      :tick-formatter="fuelFormatter"
-  />
-
-  <h2>Price per liter by month</h2>
-  <LineGradientChart
-      v-if="pricePerLiterByMonth.length"
-      title="Price per liter by month"
-      :y-values="pricePerLiterByMonth"
-      :y-labels="yLabels"
-      :tick-formatter="currencyFormatter"
-  />
 </template>
 
 <style scoped>
