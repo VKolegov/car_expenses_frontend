@@ -198,6 +198,7 @@ function onSaveClick () {
     <v-time-picker
         v-if="selectedCar"
         v-model="time"
+        format="24hr"
     ></v-time-picker>
 
     <v-btn
