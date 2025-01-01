@@ -6,7 +6,7 @@ import Refills from '@/pages/Refills.vue';
 import RefillHistory from '@/components/RefillHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
 
-const AddFuelExpenseForm = () => import('@/components/AddFuelExpenseForm.vue');
+const FuelExpenseForm = () => import('@/components/FuelExpenseForm.vue');
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -43,7 +43,7 @@ const routes = [
                 meta: {
                     auth: true,
                 },
-                component: AddFuelExpenseForm,
+                component: FuelExpenseForm,
                 props: true,
                 beforeEnter: async (to, from, next) => {
                     if (to.params.id) {
@@ -61,7 +61,7 @@ const routes = [
                 meta: {
                     auth: true,
                 },
-                component: AddFuelExpenseForm,
+                component: FuelExpenseForm,
             },
         ],
     },

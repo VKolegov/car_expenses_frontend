@@ -12,6 +12,7 @@ import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
 const router = useRouter();
+const adapter = useDate();
 
 
 const props = defineProps({
@@ -20,10 +21,6 @@ const props = defineProps({
     type: Object,
     default: null,
   }
-});
-
-defineExpose({
-  setData
 });
 
 /** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
@@ -44,7 +41,9 @@ const liters = ref(0);
 const cost = ref(0);
 const fullTank = ref(false);
 const date = ref(new Date());
-const time = ref('10:00');
+const time = ref(
+    adapter.format(date.value, 'fullTime24h')
+);
 const description = ref('');
 
 const datetime = computed(() => {
@@ -100,7 +99,6 @@ const canBeSaved = computed(() => {
       && mileage.value > 0; // TODO
 });
 
-const adapter = useDate();
 
 function onSaveClick () {
   const data = {
