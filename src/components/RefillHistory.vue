@@ -58,12 +58,12 @@ const headers = [
   {
     title: 'Fuel price',
     key: 'fuel_price',
-    value: item => round(item.type_data.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.type_data.currency],
+    value: item => round(item.type_data.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
   },
   {
     title: 'Total',
     key: 'total',
-    value: item => round(item.type_data.total, 2) + ' ' + CURRENCY_SYMBOLS[item.type_data.currency],
+    value: item => round(item.type_data.total, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
   },
   {
     title: 'Full tank',

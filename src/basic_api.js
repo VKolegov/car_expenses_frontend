@@ -47,3 +47,7 @@ export async function getRequest (url, params) {
 export async function postRequest (url, data) {
     return await makeRequest('POST', url, data);
 }
+
+export async function patchRequest(url, data){
+    return await makeRequest('PATCH', url, data);
+}

@@ -7,7 +7,7 @@ import { useUserStore } from '@/store.js';
 import { VDatePicker, VSelect, VSwitch } from 'vuetify/components';
 import { VTimePicker } from 'vuetify/labs/VTimePicker';
 
-import { createFuelExpense, fetchFuelExpensesHistory, fetchHistoryRecord } from '@/api.js';
+import { createFuelExpense, fetchFuelExpensesHistory, fetchHistoryRecord, updateFuelExpense } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
@@ -114,15 +114,21 @@ function onSaveClick () {
     description: description.value,
   };
 
-  if (props.record) {
-    console.error('updating not implemented!');
-    return;
+  const update = Boolean(props.record);
+
+  let promise;
+
+
+  if (update) {
+    promise = updateFuelExpense(props.record.id, data);
+  } else {
+    promise = createFuelExpense(data);
   }
 
-  createFuelExpense(data).then(fuelExpense => {
+  promise.then(fuelExpense => {
     fuelExpensesHistory.value.push(fuelExpense);
 
-    alert('Fuel expense added!');
+    alert(`History record ${update ? 'updated' : 'added'}!`);
 
     router.push({ name: 'refills' });
   });

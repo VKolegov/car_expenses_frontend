@@ -1,4 +1,4 @@
-import { baseURL, getRequest, postRequest } from '@/basic_api.js';
+import { baseURL, getRequest, patchRequest, postRequest } from '@/basic_api.js';
 
 /**
  * @typedef {Object} LoginResponse
@@ -67,6 +67,10 @@ export async function fetchHistoryRecord(id) {
     const r = await getRequest(`${baseURL}/history_records/${id}`);
 
     return r;
+}
+
+export async function updateFuelExpense(recordId, data) {
+    return await patchRequest(`${baseURL}/history_records/${recordId}`, data);
 }
 
 /**

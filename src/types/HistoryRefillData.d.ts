@@ -1,4 +1,3 @@
-import {Currency} from "./enums/Currency";
 import {FuelType} from "./enums/FuelType";
 
 export interface HistoryRefillData {
@@ -7,5 +6,4 @@ export interface HistoryRefillData {
     fuel_price: number; // per liter
     total: number;
     full_tank: boolean;
-    currency: Currency;
 }
