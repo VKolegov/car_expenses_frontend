@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^10.0.0",
     "chart.js": "^4.4.7",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "date-fns": "^4.1.0",
     "lodash": "^4.17.21",
     "pinia": "^2.2.5",
     "vue": "^3.5.12",

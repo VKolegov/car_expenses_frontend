@@ -1,18 +1,16 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
-import { useDate } from 'vuetify';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store.js';
 
-import { VDatePicker, VSelect, VSwitch } from 'vuetify/components';
-import { VTimePicker } from 'vuetify/labs/VTimePicker';
+import { VSelect, VSwitch } from 'vuetify/components';
+import { ru } from 'date-fns/locale';
 
 import { createFuelExpense, fetchFuelExpensesHistory, fetchHistoryRecord, updateFuelExpense } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
 const router = useRouter();
-const adapter = useDate();
 
 
 const props = defineProps({
@@ -41,15 +39,8 @@ const liters = ref(0);
 const cost = ref(0);
 const fullTank = ref(false);
 const date = ref(new Date());
-const time = ref(
-    adapter.format(date.value, 'fullTime24h')
-);
-const description = ref('');
 
-const datetime = computed(() => {
-  const dateStr = adapter.format(date.value, 'keyboardDate');
-  return new Date(`${dateStr} ${time.value}`);
-});
+const description = ref('');
 
 onMounted(() => {
   if (props.record) {
@@ -70,7 +61,6 @@ function setData(historyRecord) {
   fullTank.value = historyRecord.type_data.full_tank === 1;
 
   date.value = new Date(historyRecord.date);
-  time.value = adapter.format(date.value, 'fullTime24h');
 }
 
 watch(selectedCar, async (newValue) => {
@@ -103,7 +93,7 @@ const canBeSaved = computed(() => {
 function onSaveClick () {
   const data = {
     car_id: selectedCar.value.id,
-    date: datetime.value,
+    date: date.value,
     fuel_type: fuel.value,
     liters: liters.value,
     fuel_price: cost.value / liters.value,
@@ -147,6 +137,15 @@ function onSaveClick () {
         :item-title="car => `${car.brand} ${car.model}`"
     ></v-select>
 
+    <vue-date-picker
+        v-model="date"
+        locale="ru-RU"
+        format="dd/MM/yyyy HH:mm"
+        :format-locale="ru"
+        style="margin-bottom: 20px"
+    ></vue-date-picker>
+
+
     <v-text-field
         v-if="selectedCar"
         v-model="mileage"
@@ -189,17 +188,6 @@ function onSaveClick () {
         type="number"
         label="Enter cost"
     ></v-text-field>
-
-    <v-date-picker
-        v-if="selectedCar"
-        v-model="date"
-    ></v-date-picker>
-
-    <v-time-picker
-        v-if="selectedCar"
-        v-model="time"
-        format="24hr"
-    ></v-time-picker>
 
     <v-btn
         v-if="selectedCar"

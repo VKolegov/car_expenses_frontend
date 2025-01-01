@@ -5,6 +5,10 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import './assets/main.css'; // override vuetify
 import { createApp } from 'vue';
 
+// vue-datepicker
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+
 import App from './App.vue';
 import routes from '@/routes.js';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -73,5 +77,12 @@ router.beforeEach(async (to, from, next) => {
 
 const pinia = createPinia();
 
-createApp(App).use(vuetify).use(router).use(pinia).mount('#app');
+const app = createApp(App)
+    .use(vuetify)
+    .use(router)
+    .use(pinia);
+
+app.component('VueDatePicker', VueDatePicker);
+
+app.mount('#app');
 
