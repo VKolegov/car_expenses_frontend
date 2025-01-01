@@ -7,13 +7,26 @@ import { useUserStore } from '@/store.js';
 import { VDatePicker, VSelect, VSwitch } from 'vuetify/components';
 import { VTimePicker } from 'vuetify/labs/VTimePicker';
 
-import { createFuelExpense, fetchFuelExpensesHistory } from '@/api.js';
+import { createFuelExpense, fetchFuelExpensesHistory, fetchHistoryRecord } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
 const router = useRouter();
 
-/** @type {import('vue').Ref<FuelExpense[]>} */
+
+const props = defineProps({
+  /** @type {HistoryRecord<HistoryRefillData>} */
+  record: {
+    type: Object,
+    default: null,
+  }
+});
+
+defineExpose({
+  setData
+});
+
+/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
 const fuelExpensesHistory = ref([]);
 
 const cars = computed(() => store.userCars);
@@ -39,8 +52,34 @@ const datetime = computed(() => {
   return new Date(`${dateStr} ${time.value}`);
 });
 
+onMounted(() => {
+  if (props.record) {
+    setData(props.record);
+  }
+});
+
+// for router
+/**
+ * @param {HistoryRecord<HistoryRefillData>} historyRecord
+ */
+function setData(historyRecord) {
+  // TODO: select car id
+  mileage.value = historyRecord.mileage;
+  fuel.value  = historyRecord.type_data.fuel_type;
+  liters.value = historyRecord.type_data.liters;
+  cost.value = historyRecord.type_data.total;
+  fullTank.value = historyRecord.type_data.full_tank === 1;
+
+  date.value = new Date(historyRecord.date);
+  time.value = adapter.format(date.value, 'fullTime24h');
+}
+
 watch(selectedCar, async (newValue) => {
   if (!newValue) {
+    return;
+  }
+
+  if (props.record) {
     return;
   }
 
@@ -77,6 +116,11 @@ function onSaveClick () {
     description: description.value,
   };
 
+  if (props.record) {
+    console.error('updating not implemented!');
+    return;
+  }
+
   createFuelExpense(data).then(fuelExpense => {
     fuelExpensesHistory.value.push(fuelExpense);
 
@@ -90,7 +134,7 @@ function onSaveClick () {
 
 <template>
   <v-form @submit.prevent style="width: 100%;">
-    <h1>Adding fuel expense</h1>
+    <h1>{{ record ? 'Editing fuel expense' : 'Adding fuel expense' }}</h1>
     <v-select
         v-model="selectedCar"
         return-object

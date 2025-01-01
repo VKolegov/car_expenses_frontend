@@ -60,6 +60,17 @@ export async function fetchFuelExpensesHistory (carId = null) {
 
 /**
  *
+ * @param {number} id
+ * @returns {Promise<HistoryRecord<HistoryRefillData>>}
+ */
+export async function fetchHistoryRecord(id) {
+    const r = await getRequest(`${baseURL}/history_records/${id}`);
+
+    return r;
+}
+
+/**
+ *
  * @param {Object} data TODO
  * @returns {Promise<HistoryRecord<HistoryRefillData>>}
  */

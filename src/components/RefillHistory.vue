@@ -9,8 +9,10 @@ import { FUEL_TYPES_MAP } from '@/constants/fuel.js';
 import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { mdiPlus } from '@mdi/js';
 import { round } from 'lodash';
+import { useRouter } from 'vue-router';
 
 const store = useUserStore();
+const router = useRouter();
 
 const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
@@ -69,6 +71,16 @@ const headers = [
     value: item => item.type_data.full_tank === 1 ? 'Yes' : 'No',
   },
 ];
+
+function onClick(event, row) {
+  console.log(row);
+  router.push({
+    name: 'edit_refill',
+    params: {
+      id: row.item.id,
+    }
+  });
+}
 </script>
 
 <template>
@@ -86,6 +98,8 @@ const headers = [
       v-if="selectedCar"
       :items="fuelExpensesHistory"
       :headers="headers"
+      density="compact"
+      @click:row="onClick"
   ></v-data-table>
 
   <v-fab

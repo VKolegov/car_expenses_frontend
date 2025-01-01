@@ -1,3 +1,5 @@
+import { fetchHistoryRecord } from '@/api.js';
+
 const Login = () => import('@/pages/Login.vue');
 import TheWelcome from '@/pages/TheWelcome.vue';
 import Refills from '@/pages/Refills.vue';
@@ -34,6 +36,24 @@ const routes = [
                     auth: true,
                 },
                 component: RefillHistory,
+            },
+            {
+                name: 'edit_refill',
+                path: ':id(\\d+)',
+                meta: {
+                    auth: true,
+                },
+                component: AddFuelExpenseForm,
+                props: true,
+                beforeEnter: async (to, from, next) => {
+                    if (to.params.id) {
+                        const record = await fetchHistoryRecord(to.params.id);
+                        console.log('beforeEnter', record);
+                        to.params.record = record;
+                    }
+
+                    next();
+                }
             },
             {
                 name: 'add_refill',
