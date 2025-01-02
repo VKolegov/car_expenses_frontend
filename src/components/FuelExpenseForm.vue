@@ -38,6 +38,7 @@ const fuel = ref(null);
 const liters = ref(0);
 const cost = ref(0);
 const fullTank = ref(false);
+/** @type {import('vue').Ref<Date>} */
 const date = ref(new Date());
 
 const description = ref('');
@@ -93,12 +94,12 @@ const canBeSaved = computed(() => {
 function onSaveClick () {
   const data = {
     car_id: selectedCar.value.id,
-    date: date.value,
+    date: date.value.getTime(),
     fuel_type: fuel.value,
     liters: liters.value,
     fuel_price: cost.value / liters.value,
     total: cost.value,
-    full_tank: fullTank.value ? '1' : '0',
+    full_tank: fullTank.value ? 1 : 0,
     currency: 'rub',
     mileage: mileage.value,
     description: description.value,
