@@ -1,6 +1,10 @@
 <script setup>
 import { mdiChartLine, mdiGasStation } from '@mdi/js';
-import { VApp, VBottomNavigation, VContainer, VMain } from 'vuetify/components';
+import { VApp, VBottomNavigation, VContainer, VMain, VSnackbar } from 'vuetify/components';
+import { useUserStore } from '@/store.js';
+
+const store = useUserStore();
+
 
 if (window.Telegram?.WebApp) {
   window.Telegram.WebApp.disableVerticalSwipes();
@@ -13,6 +17,17 @@ if (window.Telegram?.WebApp) {
       <v-container fluid>
         <router-view></router-view>
       </v-container>
+      <v-snackbar
+          v-model="store.notificationDisplayed"
+          :color="store.notificationColor"
+          elevation="24"
+          timeout="5000"
+          origin="top center"
+          multi-line
+      >
+        {{ store.notificationText }}
+      </v-snackbar>
+
     </v-main>
 
 
@@ -34,6 +49,7 @@ if (window.Telegram?.WebApp) {
         <span>Charts</span>
       </v-btn>
     </v-bottom-navigation>
+
   </v-app>
 </template>
 

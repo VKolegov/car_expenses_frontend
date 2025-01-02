@@ -75,9 +75,22 @@ export const useUserStore = defineStore('user', () => {
         setCars(await fetchCars());
     }
 
+
+    const notificationDisplayed = ref(false);
+    const notificationColor = ref('success');
+    const notificationText = ref('');
+
+    function displayNotification(text, color = 'success') {
+        notificationDisplayed.value = true;
+        notificationText.value = text;
+        notificationColor.value = color;
+    }
+
     return {
         user, auth, telegramAuth, authIsLegit, setUser,
 
         userCars, fetchUserCars,
+
+        displayNotification, notificationDisplayed, notificationText, notificationColor
     };
 });

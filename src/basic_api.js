@@ -36,8 +36,15 @@ export async function makeRequest (method, url, data) {
         return await response.json();
     }
 
-    throw new HttpError(`error: ${response.status}` + await response.text(),
-        response.status);
+    // Попробуем прочитать тело ответа (если доступно)
+    let errorDetails = null;
+    let responseBody = null;
+    try {
+        responseBody = await response.json();
+    } catch {
+        errorDetails = await response.text();
+    }
+    throw new HttpError(response.status, url, response.statusText, errorDetails, responseBody);
 }
 
 export async function getRequest (url, params) {
@@ -48,6 +55,6 @@ export async function postRequest (url, data) {
     return await makeRequest('POST', url, data);
 }
 
-export async function patchRequest(url, data){
+export async function patchRequest (url, data) {
     return await makeRequest('PATCH', url, data);
 }

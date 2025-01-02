@@ -6,19 +6,18 @@ import { useUserStore } from '@/store.js';
 import { VSelect, VSwitch } from 'vuetify/components';
 import { ru } from 'date-fns/locale';
 
-import { createFuelExpense, fetchFuelExpensesHistory, fetchHistoryRecord, updateFuelExpense } from '@/api.js';
+import { createFuelExpense, fetchFuelExpensesHistory, updateFuelExpense } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
 const router = useRouter();
-
 
 const props = defineProps({
   /** @type {HistoryRecord<HistoryRefillData>} */
   record: {
     type: Object,
     default: null,
-  }
+  },
 });
 
 /** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
@@ -53,10 +52,10 @@ onMounted(() => {
 /**
  * @param {HistoryRecord<HistoryRefillData>} historyRecord
  */
-function setData(historyRecord) {
+function setData (historyRecord) {
   // TODO: select car id
   mileage.value = historyRecord.mileage;
-  fuel.value  = historyRecord.type_data.fuel_type;
+  fuel.value = historyRecord.type_data.fuel_type;
   liters.value = historyRecord.type_data.liters;
   cost.value = historyRecord.type_data.total;
   fullTank.value = historyRecord.type_data.full_tank === 1;
@@ -90,6 +89,7 @@ const canBeSaved = computed(() => {
       && mileage.value > 0; // TODO
 });
 
+const errors = ref(new Map());
 
 function onSaveClick () {
   const data = {
@@ -109,6 +109,7 @@ function onSaveClick () {
 
   let promise;
 
+  errors.value.clear();
 
   if (update) {
     promise = updateFuelExpense(props.record.id, data);
@@ -119,9 +120,24 @@ function onSaveClick () {
   promise.then(fuelExpense => {
     fuelExpensesHistory.value.push(fuelExpense);
 
-    alert(`History record ${update ? 'updated' : 'added'}!`);
+    store.displayNotification(
+        `History record ${update ? 'updated' : 'added'}!`,
+        'success'
+    );
 
     router.push({ name: 'refills' });
+  }).catch(error => {
+
+    if (!error.responseBody) {
+      store.displayNotification('Error!', 'error');
+    } else {
+      errors.value = error.getFieldErrors();
+
+      store.displayNotification(
+          error.getErrorsAsText(),
+          'error'
+      );
+    }
   });
 }
 
@@ -152,6 +168,7 @@ function onSaveClick () {
         v-model="mileage"
         type="number"
         label="Enter current mileage"
+        :error-messages="errors.get('mileage')"
     ></v-text-field>
 
     <v-row>
@@ -172,6 +189,7 @@ function onSaveClick () {
             v-model="liters"
             type="number"
             label="Enter liters"
+            :error-messages="errors.get('liters')"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -188,6 +206,7 @@ function onSaveClick () {
         v-model="cost"
         type="number"
         label="Enter cost"
+        :error-messages="errors.get('cost')"
     ></v-text-field>
 
     <v-btn
