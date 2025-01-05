@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store.js';
 
-import { VSelect, VSwitch } from 'vuetify/components';
+import { VSelect, VSwitch, VTextarea } from 'vuetify/components';
 import { ru } from 'date-fns/locale';
 
 import { createFuelExpense, fetchFuelExpensesHistory, updateFuelExpense } from '@/api.js';
@@ -59,6 +59,7 @@ function setData (historyRecord) {
   liters.value = historyRecord.type_data.liters;
   cost.value = historyRecord.type_data.total;
   fullTank.value = historyRecord.type_data.full_tank === 1;
+  description.value = historyRecord.description;
 
   date.value = new Date(historyRecord.date);
 }
@@ -208,6 +209,11 @@ function onSaveClick () {
         label="Enter cost"
         :error-messages="errors.get('cost')"
     ></v-text-field>
+
+    <v-textarea
+        v-model="description"
+        :error-messages="errors.get('description')"
+    ></v-textarea>
 
     <v-btn
         v-if="selectedCar"
