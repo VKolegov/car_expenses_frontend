@@ -1,10 +1,11 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/store.js';
-
-import { VSelect, VSwitch, VTextarea } from 'vuetify/components';
+import { formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { VSelect, VSwitch, VTextarea } from 'vuetify/components';
+
+import { useUserStore } from '@/store.js';
 
 import { createFuelExpense, fetchFuelExpensesHistory, updateFuelExpense } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
@@ -95,7 +96,7 @@ const errors = ref(new Map());
 function onSaveClick () {
   const data = {
     car_id: selectedCar.value.id,
-    date: date.value.getTime(),
+    date: formatISO(date.value),
     fuel_type: fuel.value,
     liters: liters.value,
     fuel_price: cost.value / liters.value,
