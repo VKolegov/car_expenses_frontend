@@ -38,7 +38,7 @@ if (window.Telegram?.WebApp) {
       >
         <v-icon :icon="mdiClipboardTextClock" size="x-large"></v-icon>
 
-        <span>History</span>
+        <span>История</span>
       </v-btn>
       <v-btn
           value="charts"
@@ -46,7 +46,7 @@ if (window.Telegram?.WebApp) {
       >
         <v-icon :icon="mdiChartLine" size="x-large"></v-icon>
 
-        <span>Charts</span>
+        <span>График</span>
       </v-btn>
     </v-bottom-navigation>
 

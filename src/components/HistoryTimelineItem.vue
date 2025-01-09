@@ -4,7 +4,7 @@ import { mdiGasStation } from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
 
-import { distanceFormatter } from '@/formatting.js';
+import { distanceFormatter, formatDate, formatTime } from '@/formatting.js';
 
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import { round } from 'lodash';
@@ -36,10 +36,11 @@ const iconColor = computed(() => {
   }
 });
 
-const leftSideContent = computed(() => {
+const mileage = computed(() => {
   return distanceFormatter(props.record.mileage);
   const rounded = round(props.record.mileage, 1)
 });
+const date = computed(() => formatDate(props.record.date));
 
 </script>
 
@@ -50,7 +51,11 @@ const leftSideContent = computed(() => {
       @click.native="emit('click', record, $event)"
   >
     <template v-slot:opposite>
-      <span>{{ leftSideContent }}</span>
+      <div class="history-timeline-item-left">
+        <span style="font-weight: 500;">{{ mileage }}</span>
+        <span>{{ date }}</span>
+<!--        <span>{{ formatTime(record.date) }}</span>-->
+      </div>
     </template>
     <history-record-card
         :record="record"
@@ -60,5 +65,8 @@ const leftSideContent = computed(() => {
 </template>
 
 <style scoped>
-
+.history-timeline-item-left {
+  display: flex;
+  flex-direction: column;
+}
 </style>

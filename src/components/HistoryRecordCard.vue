@@ -1,7 +1,7 @@
 <script setup>
-import { currencyFormatter, distanceFormatter, formatDate } from '../formatting.js';
-import { mdiGasStation } from '@mdi/js';
 import { computed } from 'vue';
+import { mdiGasStation } from '@mdi/js';
+import { currencyFormatter, distanceFormatter, formatDate, formatDateTime, formatTime } from '../formatting.js';
 
 const props = defineProps({
   /**
@@ -17,6 +17,7 @@ const props = defineProps({
     default: () => ({
       icon: true,
       mileage: true,
+      date: true,
     })
   }
 });
@@ -60,9 +61,9 @@ const title = computed(() => {
     ></v-icon>
     <div class="history-record-card__info">
       <h3 class="history-record-card__title">{{ title }}</h3>
-      <span>Дата: {{ formatDate(record.date) }}</span>
+      <span v-if="displayOptions.date">Дата: {{ formatDateTime(record.date) }}</span>
       <span v-if="displayOptions.mileage">Mileage: {{ distanceFormatter(record.mileage) }}</span>
-      <span>Стоимость: {{ currencyFormatter(record.total) }}</span>
+      <span>Итого: {{ currencyFormatter(record.total) }}</span>
     </div>
   </div>
 </template>
@@ -108,6 +109,8 @@ const title = computed(() => {
   display: flex;
   flex-direction: column;
   flex-grow: 2;
+
+  white-space: break-spaces;
 
   gap: 4px;
 }

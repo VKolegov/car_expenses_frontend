@@ -1,9 +1,13 @@
 // Vuetify
-import 'vuetify/styles';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createPinia } from 'pinia';
+
 import { createVuetify } from 'vuetify';
+import 'vuetify/styles';
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import './assets/main.css'; // override vuetify
-import { createApp } from 'vue';
+import { VBtn, VCol, VForm, VIcon, VRow, VTextField } from 'vuetify/components';
 
 // vue-datepicker
 import VueDatePicker from '@vuepic/vue-datepicker';
@@ -11,10 +15,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 
 import App from './App.vue';
 import routes from '@/routes.js';
-import { createRouter, createWebHistory } from 'vue-router';
-import { createPinia } from 'pinia';
 import { useUserStore } from '@/store.js';
-import { VBtn, VCol, VForm, VIcon, VRow, VTextField } from 'vuetify/components';
 
 const vuetify = createVuetify({
     components: {
