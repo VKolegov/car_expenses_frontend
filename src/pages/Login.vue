@@ -13,7 +13,7 @@ async function attemptLogin () {
 
   const success = await userStore.auth(phone.value, password.value);
   if (success) {
-    await router.push({ name: 'refills' });
+    await router.push({ name: 'history' });
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import { mdiChartLine, mdiGasStation } from '@mdi/js';
+import { mdiChartLine, mdiClipboardTextClock } from '@mdi/js';
 import { VApp, VBottomNavigation, VContainer, VMain, VSnackbar } from 'vuetify/components';
 import { useUserStore } from '@/store.js';
 
@@ -33,12 +33,12 @@ if (window.Telegram?.WebApp) {
 
     <v-bottom-navigation style="height: 75px;">
       <v-btn
-          value="refills"
-          :to="{name: 'refills'}"
+          value="history"
+          :to="{name: 'history'}"
       >
-        <v-icon :icon="mdiGasStation" size="x-large"></v-icon>
+        <v-icon :icon="mdiClipboardTextClock" size="x-large"></v-icon>
 
-        <span>Refills</span>
+        <span>History</span>
       </v-btn>
       <v-btn
           value="charts"

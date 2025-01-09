@@ -2,8 +2,8 @@ import { fetchHistoryRecord } from '@/api.js';
 
 const Login = () => import('@/pages/Login.vue');
 import TheWelcome from '@/pages/TheWelcome.vue';
-import Refills from '@/pages/Refills.vue';
-import RefillHistory from '@/components/RefillHistory.vue';
+import History from '@/pages/History.vue';
+import VehicleHistory from '@/components/VehicleHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
 
 const FuelExpenseForm = () => import('@/components/FuelExpenseForm.vue');
@@ -23,22 +23,22 @@ const routes = [
         component: Login,
     },
     {
-        path: '/refills',
+        path: '/history',
         meta: {
             auth: true,
         },
-        component: Refills,
+        component: History,
         children: [
             {
-                name: 'refills',
+                name: 'history',
                 path: '',
                 meta: {
                     auth: true,
                 },
-                component: RefillHistory,
+                component: VehicleHistory,
             },
             {
-                name: 'edit_refill',
+                name: 'edit_history_record',
                 path: ':id(\\d+)',
                 meta: {
                     auth: true,
@@ -56,7 +56,7 @@ const routes = [
                 }
             },
             {
-                name: 'add_refill',
+                name: 'add_history_record',
                 path: 'add',
                 meta: {
                     auth: true,

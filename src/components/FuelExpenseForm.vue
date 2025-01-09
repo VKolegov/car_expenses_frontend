@@ -127,7 +127,7 @@ function onSaveClick () {
         'success'
     );
 
-    router.push({ name: 'refills' });
+    router.push({ name: 'history' });
   }).catch(error => {
 
     if (!error.responseBody) {
