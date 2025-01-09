@@ -10,6 +10,7 @@ import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { mdiPlus } from '@mdi/js';
 import { round } from 'lodash';
 import { useRouter } from 'vue-router';
+import { currencyFormatter, distanceFormatter, fuelFormatter } from '@/formatting.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -49,21 +50,22 @@ const headers = [
   {
     title: 'Refill volume, l',
     key: 'liters',
-    value: item => item.type_data.liters,
+    value: item => fuelFormatter(item.type_data.liters),
   },
   {
     title: 'Refill mileage, km',
     key: 'mileage',
+    value: item => distanceFormatter(item.mileage),
   },
   {
     title: 'Fuel price',
     key: 'fuel_price',
-    value: item => round(item.type_data.fuel_price, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => currencyFormatter(item.type_data.fuel_price),
   },
   {
     title: 'Total',
     key: 'total',
-    value: item => round(item.type_data.total, 2) + ' ' + CURRENCY_SYMBOLS[item.currency],
+    value: item => currencyFormatter(item.type_data.total),
   },
   {
     title: 'Full tank',

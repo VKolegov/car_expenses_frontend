@@ -19,6 +19,7 @@ import {
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useUserStore } from '@/store.js';
 import { fetchFuelExpensesHistory } from '@/api.js';
+import { currencyFormatter, distanceFormatter, fuelFormatter } from '@/formatting.js';
 
 import LineGradientChart from '@/components/charts/LineGradientChart.vue';
 import BarGradientChart from '@/components/charts/BarGradientChart.vue';
@@ -34,12 +35,6 @@ ChartJS.register(
     Legend,
     ChartDataLabels,
 );
-
-const numberFormatter = Intl.NumberFormat();
-
-const currencyFormatter = (value) => numberFormatter.format(value) + ' руб.';
-const distanceFormatter = (value) => numberFormatter.format(value) + ' км';
-const fuelFormatter = (value) => numberFormatter.format(value) + ' л';
 
 /* end chart.js */
 
