@@ -70,7 +70,6 @@ const date = computed(() => formatDate(props.record.date));
     <history-record-card
         v-if="record.id"
         :record="record"
-        :display-options="{icon: false, mileage: false}"
     />
     <span
         v-else

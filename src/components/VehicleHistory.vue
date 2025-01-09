@@ -115,23 +115,7 @@ function onPlusClick() {
         @click="onClick"
     ></history-timeline-item>
   </v-timeline>
-
-<!--  <div-->
-<!--      v-if="selectedCar"-->
-<!--      class="history-record-cards"-->
-<!--  >-->
-<!--    <history-record-card-->
-<!--        v-for="record in historyRecords"-->
-<!--        :record="record"-->
-<!--        @click="onClick"-->
-<!--    ></history-record-card>-->
-<!--  </div>-->
 </template>
 
 <style scoped>
-.history-record-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
 </style>
