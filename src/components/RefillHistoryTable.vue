@@ -1,7 +1,7 @@
 <script setup>
 import { VDataTable } from 'vuetify/components';
 import { FUEL_TYPES_MAP } from '@/constants/fuel.js';
-import { currencyFormatter, distanceFormatter, fuelFormatter } from '@/formatting.js';
+import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 import { ref } from 'vue';
 
 /** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
@@ -21,22 +21,22 @@ const headers = [
   {
     title: 'Refill volume, l',
     key: 'liters',
-    value: item => fuelFormatter(item.type_data.liters),
+    value: item => formatFuel(item.type_data.liters),
   },
   {
     title: 'Refill mileage, km',
     key: 'mileage',
-    value: item => distanceFormatter(item.mileage),
+    value: item => formatDistance(item.mileage),
   },
   {
     title: 'Fuel price',
     key: 'fuel_price',
-    value: item => currencyFormatter(item.type_data.fuel_price),
+    value: item => formatCurrency(item.type_data.fuel_price),
   },
   {
     title: 'Total',
     key: 'total',
-    value: item => currencyFormatter(item.type_data.total),
+    value: item => formatCurrency(item.type_data.total),
   },
   {
     title: 'Full tank',

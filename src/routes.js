@@ -5,6 +5,7 @@ import TheWelcome from '@/pages/TheWelcome.vue';
 import History from '@/pages/History.vue';
 import VehicleHistory from '@/components/VehicleHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
+import Statistics from '@/pages/Statistics.vue';
 
 const FuelExpenseForm = () => import('@/components/FuelExpenseForm.vue');
 
@@ -64,6 +65,11 @@ const routes = [
                 component: FuelExpenseForm,
             },
         ],
+    },
+    {
+      name: 'statistics',
+      path: '/statistics',
+      component: Statistics,
     },
     {
         name: 'fuel_charts',

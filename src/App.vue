@@ -1,5 +1,5 @@
 <script setup>
-import { mdiChartLine, mdiClipboardTextClock } from '@mdi/js';
+import { mdiCarClock, mdiChartLine, mdiClipboardTextClock } from '@mdi/js';
 import { VApp, VBottomNavigation, VContainer, VMain, VSnackbar } from 'vuetify/components';
 import { useUserStore } from '@/store.js';
 
@@ -32,6 +32,14 @@ if (window.Telegram?.WebApp) {
 
 
     <v-bottom-navigation style="height: 75px;">
+      <v-btn
+          value="statistics"
+          :to="{name: 'statistics'}"
+      >
+        <v-icon :icon="mdiCarClock" size="x-large"></v-icon>
+
+        <span>Статистика</span>
+      </v-btn>
       <v-btn
           value="history"
           :to="{name: 'history'}"

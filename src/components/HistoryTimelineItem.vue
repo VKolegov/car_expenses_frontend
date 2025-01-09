@@ -4,7 +4,7 @@ import { mdiCalendarMonth, mdiGasStation } from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
 
-import { distanceFormatter, formatDate, formatTime } from '@/formatting.js';
+import { formatDistance, formatDate, formatTime } from '@/formatting.js';
 
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import { round } from 'lodash';
@@ -45,7 +45,7 @@ const iconColor = computed(() => {
 });
 
 const mileage = computed(() => {
-  return distanceFormatter(props.record.mileage);
+  return formatDistance(props.record.mileage);
   const rounded = round(props.record.mileage, 1)
 });
 const date = computed(() => formatDate(props.record.date));

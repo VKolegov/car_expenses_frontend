@@ -19,7 +19,7 @@ import {
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useUserStore } from '@/store.js';
 import { fetchFuelExpensesHistory } from '@/api.js';
-import { currencyFormatter, distanceFormatter, fuelFormatter } from '@/formatting.js';
+import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 
 import LineGradientChart from '@/components/charts/LineGradientChart.vue';
 import BarGradientChart from '@/components/charts/BarGradientChart.vue';
@@ -158,7 +158,7 @@ watch(fuelExpensesHistory, newVal => {
           title="Expenses per month"
           :y-values="expensesByMonth"
           :y-labels="yLabels"
-          :tick-formatter="currencyFormatter"
+          :tick-formatter="formatCurrency"
       />
       <h2>Mileage by month</h2>
       <LineGradientChart
@@ -166,7 +166,7 @@ watch(fuelExpensesHistory, newVal => {
           title="Mileage by month"
           :y-values="mileageByMonth"
           :y-labels="yLabels"
-          :tick-formatter="distanceFormatter"
+          :tick-formatter="formatDistance"
       />
       <h2>Liters per month</h2>
       <LineGradientChart
@@ -174,7 +174,7 @@ watch(fuelExpensesHistory, newVal => {
           title="Liters per month"
           :y-values="litersByMonth"
           :y-labels="yLabels"
-          :tick-formatter="fuelFormatter"
+          :tick-formatter="formatFuel"
       />
     </v-carousel-item>
     <v-carousel-item>
@@ -184,7 +184,7 @@ watch(fuelExpensesHistory, newVal => {
           title="Price per liter by month"
           :y-values="pricePerLiterByMonth"
           :y-labels="yLabels"
-          :tick-formatter="currencyFormatter"
+          :tick-formatter="formatCurrency"
       />
     </v-carousel-item>
   </v-carousel>

@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { currencyFormatter } from '../formatting.js';
+import { formatCurrency } from '../formatting.js';
 
 const props = defineProps({
   /**
@@ -24,7 +24,7 @@ const title = computed(() => {
 });
 
 const total = computed(
-    () => currencyFormatter(Math.ceil(props.record.total))
+    () => formatCurrency(Math.ceil(props.record.total))
 );
 
 </script>
