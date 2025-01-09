@@ -1,5 +1,5 @@
 <script setup>
-import { currencyFormatter, distanceFormatter } from '../formatting.js';
+import { currencyFormatter, distanceFormatter, formatDate } from '../formatting.js';
 import { mdiGasStation } from '@mdi/js';
 import { computed } from 'vue';
 
@@ -11,6 +11,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  displayOptions: {
+    type: Object,
+    default: () => ({
+      icon: true,
+      mileage: true,
+    })
+  }
 });
 
 const emit = defineEmits(['click']);
@@ -28,7 +36,14 @@ const iconColor = computed(() => {
     case 1:
       return props.record.type_data.full_tank ? 'green' : 'grey';
   }
-})
+});
+
+const title = computed(() => {
+  switch (props.record.type) {
+    case 1:
+      return 'Заправка';
+  }
+});
 
 </script>
 
@@ -38,14 +53,16 @@ const iconColor = computed(() => {
       @click="emit('click', record, $event)"
   >
     <v-icon
+        v-if="displayOptions.icon"
         :icon="icon"
         :color="iconColor"
         class="history-record-card__icon"
     ></v-icon>
     <div class="history-record-card__info">
-      <span>Date: {{ new Date(record.date).toLocaleString() }}</span>
-      <span>Mileage: {{ distanceFormatter(record.mileage) }}</span>
-      <span>Total: {{ currencyFormatter(record.total) }}</span>
+      <h3 class="history-record-card__title">{{ title }}</h3>
+      <span>Дата: {{ formatDate(record.date) }}</span>
+      <span v-if="displayOptions.mileage">Mileage: {{ distanceFormatter(record.mileage) }}</span>
+      <span>Стоимость: {{ currencyFormatter(record.total) }}</span>
     </div>
   </div>
 </template>
@@ -56,7 +73,7 @@ const iconColor = computed(() => {
   flex-direction: row;
   align-items: center;
 
-  padding: 4px;
+  padding: 4px 16px;
 
   border: 1px lightgray solid;
   border-radius: 8px;
@@ -80,6 +97,11 @@ const iconColor = computed(() => {
     width: 48px;
     height: 48px;
   }
+}
+
+.history-record-card__title {
+  margin-bottom: 2px;
+  border-bottom: 1px lightgray solid;
 }
 
 .history-record-card__info {
