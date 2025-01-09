@@ -46,6 +46,10 @@ const title = computed(() => {
   }
 });
 
+const total = computed(
+    () => currencyFormatter(Math.ceil(props.record.total))
+);
+
 </script>
 
 <template>
@@ -63,7 +67,7 @@ const title = computed(() => {
       <h3 class="history-record-card__title">{{ title }}</h3>
       <span v-if="displayOptions.date">Дата: {{ formatDateTime(record.date) }}</span>
       <span v-if="displayOptions.mileage">Mileage: {{ distanceFormatter(record.mileage) }}</span>
-      <span>Итого: {{ currencyFormatter(record.total) }}</span>
+      <span>Итого: {{ total }}</span>
     </div>
   </div>
 </template>
