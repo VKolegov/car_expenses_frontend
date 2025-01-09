@@ -53,16 +53,16 @@ watch(selectedCar, async (newValue) => {
     </tr>
 
     <tr>
-      <td>Последний зафиксированный пробег</td>
+      <td>Текущий пробег</td>
       <td>{{ formatDistance(stats.latest_mileage) }}</td>
-    </tr>
-    <tr>
-      <td>Пробег Вашем владении</td>
-      <td>{{ formatDistance(stats.total_mileage) }}</td>
     </tr>
     <tr>
       <td>Время владения</td>
       <td>{{ stats.days_owned }} дней</td>
+    </tr>
+    <tr>
+      <td>Пробег за время владения</td>
+      <td>{{ formatDistance(stats.total_mileage) }}</td>
     </tr>
     <tr>
       <td>Последний расход топлива</td>
@@ -81,8 +81,16 @@ watch(selectedCar, async (newValue) => {
       <td>{{ formatCurrency(stats.money_per_day) }}</td>
     </tr>
     <tr>
+      <td>Средний пробег в день</td>
+      <td>{{ formatDistance(stats.km_per_day) }}</td>
+    </tr>
+    <tr>
       <td>Средние затраты на километр</td>
       <td>{{ formatCurrency(stats.money_per_km) }}</td>
+    </tr>
+    <tr>
+      <td>Средний расход топлива в день</td>
+      <td>{{ formatFuel(stats.liters_per_day) }}</td>
     </tr>
 
     <!-- Заправки -->
@@ -98,6 +106,10 @@ watch(selectedCar, async (newValue) => {
       <td>{{ formatFuel(stats.total_liters) }}</td>
     </tr>
     <tr>
+      <td>Дата последней полной заправки</td>
+      <td>{{ formatDateTime(stats.latest_full_refill_date) }}</td>
+    </tr>
+    <tr>
       <td>Количество полных заправок</td>
       <td>{{ stats.total_full_refills }}</td>
     </tr>
@@ -110,28 +122,10 @@ watch(selectedCar, async (newValue) => {
       <td>{{ formatCurrency(stats.average_full_refill_cost) }}</td>
     </tr>
     <tr>
-      <td>Средний расход топлива в день</td>
-      <td>{{ formatFuel(stats.liters_per_day) }}</td>
-    </tr>
-    <tr>
-      <td>Дата последней полной заправки</td>
-      <td>{{ formatDateTime(stats.latest_full_refill_date) }}</td>
-    </tr>
-
-    <!-- Пробег -->
-    <tr>
-      <td colspan="2" class="font-weight-bold">Пробег</td>
-    </tr>
-
-    <tr>
-      <td>Средний пробег в день</td>
-      <td>{{ formatDistance(stats.km_per_day) }}</td>
-    </tr>
-
-    <tr>
       <td>Средний пробег между полными заправками</td>
       <td>{{ formatDistance(stats.average_full_refill_mileage) }}</td>
     </tr>
+
     </tbody>
   </v-table>
 
