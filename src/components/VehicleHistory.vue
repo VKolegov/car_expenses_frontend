@@ -1,14 +1,15 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
-import { mdiPlus, mdiPlusCircle } from '@mdi/js';
-
+import { mdiPlus } from '@mdi/js';
 import { useUserStore } from '@/store.js';
+
 import { fetchFuelExpensesHistory } from '@/api.js';
 
 import { VSelect, VTimeline, VTimelineItem } from 'vuetify/components';
-
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
 
@@ -36,7 +37,39 @@ watch(selectedCar, async (newValue) => {
   historyRecords.value = await fetchFuelExpensesHistory(selectedCar.value.id);
 });
 
+const historyTimeline = computed(() => {
+  const timeline = [];
+
+  if (historyRecords.value.length === 0) {
+    return timeline;
+  }
+
+  const monthFormatter = value => format(value, 'LLLL yyyy', {locale: ru});
+
+  let lastMonth = monthFormatter(historyRecords.value[0].date);
+
+  for (const record of historyRecords.value) {
+    const month = monthFormatter(record.date);
+
+    if (month !== lastMonth) {
+      timeline.push({
+        type: 'month-break',
+        text: lastMonth,
+      });
+      lastMonth = month;
+    }
+
+    timeline.push(record);
+  }
+
+  return timeline;
+})
+
 function onClick (item, event) {
+  if (!item.id) {
+    return;
+  }
+
   router.push({
     name: 'edit_history_record',
     params: {
@@ -66,6 +99,7 @@ function onPlusClick() {
   <v-timeline
       v-if="selectedCar"
       side="end"
+      truncate-line="end"
   >
     <v-timeline-item
         :icon="mdiPlus"
@@ -74,8 +108,9 @@ function onPlusClick() {
     >
       Новая запись
     </v-timeline-item>
+
     <history-timeline-item
-        v-for="record in historyRecords"
+        v-for="record in historyTimeline"
         :record="record"
         @click="onClick"
     ></history-timeline-item>
