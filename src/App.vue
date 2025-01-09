@@ -13,7 +13,7 @@ if (window.Telegram?.WebApp) {
 
 <template>
   <v-app>
-    <v-main>
+    <v-main class="app-main">
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -54,6 +54,9 @@ if (window.Telegram?.WebApp) {
 </template>
 
 <style>
+.app-main {
+  padding-bottom: 75px;
+}
 .v-application__wrap {
   max-height: var(--tg-viewport-height, 100dvh);
 }
