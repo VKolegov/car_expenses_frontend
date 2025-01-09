@@ -68,7 +68,7 @@ const headers = [
   {
     title: 'Full tank',
     key: 'full_tank',
-    value: item => item.type_data.full_tank === 1 ? 'Yes' : 'No',
+    value: item => item.type_data.full_tank ? 'Yes' : 'No',
   },
 ];
 

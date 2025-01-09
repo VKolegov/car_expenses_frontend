@@ -59,7 +59,7 @@ function setData (historyRecord) {
   fuel.value = historyRecord.type_data.fuel_type;
   liters.value = historyRecord.type_data.liters;
   cost.value = historyRecord.type_data.total;
-  fullTank.value = historyRecord.type_data.full_tank === 1;
+  fullTank.value = historyRecord.type_data.full_tank;
   description.value = historyRecord.description;
 
   date.value = new Date(historyRecord.date);
