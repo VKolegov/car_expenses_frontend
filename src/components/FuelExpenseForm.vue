@@ -9,6 +9,7 @@ import { useUserStore } from '@/store.js';
 
 import { createHistoryRecord, fetchFuelExpensesHistory, updateHistoryRecord } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
+import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -85,13 +86,16 @@ watch(selectedCar, async (newValue) => {
   }
 });
 
+// TODO: better validation
 const canBeSaved = computed(() => {
-  return selectedCar.value
-      && date.value
-      && fuel.value
-      && liters.value > 0
-      && cost.value > 0
-      && mileage.value > 0; // TODO
+  let canBeSaved = selectedCar.value && date.value && cost.value >= 0 && mileage.value > 0;
+
+  switch (recordCategory.value) {
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
+      canBeSaved = canBeSaved && fuel.value && liters.value > 0;
+  }
+
+  return canBeSaved;
 });
 
 const errors = ref(new Map());
@@ -152,7 +156,7 @@ function onSaveClick () {
 
 <template>
   <v-form @submit.prevent style="width: 100%;">
-    <h1>{{ record ? 'Editing fuel expense' : 'Adding fuel expense' }}</h1>
+    <h1>{{ record ? 'Editing history record' : 'Adding history record' }}</h1>
     <v-select
         v-model="selectedCar"
         return-object
@@ -169,6 +173,14 @@ function onSaveClick () {
         style="margin-bottom: 20px"
     ></vue-date-picker>
 
+    <v-select
+        v-if="selectedCar"
+        v-model="recordCategory"
+        :items="Object.values(HISTORY_RECORD_CATEGORY)"
+        item-title="title"
+        item-value="value"
+        label="Select category"
+    />
 
     <v-text-field
         v-if="selectedCar"
@@ -178,7 +190,7 @@ function onSaveClick () {
         :error-messages="errors.get('mileage')"
     ></v-text-field>
 
-    <v-row>
+    <v-row v-if="recordCategory === HISTORY_RECORD_CATEGORY.REFILL.value">
       <v-col>
         <v-select
             v-if="selectedCar"
@@ -203,7 +215,7 @@ function onSaveClick () {
 
 
     <v-switch
-        v-if="selectedCar"
+        v-if="selectedCar && recordCategory === HISTORY_RECORD_CATEGORY.REFILL.value"
         v-model="fullTank"
         label="Full tank"
     ></v-switch>
@@ -225,7 +237,8 @@ function onSaveClick () {
         v-if="selectedCar"
         @click="onSaveClick"
         :disabled="!canBeSaved"
-    >Save
+    >
+      Save
     </v-btn>
 
   </v-form>

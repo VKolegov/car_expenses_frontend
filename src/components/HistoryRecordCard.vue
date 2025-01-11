@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { formatCurrency } from '../formatting.js';
+import { HISTORY_RECORD_CATEGORY_MAP } from '@/constants/history_record_category.js';
 
 const props = defineProps({
   /**
@@ -15,12 +16,12 @@ const props = defineProps({
 const emit = defineEmits(['click']);
 
 const title = computed(() => {
-  switch (props.record.type) {
-    case 1:
-      return 'Заправка';
-    default:
-      return '';
+
+  if (!props.record.category) {
+    return '';
   }
+
+  return HISTORY_RECORD_CATEGORY_MAP[props.record.category].title;
 });
 
 const total = computed(
