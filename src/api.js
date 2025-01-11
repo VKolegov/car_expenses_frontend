@@ -69,9 +69,19 @@ export async function fetchHistoryRecord(id) {
     return r;
 }
 
-export async function updateFuelExpense(recordId, data) {
+/**
+ * @template T
+ * @param {Object} data TODO
+ * @returns {Promise<HistoryRecord<T>>}
+ */
+export async function createHistoryRecord(data) {
+    return await postRequest(`${baseURL}/history_records`, data);
+}
+
+export async function updateHistoryRecord(recordId, data) {
     return await patchRequest(`${baseURL}/history_records/${recordId}`, data);
 }
+
 
 /**
  *

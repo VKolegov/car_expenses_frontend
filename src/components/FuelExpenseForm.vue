@@ -7,7 +7,7 @@ import { VSelect, VSwitch, VTextarea } from 'vuetify/components';
 
 import { useUserStore } from '@/store.js';
 
-import { createFuelExpense, fetchFuelExpensesHistory, updateFuelExpense } from '@/api.js';
+import { createHistoryRecord, fetchFuelExpensesHistory, updateHistoryRecord } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 
 const store = useUserStore();
@@ -33,13 +33,16 @@ onMounted(async () => {
   }
 });
 
+const recordType = ref(1);
+const recordCategory = ref('refill');
+
+/** @type {import('vue').Ref<Date>} */
+const date = ref(new Date());
 const mileage = ref(0);
 const fuel = ref(null);
 const liters = ref(0);
 const cost = ref(0);
 const fullTank = ref(false);
-/** @type {import('vue').Ref<Date>} */
-const date = ref(new Date());
 
 const description = ref('');
 
@@ -97,6 +100,8 @@ function onSaveClick () {
   const data = {
     car_id: selectedCar.value.id,
     date: formatISO(date.value),
+    type: recordType.value,
+    category: recordCategory.value,
     fuel_type: fuel.value,
     liters: liters.value,
     fuel_price: cost.value / liters.value,
@@ -114,9 +119,9 @@ function onSaveClick () {
   errors.value.clear();
 
   if (update) {
-    promise = updateFuelExpense(props.record.id, data);
+    promise = updateHistoryRecord(props.record.id, data);
   } else {
-    promise = createFuelExpense(data);
+    promise = createHistoryRecord(data);
   }
 
   promise.then(fuelExpense => {
