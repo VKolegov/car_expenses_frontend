@@ -53,7 +53,7 @@ const historyTimeline = computed(() => {
 
     if (month !== lastMonth) {
       timeline.push({
-        type: 'month-break',
+        category: 'month-break',
         text: lastMonth,
       });
       lastMonth = month;

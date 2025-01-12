@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { mdiCalendarMonth, mdiGasStation } from '@mdi/js';
+import { mdiCalendarMonth, mdiGasStation, mdiWrench } from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
 
@@ -8,6 +8,7 @@ import { formatDistance, formatDate, formatTime } from '@/formatting.js';
 
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import { round } from 'lodash';
+import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
 const props = defineProps({
   /**
@@ -23,9 +24,11 @@ const emit = defineEmits(['click']);
 
 
 const icon = computed(() => {
-  switch (props.record.type) {
-    case 1:
+  switch (props.record.category) {
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
       return mdiGasStation;
+    case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
+      return mdiWrench;
     case 'month-break':
       return mdiCalendarMonth;
     default:
@@ -34,9 +37,20 @@ const icon = computed(() => {
 });
 
 const iconColor = computed(() => {
-  switch (props.record.type) {
-    case 1:
+  switch (props.record.category) {
+    case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
+      return 'white';
+    default:
+      return null;
+  }
+});
+
+const backgroundColor = computed(() => {
+  switch (props.record.category) {
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
       return props.record.type_data.full_tank ? 'green' : 'grey';
+    case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
+      return 'orange';
     case 'month-break':
       return 'white';
     default:
@@ -55,7 +69,8 @@ const date = computed(() => formatDate(props.record.date));
 <template>
   <v-timeline-item
       :icon="icon"
-      :dot-color="iconColor"
+      :icon-color="iconColor"
+      :dot-color="backgroundColor"
       @click.native="emit('click', record, $event)"
   >
     <template v-slot:opposite>
