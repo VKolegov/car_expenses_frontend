@@ -1,14 +1,16 @@
 <script setup>
 import { computed } from 'vue';
-import { mdiCalendarMonth, mdiGasStation, mdiWrench } from '@mdi/js';
+import {
+  mdiCalendarMonth,
+} from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
 
-import { formatDistance, formatDate, formatTime } from '@/formatting.js';
+import { formatDistance, formatDate } from '@/formatting.js';
 
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import { round } from 'lodash';
-import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
+import { HISTORY_RECORD_CATEGORY, HISTORY_RECORD_CATEGORY_MAP } from '@/constants/history_record_category.js';
 
 const props = defineProps({
   /**
@@ -25,14 +27,10 @@ const emit = defineEmits(['click']);
 
 const icon = computed(() => {
   switch (props.record.category) {
-    case HISTORY_RECORD_CATEGORY.REFILL.value:
-      return mdiGasStation;
-    case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
-      return mdiWrench;
     case 'month-break':
-      return mdiCalendarMonth;
+      return mdiCalendarMonth; // Иконка для разделения по месяцам
     default:
-      return null;
+      return HISTORY_RECORD_CATEGORY_MAP[props.record.category].icon;
   }
 });
 
