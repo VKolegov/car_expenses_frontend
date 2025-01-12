@@ -51,6 +51,8 @@ const backgroundColor = computed(() => {
       return 'orange';
     case HISTORY_RECORD_CATEGORY.REPAIR.value:
       return 'red';
+    case HISTORY_RECORD_CATEGORY.WHEELS.value:
+      return 'blue';
     case 'month-break':
       return 'white';
     default:
