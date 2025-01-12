@@ -2,6 +2,9 @@ export interface TotalCarStats {
     car_id: number;
     total_money: number;
     total_fuel_money: number;
+    total_repair_money: number;
+    total_maintenance_money: number;
+    total_wheels_money: number;
     total_liters: number;
     total_full_refills: number;
     latest_full_refill_date: Date;

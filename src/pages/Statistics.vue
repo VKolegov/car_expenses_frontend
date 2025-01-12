@@ -77,6 +77,22 @@ watch(selectedCar, async (newValue) => {
       <td>{{ formatCurrency(stats.total_money) }}</td>
     </tr>
     <tr>
+      <td>Траты на топливо</td>
+      <td>{{ formatCurrency(stats.total_fuel_money) }}</td>
+    </tr>
+    <tr>
+      <td>Траты на ремонт</td>
+      <td>{{ formatCurrency(stats.total_repair_money) }}</td>
+    </tr>
+    <tr>
+      <td>Траты на обслуживание</td>
+      <td>{{ formatCurrency(stats.total_maintenance_money) }}</td>
+    </tr>
+    <tr>
+      <td>Траты на шиномонтаж</td>
+      <td>{{ formatCurrency(stats.total_wheels_money) }}</td>
+    </tr>
+    <tr>
       <td>Средние затраты в день</td>
       <td>{{ formatCurrency(stats.money_per_day) }}</td>
     </tr>
@@ -88,43 +104,35 @@ watch(selectedCar, async (newValue) => {
       <td>Средние затраты на километр</td>
       <td>{{ formatCurrency(stats.money_per_km) }}</td>
     </tr>
-    <tr>
-      <td>Средний расход топлива в день</td>
-      <td>{{ formatFuel(stats.liters_per_day) }}</td>
-    </tr>
 
     <!-- Заправки -->
     <tr>
-      <td colspan="2" class="font-weight-bold">Заправки</td>
-    </tr>
-    <tr>
-      <td>Сумма затрат на топливо</td>
-      <td>{{ formatCurrency(stats.total_fuel_money) }}</td>
+      <td colspan="2" class="font-weight-bold">Топливо</td>
     </tr>
     <tr>
       <td>Общее количество литров</td>
       <td>{{ formatFuel(stats.total_liters) }}</td>
     </tr>
     <tr>
-      <td>Дата последней полной заправки</td>
-      <td>{{ formatDateTime(stats.latest_full_refill_date) }}</td>
-    </tr>
-    <tr>
       <td>Количество полных заправок</td>
       <td>{{ stats.total_full_refills }}</td>
     </tr>
     <tr>
-      <td>Средний объем полной заправки</td>
-      <td>{{ formatFuel(stats.average_full_refill_volume) }}</td>
+      <td>Средний расход топлива в день</td>
+      <td>{{ formatFuel(stats.liters_per_day) }}</td>
     </tr>
-    <tr>
-      <td>Средняя стоимость полной заправки</td>
-      <td>{{ formatCurrency(stats.average_full_refill_cost) }}</td>
-    </tr>
-    <tr>
-      <td>Средний пробег между полными заправками</td>
-      <td>{{ formatDistance(stats.average_full_refill_mileage) }}</td>
-    </tr>
+<!--    <tr>-->
+<!--      <td>Средний объем полной заправки</td>-->
+<!--      <td>{{ formatFuel(stats.average_full_refill_volume) }}</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Средняя стоимость полной заправки</td>-->
+<!--      <td>{{ formatCurrency(stats.average_full_refill_cost) }}</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Средний пробег между полными заправками</td>-->
+<!--      <td>{{ formatDistance(stats.average_full_refill_mileage) }}</td>-->
+<!--    </tr>-->
 
     </tbody>
   </v-table>
