@@ -37,6 +37,7 @@ const total = computed(
   >
     <div class="history-record-card__info">
       <h3 class="history-record-card__title">{{ title }}</h3>
+      <span v-if="record.description"> {{ record.description }}</span>
       <span>Итого: {{ total }}</span>
     </div>
   </div>
