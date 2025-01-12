@@ -49,6 +49,8 @@ const backgroundColor = computed(() => {
       return props.record.type_data.full_tank ? 'green' : 'grey';
     case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
       return 'orange';
+    case HISTORY_RECORD_CATEGORY.REPAIR.value:
+      return 'red';
     case 'month-break':
       return 'white';
     default:
