@@ -23,7 +23,7 @@ const props = defineProps({
 });
 
 /** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
-const fuelExpensesHistory = ref([]);
+const historyRecords = ref([]);
 
 const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
@@ -60,10 +60,17 @@ onMounted(() => {
 function setData (historyRecord) {
   // TODO: select car id
   mileage.value = historyRecord.mileage;
-  fuel.value = historyRecord.type_data.fuel_type;
-  liters.value = historyRecord.type_data.liters;
-  cost.value = historyRecord.type_data.total;
-  fullTank.value = historyRecord.type_data.full_tank;
+  recordType.value = historyRecord.type;
+  recordCategory.value = historyRecord.category;
+
+  switch (historyRecord.category) {
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
+      fuel.value = historyRecord.type_data.fuel_type;
+      liters.value = historyRecord.type_data.liters;
+      fullTank.value = historyRecord.type_data.full_tank;
+  }
+
+  cost.value = historyRecord.total;
   description.value = historyRecord.description;
 
   date.value = new Date(historyRecord.date);
@@ -79,10 +86,10 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  fuelExpensesHistory.value = await fetchFuelExpensesHistory(selectedCar.value.id);
+  historyRecords.value = await fetchFuelExpensesHistory(selectedCar.value.id);
 
-  if (fuelExpensesHistory.value.length > 0) {
-    mileage.value = fuelExpensesHistory.value[0].mileage;
+  if (historyRecords.value.length > 0) {
+    mileage.value = historyRecords.value[0].mileage;
   }
 });
 
@@ -129,11 +136,11 @@ function onSaveClick () {
   }
 
   promise.then(fuelExpense => {
-    fuelExpensesHistory.value.push(fuelExpense);
+    historyRecords.value.push(fuelExpense);
 
     store.displayNotification(
         `History record ${update ? 'updated' : 'added'}!`,
-        'success'
+        'success',
     );
 
     router.push({ name: 'history' });
@@ -146,7 +153,7 @@ function onSaveClick () {
 
       store.displayNotification(
           error.getErrorsAsText(),
-          'error'
+          'error',
       );
     }
   });
