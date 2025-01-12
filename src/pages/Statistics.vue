@@ -39,7 +39,7 @@ watch(selectedCar, async (newValue) => {
       :item-title="car => `${car.brand} ${car.model}`"
   ></v-select>
 
-  <v-table v-if="stats">
+  <v-table v-if="stats" density="compact">
     <thead>
     <tr>
       <th class="text-left">Параметр</th>
