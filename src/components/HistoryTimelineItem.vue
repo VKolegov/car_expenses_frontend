@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import {
-  mdiCalendarMonth,
+  mdiCalendarMonth, mdiGaugeFull,
 } from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
@@ -29,6 +29,8 @@ const icon = computed(() => {
   switch (props.record.category) {
     case 'month-break':
       return mdiCalendarMonth; // Иконка для разделения по месяцам
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
+      return props.record.type_data.full_tank ? mdiGaugeFull : HISTORY_RECORD_CATEGORY.REFILL.icon;
     default:
       return HISTORY_RECORD_CATEGORY_MAP[props.record.category].icon;
   }
@@ -46,7 +48,7 @@ const iconColor = computed(() => {
 const backgroundColor = computed(() => {
   switch (props.record.category) {
     case HISTORY_RECORD_CATEGORY.REFILL.value:
-      return props.record.type_data.full_tank ? 'green' : 'grey';
+      return 'green';
     case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
       return 'orange';
     case HISTORY_RECORD_CATEGORY.REPAIR.value:
