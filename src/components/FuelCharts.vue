@@ -127,7 +127,7 @@ watch(fuelExpensesHistory, newVal => {
 
   pricePerLiterByMonth.value = groups.map(items => {
     const totalLiters = items.reduce((sum, item) => sum + (item.type_data?.liters ?? 0), 0);
-    const totalCost = items.reduce((sum, item) => sum + item.total, 0);
+    const totalCost = items.reduce((sum, item) => sum + (item.type_data?.total ?? 0), 0);
     return round(totalCost / totalLiters, 2);
   });
 
