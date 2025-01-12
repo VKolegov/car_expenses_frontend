@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { VSelect, VSwitch, VTextarea } from 'vuetify/components';
+import { VListItem, VSelect, VSwitch, VTextarea } from 'vuetify/components';
 
 import { useUserStore } from '@/store.js';
 
@@ -167,10 +167,10 @@ function onSaveClick () {
     <v-select
         v-model="selectedCar"
         return-object
-        label="Select car to add fuel expense"
+        label="Автомобиль"
         :items="cars"
         :item-title="car => `${car.brand} ${car.model}`"
-    ></v-select>
+    />
 
     <vue-date-picker
         v-model="date"
@@ -178,7 +178,7 @@ function onSaveClick () {
         format="dd/MM/yyyy HH:mm"
         :format-locale="ru"
         style="margin-bottom: 20px"
-    ></vue-date-picker>
+    />
 
     <v-select
         v-if="selectedCar"
@@ -186,16 +186,29 @@ function onSaveClick () {
         :items="Object.values(HISTORY_RECORD_CATEGORY)"
         item-title="title"
         item-value="value"
-        label="Select category"
-    />
+    >
+      <!-- Слот для отображения иконки и текста выбранного элемента -->
+      <template v-slot:selection="{ item }">
+        <div class="v-select__selected-item">
+          <v-icon>{{ item.raw.icon }}</v-icon>
+          <!--          <div class="v-list-item__spacer"></div>-->
+          <span>{{ item.title }}</span>
+        </div>
+      </template>
+
+      <!-- Слот для отображения каждого элемента в выпадающем списке -->
+      <template v-slot:item="{ props, item }">
+        <v-list-item v-bind="props" :prepend-icon="item.raw.icon" :slim="true"/>
+      </template>
+    </v-select>
 
     <v-text-field
         v-if="selectedCar"
         v-model="mileage"
         type="number"
-        label="Enter current mileage"
+        label="Пробег"
         :error-messages="errors.get('mileage')"
-    ></v-text-field>
+    />
 
     <v-row v-if="recordCategory === HISTORY_RECORD_CATEGORY.REFILL.value">
       <v-col>
@@ -205,7 +218,7 @@ function onSaveClick () {
             :items="Object.values(FUEL_TYPES)"
             item-title="title"
             item-value="value"
-            label="Select fuel type"
+            label="Тип топлива"
         />
       </v-col>
 
@@ -214,9 +227,9 @@ function onSaveClick () {
             v-if="selectedCar"
             v-model="liters"
             type="number"
-            label="Enter liters"
+            label="Литры"
             :error-messages="errors.get('liters')"
-        ></v-text-field>
+        />
       </v-col>
     </v-row>
 
@@ -224,21 +237,22 @@ function onSaveClick () {
     <v-switch
         v-if="selectedCar && recordCategory === HISTORY_RECORD_CATEGORY.REFILL.value"
         v-model="fullTank"
-        label="Full tank"
-    ></v-switch>
+        label="Полный бак"
+    />
 
     <v-text-field
         v-if="selectedCar"
         v-model="cost"
         type="number"
-        label="Enter cost"
+        label="Итого"
         :error-messages="errors.get('cost')"
-    ></v-text-field>
+    />
 
     <v-textarea
         v-model="description"
+        label="Описание"
         :error-messages="errors.get('description')"
-    ></v-textarea>
+    />
 
     <v-btn
         v-if="selectedCar"
@@ -251,6 +265,10 @@ function onSaveClick () {
   </v-form>
 </template>
 
-<style scoped>
-
+<style>
+.v-select__selected-item {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
 </style>
