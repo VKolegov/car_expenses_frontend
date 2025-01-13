@@ -38,7 +38,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const store = useUserStore();
 
-    if (to.meta.auth && !store.user) {
+    if (!store.user && to.name !== 'login') {
         const legit = await store.authIsLegit();
 
         if (legit) {
@@ -48,6 +48,7 @@ router.beforeEach(async (to, from, next) => {
         }
 
         if (!window.Telegram?.WebApp?.initData) {
+            console.log('moving to login');
             await next({
                 name: 'login',
             });
@@ -68,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
         }
     }
 
-    if (store.userCars.length === 0) {
+    if (store.user && store.userCars.length === 0) {
         await store.fetchUserCars();
     }
 
