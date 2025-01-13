@@ -39,11 +39,18 @@ export async function makeRequest (method, url, data) {
     // Попробуем прочитать тело ответа (если доступно)
     let errorDetails = null;
     let responseBody = null;
+
     try {
-        responseBody = await response.json();
-    } catch {
-        errorDetails = await response.text();
+        const contentType = response.headers.get("Content-Type") || "";
+        if (contentType.includes("application/json")) {
+            responseBody = await response.json();
+        } else {
+            errorDetails = await response.text();
+        }
+    } catch (error) {
+        console.error("Ошибка обработки ответа:", error);
     }
+
     throw new HttpError(response.status, url, response.statusText, errorDetails, responseBody);
 }
 
