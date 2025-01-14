@@ -162,7 +162,10 @@ function onSaveClick () {
 </script>
 
 <template>
-  <v-form @submit.prevent style="width: 100%;">
+  <v-form
+      class="fuel-expense-form"
+      @submit.prevent
+  >
     <h1>{{ record ? 'Editing history record' : 'Adding history record' }}</h1>
     <v-select
         v-model="selectedCar"
@@ -266,6 +269,16 @@ function onSaveClick () {
 </template>
 
 <style>
+.fuel-expense-form {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .fuel-expense-form {
+    padding-bottom: 128px;
+  }
+}
+
 .v-select__selected-item {
   display: flex;
   flex-direction: row;
