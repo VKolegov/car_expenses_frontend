@@ -11,3 +11,6 @@ export const formatFuel = (value) => numberFormatter.format(value) + ' л';
 export const formatDateTime = (value) => format(value, 'dd/MM/yyyy HH:mm', { locale: ru });
 export const formatDate = (value) => format(value, 'dd MMM', { locale: ru });
 export const formatTime = (value) => format(value, 'HH:mm', { locale: ru });
+
+
+export const formatCost = cost => cost === 0 ? 'бесплатно' : `${cost} ${CURRENCY_SYMBOLS['rub']}`;

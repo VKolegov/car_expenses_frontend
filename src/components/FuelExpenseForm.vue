@@ -7,9 +7,13 @@ import { VListItem, VSelect, VSwitch, VTextarea } from 'vuetify/components';
 
 import { useUserStore } from '@/store.js';
 
-import { createHistoryRecord, fetchFuelExpensesHistory, updateHistoryRecord } from '@/api.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
+
+import { createHistoryRecord, fetchFuelExpensesHistory, updateHistoryRecord } from '@/api.js';
+import { formatCost } from '@/formatting.js';
+
+import InvoiceItems from '@/components/InvoiceItems.vue';
 
 const store = useUserStore();
 const router = useRouter();
@@ -34,16 +38,25 @@ onMounted(async () => {
   }
 });
 
+/** @type {import('vue').Ref<HistoryRecordType>} */
 const recordType = ref(1);
+/** @type {import('vue').Ref<HistoryRecordExpenseCategory>} */
 const recordCategory = ref('refill');
 
 /** @type {import('vue').Ref<Date>} */
 const date = ref(new Date());
 const mileage = ref(0);
-const fuel = ref(null);
+const fuelType = ref(null);
 const liters = ref(0);
 const cost = ref(0);
 const fullTank = ref(false);
+
+/** @type {import('vue').Ref<InvoiceItem[]>} */
+const invoiceItems = ref([]);
+
+watch(invoiceItems, (newVal) => {
+  cost.value = newVal.reduce((sum, item) => sum + item.cost, 0);
+}, { deep: true });
 
 const description = ref('');
 
@@ -65,9 +78,17 @@ function setData (historyRecord) {
 
   switch (historyRecord.category) {
     case HISTORY_RECORD_CATEGORY.REFILL.value:
-      fuel.value = historyRecord.type_data.fuel_type;
+      fuelType.value = historyRecord.type_data.fuel_type;
       liters.value = historyRecord.type_data.liters;
       fullTank.value = historyRecord.type_data.full_tank;
+      break;
+    default:
+      if (historyRecord.invoice_items && historyRecord.invoice_items.length > 0) {
+        historyRecord.invoice_items.forEach(item => {
+          item.cost_formatted = formatCost(item.cost);
+        });
+        invoiceItems.value = historyRecord.invoice_items;
+      }
   }
 
   cost.value = historyRecord.total;
@@ -99,7 +120,7 @@ const canBeSaved = computed(() => {
 
   switch (recordCategory.value) {
     case HISTORY_RECORD_CATEGORY.REFILL.value:
-      canBeSaved = canBeSaved && fuel.value && liters.value > 0;
+      canBeSaved = canBeSaved && fuelType.value && liters.value > 0;
   }
 
   return canBeSaved;
@@ -113,15 +134,25 @@ function onSaveClick () {
     date: formatISO(date.value),
     type: recordType.value,
     category: recordCategory.value,
-    fuel_type: fuel.value,
-    liters: liters.value,
-    fuel_price: cost.value / liters.value,
     total: cost.value,
-    full_tank: fullTank.value ? 1 : 0,
     currency: 'rub',
     mileage: mileage.value,
     description: description.value,
   };
+
+  if (recordCategory.value === 'refill') {
+    Object.assign(data, {
+      fuel_type: fuelType.value,
+      liters: liters.value,
+      fuel_price: cost.value / liters.value,
+      full_tank: fullTank.value ? 1 : 0,
+    });
+  } else {
+    data.invoice_items = invoiceItems.value.map(item => ({
+      ...item,
+      category: recordCategory.value
+    }));
+  }
 
   const update = Boolean(props.record);
 
@@ -207,7 +238,7 @@ function onSaveClick () {
 
     <v-text-field
         v-if="selectedCar"
-        v-model="mileage"
+        v-model.number="mileage"
         type="number"
         label="Пробег"
         :error-messages="errors.get('mileage')"
@@ -217,7 +248,7 @@ function onSaveClick () {
       <v-col>
         <v-select
             v-if="selectedCar"
-            v-model="fuel"
+            v-model="fuelType"
             :items="Object.values(FUEL_TYPES)"
             item-title="title"
             item-value="value"
@@ -228,7 +259,7 @@ function onSaveClick () {
       <v-col>
         <v-text-field
             v-if="selectedCar"
-            v-model="liters"
+            v-model.number="liters"
             type="number"
             label="Литры"
             :error-messages="errors.get('liters')"
@@ -243,11 +274,20 @@ function onSaveClick () {
         label="Полный бак"
     />
 
+    <div
+        v-if="selectedCar && recordCategory !== HISTORY_RECORD_CATEGORY.REFILL.value"
+        class="fuel-expense-form__invoice-items"
+    >
+      <h3>Позиции</h3>
+      <invoice-items v-model="invoiceItems"/>
+    </div>
+
     <v-text-field
         v-if="selectedCar"
-        v-model="cost"
+        v-model.number="cost"
         type="number"
         label="Итого"
+        :disabled="recordCategory !== HISTORY_RECORD_CATEGORY.REFILL.value && invoiceItems.length > 0"
         :error-messages="errors.get('cost')"
     />
 
@@ -277,6 +317,10 @@ function onSaveClick () {
   .fuel-expense-form {
     padding-bottom: 128px;
   }
+}
+
+.fuel-expense-form__invoice-items {
+  margin-bottom: 40px;
 }
 
 .v-select__selected-item {

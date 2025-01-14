@@ -27,3 +27,37 @@ a,
         place-items: center;
     }
 }
+
+/* vuetify 3 v-text-field custom density (unused for now) */
+
+.v-input--density-32 .v-field--variant-plain,
+.v-input--density-32 .v-field--variant-underlined {
+    --v-input-control-height: 32px; /* change here */
+    --v-field-padding-top: 0px;
+    --v-field-padding-bottom: 0px;
+}
+
+.v-input--density-32 .v-field--variant-outlined,
+.v-input--density-32 .v-field--single-line,
+.v-input--density-32 .v-field--no-label {
+    --v-field-padding-bottom: 7px;
+}
+
+.v-input--density-32 .v-field--variant-solo,
+.v-input--density-32 .v-field--variant-solo-inverted,
+.v-input--density-32 .v-field--variant-solo-filled,
+.v-input--density-32 .v-field--variant-filled {
+    --v-input-control-height: 40px; /* change here */
+    --v-field-padding-bottom: 0px;
+}
+
+.v-input--density-32 .v-field--variant-solo .v-label.v-field-label--floating,
+.v-input--density-32 .v-field--variant-solo-inverted .v-label.v-field-label--floating,
+.v-input--density-32 .v-field--variant-filled .v-label.v-field-label--floating,
+.v-input--density-32 .v-field--variant-solo-filled .v-label.v-field-label--floating {
+    top: 2.5px;
+}
+
+.v-input--density-32 .v-field__input {
+    row-gap: 3.5px;
+}

@@ -10,6 +10,14 @@ import {
     mdiShovel,
 } from '@mdi/js';
 
+/**
+ * @typedef {Object} HistoryRecordCategoryDescription
+ * @property {string} icon
+ * @property {string} title
+ * @property {HistoryRecordExpenseCategory} value
+ */
+
+/** @type {Object.<string, HistoryRecordCategoryDescription>} */
 export const HISTORY_RECORD_CATEGORY = {
     REFILL: { title: 'Заправка', value: 'refill', icon: mdiGasStation },
     MAINTENANCE: {
@@ -30,6 +38,7 @@ export const HISTORY_RECORD_CATEGORY = {
     TUNING: { title: 'Тюнинг', value: 'tuning', icon: mdiCarTurbocharger },
 };
 
+/** @type {Record<HistoryRecordExpenseCategory, HistoryRecordCategoryDescription>} */
 export const HISTORY_RECORD_CATEGORY_MAP = {
     'refill': HISTORY_RECORD_CATEGORY.REFILL,
     'maintenance': HISTORY_RECORD_CATEGORY.MAINTENANCE,
