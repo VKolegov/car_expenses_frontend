@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { formatCurrency } from '../formatting.js';
+import { formatCost } from '../formatting.js';
 import { HISTORY_RECORD_CATEGORY_MAP } from '@/constants/history_record_category.js';
 
 const props = defineProps({
@@ -25,7 +25,7 @@ const title = computed(() => {
 });
 
 const total = computed(
-    () => formatCurrency(Math.ceil(props.record.total))
+    () => formatCost(Math.ceil(props.record.total))
 );
 
 </script>
@@ -38,7 +38,7 @@ const total = computed(
     <div class="history-record-card__info">
       <h3 class="history-record-card__title">{{ title }}</h3>
       <span v-if="record.description"> {{ record.description }}</span>
-      <span>Итого: {{ total }}</span>
+      <span>{{ total }}</span>
     </div>
   </div>
 </template>
