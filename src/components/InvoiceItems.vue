@@ -96,9 +96,9 @@ function onEnterPress () {
   // если редактируем последний элемент в списке
   if (editingI.value === items.value.length - 1) {
     const itWasNewItem = items.value[editingI.value].empty;
-    finishEditing();
+    const changesWereCommited = finishEditing();
 
-    if (itWasNewItem) {
+    if (changesWereCommited && itWasNewItem) {
       addNewItem();
       skipNextBlurEvent = true;
       setEditing(items.value.length - 1);
@@ -127,7 +127,7 @@ function finishEditing () {
   if (!fieldValue.value) {
     // console.debug('empty string, splicing');
     items.value.splice(editingI.value, 1);
-    return;
+    return false;
   }
 
   /** @type {InvoiceItem} */
@@ -154,6 +154,8 @@ function finishEditing () {
 
   //items.value.splice(editingI.value, 1, item);
   // console.debug('finished editing', item, items.value);
+
+  return true;
 }
 
 function addNewItem () {
