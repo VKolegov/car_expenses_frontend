@@ -7,7 +7,7 @@ import VehicleHistory from '@/components/VehicleHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
 import Statistics from '@/pages/Statistics.vue';
 
-const FuelExpenseForm = () => import('@/components/FuelExpenseForm.vue');
+const HistoryRecordEditForm = () => import('@/components/HistoryRecordEditForm.vue');
 
 /** @type {import('vue-router').RouteLocation[]} */
 const routes = [
@@ -44,7 +44,7 @@ const routes = [
                 meta: {
                     auth: true,
                 },
-                component: FuelExpenseForm,
+                component: HistoryRecordEditForm,
                 props: true,
                 beforeEnter: async (to, from, next) => {
                     if (to.params.id) {
@@ -62,7 +62,7 @@ const routes = [
                 meta: {
                     auth: true,
                 },
-                component: FuelExpenseForm,
+                component: HistoryRecordEditForm,
             },
         ],
     },
