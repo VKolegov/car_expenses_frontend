@@ -241,6 +241,8 @@ function onAddClick () {
 .invoice-item__cost {
   display: block;
   margin-left: auto;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .invoice-item__edit-field {
