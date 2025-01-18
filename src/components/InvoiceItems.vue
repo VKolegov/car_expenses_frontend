@@ -230,7 +230,7 @@ function onAddClick () {
   border-bottom: 1px solid lightgray;
 
   position: relative;
-  height: 42px; /* approx v-text-field height */
+  min-height: 42px; /* approx v-text-field height */
 }
 
 .invoice-item__cost {
