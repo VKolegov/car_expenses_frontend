@@ -15,6 +15,7 @@ const items = defineModel({
 
 const editingI = ref(NO_EDITING);
 const editField = ref();
+/** @type {import('vue').Ref<string>} */
 const fieldValue = ref('');
 
 function setEditing (i) {
@@ -124,7 +125,9 @@ function finishEditing () {
   //  items.value = items.value.slice(0, NO_EDITING);
   //}
 
-  if (!fieldValue.value) {
+  const inputVal = fieldValue.value.trim();
+
+  if (!inputVal) {
     // console.debug('empty string, splicing');
     items.value.splice(editingI.value, 1);
     return false;
@@ -133,7 +136,7 @@ function finishEditing () {
   /** @type {InvoiceItem} */
   const item = items.value[editingI.value];
 
-  const splitInputValue = fieldValue.value.split(/\s+/);
+  const splitInputValue = inputVal.split(/\s+/);
 
   if (splitInputValue.length > 1) {
     const cost = parseFloat(
@@ -143,9 +146,11 @@ function finishEditing () {
     if (!Number.isNaN(cost)) {
       item.cost = cost;
       item.cost_formatted = formatCost(cost);
+      item.name = splitInputValue.slice(0, -1).join(' ');
+    } else {
+      item.name = inputVal;
     }
 
-    item.name = splitInputValue.slice(0, -1).join(' ');
   } else {
     item.name = splitInputValue[0];
   }
