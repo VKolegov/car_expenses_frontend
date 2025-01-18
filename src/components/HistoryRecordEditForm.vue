@@ -10,7 +10,7 @@ import { useUserStore } from '@/store.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
-import { createHistoryRecord, fetchFuelExpensesHistory, updateHistoryRecord } from '@/api.js';
+import { createHistoryRecord, fetchFuelExpensesHistory, getAiItemsDescription, updateHistoryRecord } from '@/api.js';
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
@@ -113,6 +113,28 @@ watch(selectedCar, async (newValue) => {
     mileage.value = historyRecords.value[0].mileage;
   }
 });
+
+const generatingDescription = ref(false);
+async function generateDescription() {
+  generatingDescription.value = true;
+
+  try {
+    const r = await getAiItemsDescription(invoiceItems.value.map(item => item.name));
+
+    description.value = r.response;
+
+    alert(`Использование ИИ обошлось в ${r.cost} токен(ов)`);
+  } catch (e) {
+    console.error(e);
+  }
+
+  generatingDescription.value = false;
+}
+
+function onGenerateDescriptionClick() {
+  generateDescription();
+}
+
 
 // TODO: better validation
 const canBeSaved = computed(() => {
@@ -298,11 +320,21 @@ function onSaveClick () {
     />
 
     <v-btn
+      v-if="!description && recordCategory !== HISTORY_RECORD_CATEGORY.REFILL.value && invoiceItems.length > 0"
+      :disabled="generatingDescription"
+      @click="onGenerateDescriptionClick"
+      style="width: 100%; margin-bottom: 50px;"
+    >
+      Сгенерировать с помощью AI
+    </v-btn>
+
+    <v-btn
         v-if="selectedCar"
         @click="onSaveClick"
         :disabled="!canBeSaved"
+        style="width: 100%"
     >
-      Save
+      Сохранить
     </v-btn>
 
   </v-form>

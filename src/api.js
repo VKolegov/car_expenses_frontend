@@ -100,3 +100,12 @@ export async function createFuelExpense (data) {
 export async function fetchCarStats (carId) {
     return await getRequest(`${baseURL}/stats/for_car/${carId}`);
 }
+
+/**
+ *
+ * @param {string[]} items
+ * @returns {Promise<{response: string, cost: number}>}
+ */
+export async function getAiItemsDescription(items) {
+    return await postRequest(`${baseURL}/ai/invoice_items_description`, { items });
+}
