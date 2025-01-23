@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import {
-    fetchCars,
+    fetchCarsNew,
     login,
     meNew,
     telegramLoginNew,
@@ -77,7 +77,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     async function fetchUserCars () {
-        setCars(await fetchCars());
+        setCars(await fetchCarsNew());
     }
 
 

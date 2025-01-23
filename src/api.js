@@ -1,4 +1,10 @@
-import { baseURL, baseURL_GO, getRequest, patchRequest, postRequest } from '@/basic_api.js';
+import {
+    baseURL,
+    baseURL_GO,
+    getRequest,
+    patchRequest,
+    postRequest,
+} from '@/basic_api.js';
 
 /**
  * @typedef {Object} LoginResponse
@@ -12,7 +18,7 @@ import { baseURL, baseURL_GO, getRequest, patchRequest, postRequest } from '@/ba
  * @param password
  * @returns {Promise<LoginResponse>}
  */
-export async function login (phone, password) {
+export async function login(phone, password) {
     const r = await postRequest(`${baseURL}/login`, {
         phone,
         password,
@@ -26,7 +32,7 @@ export async function login (phone, password) {
  * @param {string} initData telegram app init data
  * @returns {Promise<LoginResponse>}
  */
-export async function telegramLogin (initData) {
+export async function telegramLogin(initData) {
     return await postRequest(`${baseURL}/telegram/auth`, {
         tgRawData: initData,
     });
@@ -37,13 +43,13 @@ export async function telegramLogin (initData) {
  * @param {string} initData telegram app init data
  * @returns {Promise<LoginResponse>}
  */
-export async function telegramLoginNew (initData) {
+export async function telegramLoginNew(initData) {
     return await postRequest(`${baseURL_GO}/telegram/auth`, {
         tg_raw_data: initData,
     });
 }
 
-export async function me () {
+export async function me() {
     return await getRequest(`${baseURL}/me`);
 }
 
@@ -51,7 +57,11 @@ export async function meNew() {
     return await getRequest(`${baseURL_GO}/users/me`);
 }
 
-export async function fetchCars () {
+export async function fetchCarsNew() {
+    return await getRequest(`${baseURL_GO}/cars`);
+}
+
+export async function fetchCars() {
     const r = await getRequest(`${baseURL}/cars`);
 
     return r;
@@ -61,7 +71,7 @@ export async function fetchCars () {
  * @param {number|null} carId
  * @returns {Promise<HistoryRecord<HistoryRefillData>[]>}
  */
-export async function fetchFuelExpensesHistory (carId = null) {
+export async function fetchFuelExpensesHistory(carId = null) {
     const url = `${baseURL}/fuel_expenses`;
 
     if (carId) {
@@ -97,13 +107,12 @@ export async function updateHistoryRecord(recordId, data) {
     return await patchRequest(`${baseURL}/history_records/${recordId}`, data);
 }
 
-
 /**
  *
  * @param {Object} data TODO
  * @returns {Promise<HistoryRecord<HistoryRefillData>>}
  */
-export async function createFuelExpense (data) {
+export async function createFuelExpense(data) {
     return await postRequest(`${baseURL}/fuel_expenses`, data);
 }
 
@@ -112,7 +121,7 @@ export async function createFuelExpense (data) {
  * @param {number} carId
  * @returns {Promise<TotalCarStats>}
  */
-export async function fetchCarStats (carId) {
+export async function fetchCarStats(carId) {
     return await getRequest(`${baseURL}/stats/for_car/${carId}`);
 }
 
@@ -122,5 +131,6 @@ export async function fetchCarStats (carId) {
  * @returns {Promise<{response: string, cost: number}>}
  */
 export async function getAiItemsDescription(items) {
-    return await postRequest(`${baseURL}/ai/invoice_items_description`, { items });
+    return await postRequest(`${baseURL}/ai/invoice_items_description`,
+        { items });
 }
