@@ -1,6 +1,11 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { fetchCars, login, me, telegramLogin } from '@/api.js';
+import {
+    fetchCars,
+    login,
+    meNew,
+    telegramLoginNew,
+} from '@/api.js';
 import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
 
 export const useUserStore = defineStore('user', () => {
@@ -32,7 +37,7 @@ export const useUserStore = defineStore('user', () => {
     async function telegramAuth (initData) {
 
         try {
-            const response = await telegramLogin(initData);
+            const response = await telegramLoginNew(initData);
 
             setUser(response.user);
 
@@ -54,7 +59,7 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            setUser(await me());
+            setUser(await meNew());
             return true;
         } catch (e) {
             if (e.code === 401) {

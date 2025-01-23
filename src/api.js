@@ -1,4 +1,4 @@
-import { baseURL, getRequest, patchRequest, postRequest } from '@/basic_api.js';
+import { baseURL, baseURL_GO, getRequest, patchRequest, postRequest } from '@/basic_api.js';
 
 /**
  * @typedef {Object} LoginResponse
@@ -32,8 +32,23 @@ export async function telegramLogin (initData) {
     });
 }
 
+/**
+ *
+ * @param {string} initData telegram app init data
+ * @returns {Promise<LoginResponse>}
+ */
+export async function telegramLoginNew (initData) {
+    return await postRequest(`${baseURL_GO}/telegram/auth`, {
+        tg_raw_data: initData,
+    });
+}
+
 export async function me () {
     return await getRequest(`${baseURL}/me`);
+}
+
+export async function meNew() {
+    return await getRequest(`${baseURL_GO}/users/me`);
 }
 
 export async function fetchCars () {

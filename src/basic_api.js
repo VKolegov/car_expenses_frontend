@@ -2,6 +2,7 @@ import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
 import HttpError from '@/errors.js';
 
 export const baseURL = import.meta.env.VITE_API_URL;
+export const baseURL_GO = import.meta.env.VITE_GO_API_URL;
 
 const basicHeaders = {
     'Content-Type': 'application/json',
