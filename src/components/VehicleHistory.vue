@@ -7,10 +7,9 @@ import { ru } from 'date-fns/locale';
 import { mdiPlus } from '@mdi/js';
 import { useUserStore } from '@/store.js';
 
-import { fetchFuelExpensesHistory } from '@/api.js';
+import { fetchHistoryRecords } from '@/api.js';
 
 import { VSelect, VTimeline, VTimelineItem } from 'vuetify/components';
-import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
 
 const store = useUserStore();
@@ -25,7 +24,7 @@ onMounted(async () => {
   }
 });
 
-/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
+/** @type {import('vue').Ref<HistoryRecord[]>} */
 const historyRecords = ref([]);
 
 watch(selectedCar, async (newValue) => {
@@ -34,7 +33,7 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  historyRecords.value = await fetchFuelExpensesHistory(selectedCar.value.id);
+  historyRecords.value = await fetchHistoryRecords(selectedCar.value.id);
 });
 
 const historyTimeline = computed(() => {

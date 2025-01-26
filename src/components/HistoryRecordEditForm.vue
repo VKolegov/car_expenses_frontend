@@ -10,7 +10,12 @@ import { useUserStore } from '@/store.js';
 import { FUEL_TYPES } from '@/constants/fuel.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
-import { createHistoryRecord, fetchFuelExpensesHistory, getAiItemsDescription, updateHistoryRecord } from '@/api.js';
+import {
+  createHistoryRecord,
+  fetchHistoryRecords,
+  getAiItemsDescription,
+  updateHistoryRecord,
+} from '@/api.js';
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
@@ -19,14 +24,14 @@ const store = useUserStore();
 const router = useRouter();
 
 const props = defineProps({
-  /** @type {HistoryRecord<HistoryRefillData>} */
+  /** @type {HistoryRecord} */
   record: {
     type: Object,
     default: null,
   },
 });
 
-/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
+/** @type {import('vue').Ref<HistoryRecord[]>} */
 const historyRecords = ref([]);
 
 const cars = computed(() => store.userCars);
@@ -68,7 +73,7 @@ onMounted(() => {
 
 // for router
 /**
- * @param {HistoryRecord<HistoryRefillData>} historyRecord
+ * @param {HistoryRecord} historyRecord
  */
 function setData (historyRecord) {
   // TODO: select car id
@@ -107,7 +112,7 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  historyRecords.value = await fetchFuelExpensesHistory(selectedCar.value.id);
+  historyRecords.value = await fetchHistoryRecords(selectedCar.value.id);
 
   if (historyRecords.value.length > 0) {
     mileage.value = historyRecords.value[0].mileage;

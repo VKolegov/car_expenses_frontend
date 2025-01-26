@@ -4,7 +4,7 @@ import { FUEL_TYPES_MAP } from '@/constants/fuel.js';
 import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 import { ref } from 'vue';
 
-/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
+/** @type {import('vue').Ref<HistoryRecord[]>} */
 const fuelExpensesHistory = ref([]);
 
 const headers = [

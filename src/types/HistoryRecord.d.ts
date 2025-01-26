@@ -1,8 +1,9 @@
 import {Currency} from "./enums/Currency";
 import {HistoryRecordExpenseCategory} from "./enums/HistoryRecordExpenseCategory";
 import {InvoiceItem} from "./InvoiceItem";
+import {HistoryRefillData} from "./HistoryRefillData";
 
-export interface HistoryRecord<T> {
+export interface HistoryRecord {
     id: number;
     date: Date | number;
     user_id: number;
@@ -14,7 +15,7 @@ export interface HistoryRecord<T> {
     mileage: number;
     description?: string;
 
-    type_data?: T
+    type_data?: HistoryRefillData
 
     invoice_items?: InvoiceItem[],
 }

@@ -69,7 +69,7 @@ export async function fetchCars() {
 
 /**
  * @param {number|null} carId
- * @returns {Promise<HistoryRecord<HistoryRefillData>[]>}
+ * @returns {Promise<HistoryRecord[]>}
  */
 export async function fetchFuelExpensesHistory(carId = null) {
     const url = `${baseURL}/fuel_expenses`;
@@ -84,9 +84,25 @@ export async function fetchFuelExpensesHistory(carId = null) {
 }
 
 /**
+ * @param {number|null} carId
+ * @returns {Promise<HistoryRecord[]>}
+ */
+export async function fetchHistoryRecords(carId = null) {
+    const url = `${baseURL_GO}/history_records`;
+
+    if (carId) {
+        return await getRequest(url, {
+            car_id: carId,
+        });
+    }
+
+    return await getRequest(url);
+}
+
+/**
  *
  * @param {number} id
- * @returns {Promise<HistoryRecord<HistoryRefillData>>}
+ * @returns {Promise<HistoryRecord>}
  */
 export async function fetchHistoryRecord(id) {
     const r = await getRequest(`${baseURL}/history_records/${id}`);
@@ -110,7 +126,7 @@ export async function updateHistoryRecord(recordId, data) {
 /**
  *
  * @param {Object} data TODO
- * @returns {Promise<HistoryRecord<HistoryRefillData>>}
+ * @returns {Promise<HistoryRecord>}
  */
 export async function createFuelExpense(data) {
     return await postRequest(`${baseURL}/fuel_expenses`, data);

@@ -18,7 +18,7 @@ import {
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useUserStore } from '@/store.js';
-import { fetchFuelExpensesHistory } from '@/api.js';
+import { fetchHistoryRecords } from '@/api.js';
 import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 
 import LineGradientChart from '@/components/charts/LineGradientChart.vue';
@@ -49,7 +49,7 @@ onMounted(async () => {
   }
 });
 
-/** @type {import('vue').Ref<HistoryRecord<HistoryRefillData>[]>} */
+/** @type {import('vue').Ref<HistoryRecord[]>} */
 const fuelExpensesHistory = ref([]);
 
 watch(selectedCar, async (newValue) => {
@@ -58,7 +58,7 @@ watch(selectedCar, async (newValue) => {
   }
 
   // order date desc
-  fuelExpensesHistory.value = await fetchFuelExpensesHistory(selectedCar.value.id);
+  fuelExpensesHistory.value = await fetchHistoryRecords(selectedCar.value.id);
 });
 
 // --------------
@@ -67,8 +67,8 @@ watch(selectedCar, async (newValue) => {
 /**
  * Группирует массив записей истории по месяцам в обратном хронологическом порядке.
  *
- * @param {HistoryRecord<HistoryRefillData>[]} data - Массив записей истории, содержащих данные о заправках.
- * @returns {Object<string, HistoryRecord<HistoryRefillData>[]>} Объект, где ключи — это месяцы в формате "YYYY-MM",
+ * @param {HistoryRecord[]} data - Массив записей истории, содержащих данные о заправках.
+ * @returns {Object<string, HistoryRecord[]>} Объект, где ключи — это месяцы в формате "YYYY-MM",
  * а значения — массивы записей истории, относящиеся к этим месяцам.
  */
 const groupByMonth = (data) => {
@@ -95,7 +95,7 @@ watch(fuelExpensesHistory, newVal => {
 
   // Группировка всех данных
   const groupedData = groupByMonth(newVal);
-  /** @type {Array<HistoryRecord<HistoryRefillData>[]>} */
+  /** @type {Array<HistoryRecord[]>} */
   const groups = Object.values(groupedData);
 
 // Генерация массивов из сгруппированных данных
