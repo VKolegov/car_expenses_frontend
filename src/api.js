@@ -111,6 +111,15 @@ export async function fetchHistoryRecord(id) {
 }
 
 /**
+ *
+ * @param {number} id
+ * @returns {Promise<HistoryRecord>}
+ */
+export async function fetchHistoryRecordNew(id) {
+    return await getRequest(`${baseURL_GO}/history_records/${id}`);
+}
+
+/**
  * @template T
  * @param {Object} data TODO
  * @returns {Promise<HistoryRecord<T>>}

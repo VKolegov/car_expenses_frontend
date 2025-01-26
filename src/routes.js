@@ -1,4 +1,4 @@
-import { fetchHistoryRecord } from '@/api.js';
+import { fetchHistoryRecordNew } from '@/api.js';
 
 const Login = () => import('@/pages/Login.vue');
 import TheWelcome from '@/pages/TheWelcome.vue';
@@ -48,7 +48,7 @@ const routes = [
                 props: true,
                 beforeEnter: async (to, from, next) => {
                     if (to.params.id) {
-                        const record = await fetchHistoryRecord(to.params.id);
+                        const record = await fetchHistoryRecordNew(to.params.id);
                         console.log('beforeEnter', record);
                         to.params.record = record;
                     }
