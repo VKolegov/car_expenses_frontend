@@ -8,6 +8,7 @@ import { VListItem, VSelect, VSwitch, VTextarea } from 'vuetify/components';
 import { useUserStore } from '@/store.js';
 
 import { FUEL_TYPES } from '@/constants/fuel.js';
+import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
 import {
@@ -224,7 +225,7 @@ function onSaveClick () {
       class="fuel-expense-form"
       @submit.prevent
   >
-    <h1>{{ record ? 'Editing history record' : 'Adding history record' }}</h1>
+    <h1>{{ record ? 'Редактирование записи' : 'Новая запись' }}</h1>
     <v-select
         v-model="selectedCar"
         return-object
@@ -268,6 +269,7 @@ function onSaveClick () {
         v-model.number="mileage"
         type="number"
         label="Пробег"
+        suffix="км"
         :error-messages="errors.get('mileage')"
     />
 
@@ -289,6 +291,7 @@ function onSaveClick () {
             v-model.number="liters"
             type="number"
             label="Литры"
+            suffix="л"
             :error-messages="errors.get('liters')"
         />
       </v-col>
@@ -314,6 +317,7 @@ function onSaveClick () {
         v-model.number="cost"
         type="number"
         label="Итого"
+        :suffix="CURRENCY_SYMBOLS.rub"
         :disabled="recordCategory !== HISTORY_RECORD_CATEGORY.REFILL.value && invoiceItems.length > 0"
         :error-messages="errors.get('cost')"
     />
