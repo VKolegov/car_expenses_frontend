@@ -120,12 +120,19 @@ export async function fetchHistoryRecordNew(id) {
 }
 
 /**
- * @template T
  * @param {Object} data TODO
- * @returns {Promise<HistoryRecord<T>>}
+ * @returns {Promise<HistoryRecord>}
  */
 export async function createHistoryRecord(data) {
     return await postRequest(`${baseURL}/history_records`, data);
+}
+
+/**
+ * @param {Object} data TODO
+ * @returns {Promise<HistoryRecord>}
+ */
+export async function createHistoryRecordNew(data) {
+    return await postRequest(`${baseURL_GO}/history_records`, data);
 }
 
 export async function updateHistoryRecord(recordId, data) {

@@ -12,7 +12,7 @@ import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
 import {
-  createHistoryRecord,
+  createHistoryRecordNew,
   fetchHistoryRecords,
   getAiItemsDescription,
   updateHistoryRecord,
@@ -169,12 +169,12 @@ function onSaveClick () {
   };
 
   if (recordCategory.value === 'refill') {
-    Object.assign(data, {
+    data.fuel_data = {
       fuel_type: fuelType.value,
       liters: liters.value,
       fuel_price: cost.value / liters.value,
-      full_tank: fullTank.value ? 1 : 0,
-    });
+      full_tank: fullTank.value,
+    }
   } else {
     data.invoice_items = invoiceItems.value.map(item => ({
       ...item,
@@ -189,9 +189,10 @@ function onSaveClick () {
   errors.value.clear();
 
   if (update) {
+    Object.assign(data, data.fuel_data)
     promise = updateHistoryRecord(props.record.id, data);
   } else {
-    promise = createHistoryRecord(data);
+    promise = createHistoryRecordNew(data);
   }
 
   promise.then(fuelExpense => {
