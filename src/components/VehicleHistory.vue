@@ -96,7 +96,7 @@ function onPlusClick() {
   ></v-select>
 
   <v-timeline
-      v-if="selectedCar"
+      v-if="selectedCar && historyTimeline.length > 0"
       side="end"
       truncate-line="end"
   >

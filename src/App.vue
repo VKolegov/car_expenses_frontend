@@ -31,7 +31,7 @@ if (window.Telegram?.WebApp) {
     </v-main>
 
 
-    <v-bottom-navigation style="height: 75px;">
+    <v-bottom-navigation v-show="store.user" style="height: 75px;">
       <v-btn
           value="statistics"
           :to="{name: 'statistics'}"
