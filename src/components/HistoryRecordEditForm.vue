@@ -13,7 +13,7 @@ import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js'
 
 import {
   createHistoryRecordNew,
-  fetchHistoryRecords,
+  fetchBeforeDate,
   getAiItemsDescription,
   updateHistoryRecord,
 } from '@/api.js';
@@ -32,9 +32,6 @@ const props = defineProps({
   },
 });
 
-/** @type {import('vue').Ref<HistoryRecord[]>} */
-const historyRecords = ref([]);
-
 const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
 
@@ -51,6 +48,13 @@ const recordCategory = ref('refill');
 
 /** @type {import('vue').Ref<Date>} */
 const date = ref(new Date());
+
+watch(date, (newVal) => {
+  if (!props.record) {
+    updateMileageFromLastRecord();
+  }
+});
+
 const mileage = ref(0);
 const fuelType = ref(null);
 const liters = ref(0);
@@ -103,7 +107,7 @@ function setData (historyRecord) {
   date.value = new Date(historyRecord.date);
 }
 
-watch(selectedCar, async (newValue) => {
+watch(selectedCar, (newValue) => {
   if (!newValue) {
     return;
   }
@@ -112,13 +116,16 @@ watch(selectedCar, async (newValue) => {
     return;
   }
 
-  // order date desc
-  historyRecords.value = await fetchHistoryRecords(selectedCar.value.id);
-
-  if (historyRecords.value.length > 0) {
-    mileage.value = historyRecords.value[0].mileage;
-  }
+  updateMileageFromLastRecord()
 });
+
+async function updateMileageFromLastRecord() {
+  const lastHistoryRecord = await fetchBeforeDate(selectedCar.value.id, date.value);
+
+  if (lastHistoryRecord) {
+    mileage.value = lastHistoryRecord.mileage;
+  }
+}
 
 const generatingDescription = ref(false);
 async function generateDescription() {
@@ -195,9 +202,7 @@ function onSaveClick () {
     promise = createHistoryRecordNew(data);
   }
 
-  promise.then(fuelExpense => {
-    historyRecords.value.push(fuelExpense);
-
+  promise.then(_ => {
     store.displayNotification(
         `History record ${update ? 'updated' : 'added'}!`,
         'success',

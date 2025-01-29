@@ -166,3 +166,16 @@ export async function getAiItemsDescription(items) {
     return await postRequest(`${baseURL}/ai/invoice_items_description`,
         { items });
 }
+
+/**
+ *
+ * @param {number} carId
+ * @param {Date} date
+ * @returns {Promise<HistoryRecord>}
+ */
+export async function fetchBeforeDate(carId, date) {
+    return await getRequest(`${baseURL_GO}/history_records/before_date`, {
+        car_id: carId,
+        date: date.toISOString(),
+    })
+}
