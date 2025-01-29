@@ -29,8 +29,6 @@ const icon = computed(() => {
   switch (props.record.category) {
     case 'month-break':
       return mdiCalendarMonth; // Иконка для разделения по месяцам
-    case HISTORY_RECORD_CATEGORY.REFILL.value:
-      return props.record.type_data.full_tank ? mdiGaugeFull : HISTORY_RECORD_CATEGORY.REFILL.icon;
     default:
       return HISTORY_RECORD_CATEGORY_MAP[props.record.category].icon;
   }
@@ -40,6 +38,8 @@ const iconColor = computed(() => {
   switch (props.record.category) {
     case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
       return 'white';
+    case HISTORY_RECORD_CATEGORY.REFILL.value:
+      return props.record.type_data.full_tank ? 'white' : 'black';
     default:
       return null;
   }
@@ -48,7 +48,7 @@ const iconColor = computed(() => {
 const backgroundColor = computed(() => {
   switch (props.record.category) {
     case HISTORY_RECORD_CATEGORY.REFILL.value:
-      return 'green';
+      return props.record.type_data.full_tank ? 'green' : 'white';
     case HISTORY_RECORD_CATEGORY.MAINTENANCE.value:
       return 'orange';
     case HISTORY_RECORD_CATEGORY.REPAIR.value:
