@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
-import { formatCost } from '../formatting.js';
-import { HISTORY_RECORD_CATEGORY_MAP } from '@/constants/history_record_category.js';
+import { formatCost, formatFuel } from '../formatting.js';
+import { HISTORY_RECORD_CATEGORY, HISTORY_RECORD_CATEGORY_MAP } from '@/constants/history_record_category.js';
 
 const props = defineProps({
   /**
@@ -21,12 +21,41 @@ const title = computed(() => {
     return '';
   }
 
-  return HISTORY_RECORD_CATEGORY_MAP[props.record.category].title;
+  const t = HISTORY_RECORD_CATEGORY_MAP[props.record.category].title;
+
+  // if (props.record.category === HISTORY_RECORD_CATEGORY.REFILL.value) {
+  //   const l = formatFuel(props.record.type_data.liters);
+  //   return `${t} на ${l}`;
+  // }
+
+  return t;
 });
 
 const total = computed(
-    () => formatCost(Math.ceil(props.record.total))
+    () => {
+      const cost = formatCost(Math.ceil(props.record.total));
+
+      switch (props.record.category) {
+        // case HISTORY_RECORD_CATEGORY.REFILL.value:
+        //   const l = formatFuel(props.record.type_data.liters);
+        //   return `${cost} / ${l}`;
+        default:
+          return cost;
+      }
+    }
 );
+
+const description = computed(() => {
+  if (!props.record.category) {
+    return '';
+  }
+
+  if (props.record.category === HISTORY_RECORD_CATEGORY.REFILL.value) {
+    return 'Залито ' + formatFuel(props.record.type_data.liters)
+  }
+
+  return props.record.description;
+})
 
 </script>
 
@@ -37,7 +66,7 @@ const total = computed(
   >
     <div class="history-record-card__info">
       <h3 class="history-record-card__title">{{ title }}</h3>
-      <span v-if="record.description"> {{ record.description }}</span>
+      <span v-if="description"> {{ description }}</span>
       <span>{{ total }}</span>
     </div>
   </div>
