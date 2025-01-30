@@ -97,6 +97,10 @@ watch(selectedCar, async (newValue) => {
       <td>{{ formatCurrency(stats.money_per_day) }}</td>
     </tr>
     <tr>
+      <td>Средние затраты на обсл. в день</td>
+      <td>{{ formatCurrency(stats.maintenance_cost_per_day) }}</td>
+    </tr>
+    <tr>
       <td>Средний пробег в день</td>
       <td>{{ formatDistance(stats.km_per_day) }}</td>
     </tr>
@@ -121,19 +125,6 @@ watch(selectedCar, async (newValue) => {
       <td>Средний расход топлива в день</td>
       <td>{{ formatFuel(stats.liters_per_day) }}</td>
     </tr>
-<!--    <tr>-->
-<!--      <td>Средний объем полной заправки</td>-->
-<!--      <td>{{ formatFuel(stats.average_full_refill_volume) }}</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>Средняя стоимость полной заправки</td>-->
-<!--      <td>{{ formatCurrency(stats.average_full_refill_cost) }}</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>Средний пробег между полными заправками</td>-->
-<!--      <td>{{ formatDistance(stats.average_full_refill_mileage) }}</td>-->
-<!--    </tr>-->
-
     </tbody>
   </v-table>
 

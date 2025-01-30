@@ -16,6 +16,7 @@ export interface TotalCarStats {
     days_owned: number;
     km_per_day: number;
     money_per_day: number;
+    maintenance_cost_per_day: number;
     liters_per_day: number;
     money_per_km: number;
 }
