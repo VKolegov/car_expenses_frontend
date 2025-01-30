@@ -10,9 +10,6 @@ export interface TotalCarStats {
     latest_full_refill_date: Date;
     last_consumption: number | null;
     average_consumption: number | null;
-    average_full_refill_volume: number | null;
-    average_full_refill_cost: number | null;
-    average_full_refill_mileage: number | null;
     consumption_units: string;
     total_mileage: number;
     latest_mileage: number;

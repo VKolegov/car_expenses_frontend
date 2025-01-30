@@ -159,6 +159,15 @@ export async function fetchCarStats(carId) {
 
 /**
  *
+ * @param {number} carId
+ * @returns {Promise<TotalCarStats>}
+ */
+export async function fetchCarStatsNew(carId) {
+    return await getRequest(`${baseURL_GO}/stats/car/${carId}`);
+}
+
+/**
+ *
  * @param {string[]} items
  * @returns {Promise<{response: string, cost: number}>}
  */
