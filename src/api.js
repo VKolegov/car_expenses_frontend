@@ -18,6 +18,20 @@ export async function authUsingTelegram(initData) {
     });
 }
 
+/**
+ *
+ * @param {string} phone
+ * @param {string} password
+ * @returns {Promise<LoginResponse>}
+ */
+export async function login(phone, password) {
+    return await postRequest(`${baseURL_GO}/users/login`, {
+        phone,
+        password,
+    });
+}
+
+
 export async function fetchMe() {
     return await getRequest(`${baseURL_GO}/users/me`);
 }
