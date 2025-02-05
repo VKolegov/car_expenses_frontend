@@ -12,14 +12,14 @@ import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
 import {
-  createHistoryRecordNew,
   fetchBeforeDate,
-  getAiItemsDescription,
+  createHistoryRecord,
   updateHistoryRecord,
 } from '@/api.js';
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
+import { getAiItemsDescription } from '@/old_api.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -196,10 +196,9 @@ function onSaveClick () {
   errors.value.clear();
 
   if (update) {
-    Object.assign(data, data.fuel_data)
     promise = updateHistoryRecord(props.record.id, data);
   } else {
-    promise = createHistoryRecordNew(data);
+    promise = createHistoryRecord(data);
   }
 
   promise.then(_ => {

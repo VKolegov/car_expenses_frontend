@@ -56,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
         const legit = await store.authIsLegit();
 
         if (legit) {
-            await store.fetchUserCars();
+            await store.fetchCurrentUserCars();
             await next();
             return;
         }
@@ -84,7 +84,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (store.user && store.userCars.length === 0) {
-        await store.fetchUserCars();
+        await store.fetchCurrentUserCars();
     }
 
     await next();

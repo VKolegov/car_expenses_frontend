@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useUserStore } from '@/store.js';
-import { fetchCarStatsNew } from '@/api.js';
+import { fetchCarStats } from '@/api.js';
 import { VSelect, VTable } from 'vuetify/components';
 import { formatCurrency, formatDistance, formatFuel } from '../formatting.js';
 
@@ -24,7 +24,7 @@ watch(selectedCar, async (newValue) => {
     return;
   }
 
-  stats.value = await fetchCarStatsNew(selectedCar.value.id);
+  stats.value = await fetchCarStats(selectedCar.value.id);
 });
 </script>
 

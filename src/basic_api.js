@@ -66,3 +66,7 @@ export async function postRequest (url, data) {
 export async function patchRequest (url, data) {
     return await makeRequest('PATCH', url, data);
 }
+
+export async function putRequest (url, data) {
+    return await makeRequest('PUT', url, data);
+}

@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import {
-  mdiCalendarMonth, mdiGaugeFull,
+  mdiCalendarMonth,
 } from '@mdi/js';
 
 import {VTimelineItem } from 'vuetify/components';
