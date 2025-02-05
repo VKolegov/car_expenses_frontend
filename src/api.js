@@ -103,3 +103,13 @@ export async function fetchBeforeDate(carId, date) {
         date: date.toISOString(),
     })
 }
+
+/**
+ *
+ * @param {string[]} items
+ * @returns {Promise<{response: string, cost: number}>}
+ */
+export async function getAiItemsDescription(items) {
+    return await postRequest(`${baseURL_GO}/ai/invoice_items_description`,
+        { items });
+}

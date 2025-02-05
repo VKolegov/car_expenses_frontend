@@ -14,12 +14,11 @@ import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js'
 import {
   fetchBeforeDate,
   createHistoryRecord,
-  updateHistoryRecord,
+  updateHistoryRecord, getAiItemsDescription,
 } from '@/api.js';
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
-import { getAiItemsDescription } from '@/old_api.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -175,7 +174,7 @@ function onSaveClick () {
     description: description.value,
   };
 
-  if (recordCategory.value === 'refill') {
+  if (recordCategory.value === HISTORY_RECORD_CATEGORY.REFILL.value) {
     data.fuel_data = {
       fuel_type: fuelType.value,
       liters: liters.value,
