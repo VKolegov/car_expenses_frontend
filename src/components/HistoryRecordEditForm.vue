@@ -7,7 +7,7 @@ import { VListItem, VSelect, VSwitch, VTextarea } from 'vuetify/components';
 
 import { useUserStore } from '@/store.js';
 
-import { FUEL_TYPES } from '@/constants/fuel.js';
+import { FUEL_TYPES, getFuelTypesByEngineType } from '@/constants/fuel.js';
 import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
@@ -20,6 +20,7 @@ import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
 import CarSelector from '@/components/CarSelector.vue';
+import { ENGINE_TYPES } from '@/constants/engine_types.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -69,6 +70,44 @@ onMounted(() => {
   }
 });
 
+const fuelTypes = computed(() => {
+  const engineType = selectedCar.value.modification_info?.engine_type;
+
+  if (!engineType) {
+    return Object.values(FUEL_TYPES);
+  }
+
+  return  Object.values(getFuelTypesByEngineType(engineType));
+});
+
+watch(fuelType, (selectedFuelType) => {
+
+  const engineType = selectedCar.value.modification_info?.engine_type;
+
+  if (!engineType) {
+    return;
+  }
+
+  const recommendedFuelType = selectedCar.value.modification_info?.fuel_type;
+
+  if (!recommendedFuelType) {
+    return;
+  }
+
+  if ([ENGINE_TYPES.PETROL, ENGINE_TYPES.HYBRID, ENGINE_TYPES.GAS_PETROL].includes(engineType)) { // TODO: hybrid, gas_petrol
+    const recommendedFuelOctaneNumber = parseInt(recommendedFuelType);
+
+    const octaneDiff = parseInt(selectedFuelType.replace('gasoline-', '')) - recommendedFuelOctaneNumber;
+
+    if (octaneDiff < 0) {
+      errors.value.set('fuel_type', [`Внимание: для этого двигателя нужен бензин с окт. числом не ниже ${recommendedFuelOctaneNumber}`]);
+    } else {
+      errors.value.set('fuel_type', [])
+    }
+  }
+
+});
+
 // for router
 /**
  * @param {HistoryRecord} historyRecord
@@ -109,7 +148,7 @@ watch(selectedCar, (newValue) => {
     return;
   }
 
-  updateMileageFromLastRecord()
+  updateMileageFromLastRecord();
 });
 
 async function updateMileageFromLastRecord() {
@@ -273,10 +312,11 @@ function onSaveClick () {
         <v-select
             v-if="selectedCar"
             v-model="fuelType"
-            :items="Object.values(FUEL_TYPES)"
+            :items="fuelTypes"
             item-title="title"
             item-value="value"
             label="Тип топлива"
+            :error-messages="errors.get('fuel_type')"
         />
       </v-col>
 
