@@ -19,6 +19,7 @@ import {
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
+import CarSelector from '@/components/CarSelector.vue';
 
 const store = useUserStore();
 const router = useRouter();
@@ -31,14 +32,7 @@ const props = defineProps({
   },
 });
 
-const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
-
-onMounted(async () => {
-  if (cars.value.length === 1) {
-    selectedCar.value = cars.value[0];
-  }
-});
 
 /** @type {import('vue').Ref<HistoryRecordType>} */
 const recordType = ref(1);
@@ -230,12 +224,9 @@ function onSaveClick () {
       @submit.prevent
   >
     <h1>{{ record ? 'Редактирование записи' : 'Новая запись' }}</h1>
-    <v-select
+
+    <car-selector
         v-model="selectedCar"
-        return-object
-        label="Автомобиль"
-        :items="cars"
-        :item-title="car => `${car.brand} ${car.model}`"
     />
 
     <vue-date-picker

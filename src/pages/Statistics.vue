@@ -1,20 +1,13 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
-import { useUserStore } from '@/store.js';
+import { ref, watch } from 'vue';
+import { VTable } from 'vuetify/components';
+
 import { fetchCarStats } from '@/api.js';
-import { VSelect, VTable } from 'vuetify/components';
 import { formatCurrency, formatDistance, formatFuel } from '../formatting.js';
 
-const store = useUserStore();
+import CarSelector from '@/components/CarSelector.vue';
 
-const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
-
-onMounted(async () => {
-  if (cars.value.length === 1) {
-    selectedCar.value = cars.value[0];
-  }
-});
 
 /** @type {import('vue').Ref<TotalCarStats>} */
 const stats = ref(null);
@@ -31,13 +24,9 @@ watch(selectedCar, async (newValue) => {
 <template>
   <h1>Статистика (WIP)</h1>
 
-  <v-select
+  <car-selector
       v-model="selectedCar"
-      return-object
-      label="Автомобиль"
-      :items="cars"
-      :item-title="car => `${car.brand} ${car.model}`"
-  ></v-select>
+  />
 
   <v-table v-if="stats" density="compact">
     <thead>

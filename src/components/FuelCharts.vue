@@ -1,7 +1,7 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { round } from 'lodash';
-import { VCarousel, VCarouselItem, VSelect } from 'vuetify/components';
+import { VCarousel, VCarouselItem } from 'vuetify/components';
 
 /* chart.js */
 import {
@@ -17,12 +17,12 @@ import {
 } from 'chart.js';
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { useUserStore } from '@/store.js';
 import { fetchHistoryRecords } from '@/api.js';
 import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 
 import LineGradientChart from '@/components/charts/LineGradientChart.vue';
 import BarGradientChart from '@/components/charts/BarGradientChart.vue';
+import CarSelector from '@/components/CarSelector.vue';
 
 ChartJS.register(
     CategoryScale,
@@ -38,16 +38,7 @@ ChartJS.register(
 
 /* end chart.js */
 
-const store = useUserStore();
-const cars = computed(() => store.userCars);
-
 const selectedCar = ref(null);
-
-onMounted(async () => {
-  if (cars.value.length === 1) {
-    selectedCar.value = cars.value[0];
-  }
-});
 
 /** @type {import('vue').Ref<HistoryRecord[]>} */
 const fuelExpensesHistory = ref([]);
@@ -138,13 +129,9 @@ watch(fuelExpensesHistory, newVal => {
 </script>
 
 <template>
-  <v-select
+  <car-selector
       v-model="selectedCar"
-      return-object
-      label="Select car to view history"
-      :items="cars"
-      :item-title="car => `${car.brand} ${car.model}`"
-  ></v-select>
+  />
 
   <v-carousel
       height="auto"

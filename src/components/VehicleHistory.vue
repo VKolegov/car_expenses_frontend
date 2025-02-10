@@ -5,24 +5,17 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 import { mdiPlus } from '@mdi/js';
-import { useUserStore } from '@/store.js';
 
 import { fetchHistoryRecords } from '@/api.js';
 
-import { VSelect, VTimeline, VTimelineItem } from 'vuetify/components';
+import { VTimeline, VTimelineItem } from 'vuetify/components';
 import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
+import CarSelector from '@/components/CarSelector.vue';
 
-const store = useUserStore();
 const router = useRouter();
 
-const cars = computed(() => store.userCars);
 const selectedCar = ref(null);
 
-onMounted(async () => {
-  if (cars.value.length === 1) {
-    selectedCar.value = cars.value[0];
-  }
-});
 
 /** @type {import('vue').Ref<HistoryRecord[]>} */
 const historyRecords = ref([]);
@@ -87,13 +80,9 @@ function onPlusClick() {
 <template>
   <h1>История</h1>
 
-  <v-select
+  <car-selector
       v-model="selectedCar"
-      return-object
-      label="Автомобиль"
-      :items="cars"
-      :item-title="car => `${car.brand} ${car.model}`"
-  ></v-select>
+  />
 
   <v-timeline
       v-if="selectedCar && historyTimeline.length > 0"
