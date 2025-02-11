@@ -16,6 +16,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Hello, {{ user.first_name }}!</h1>
-  <h2>This app is currently under lazy development</h2>
+  <h1>Привет, {{ user.first_name }}!</h1>
+  <h2>Приложение еще в разработке</h2>
+  <span>Но уже есть:</span>
+  <ul style="padding: 0 20px 20px 20px;">
+    <li>Добавление и редактирование расходов на топливо</li>
+    <li>Добавление и редактирование расходов на сервис/обслуживание и прочие</li>
+    <li>Добавление и редактирование позиций расходов</li>
+    <li>Подсчет статистики</li>
+    <li>Графики</li>
+    <li>База данных автомобилей</li>
+  </ul>
 </template>
