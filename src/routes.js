@@ -1,11 +1,12 @@
 import { fetchHistoryRecord } from '@/api.js';
-
-const Login = () => import('@/pages/Login.vue');
 import TheWelcome from '@/pages/TheWelcome.vue';
 import History from '@/pages/History.vue';
 import VehicleHistory from '@/components/VehicleHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
 import Statistics from '@/pages/Statistics.vue';
+import Garage from '@/pages/Garage.vue';
+
+const Login = () => import('@/pages/Login.vue');
 
 const HistoryRecordEditForm = () => import('@/components/HistoryRecordEditForm.vue');
 
@@ -54,7 +55,7 @@ const routes = [
                     }
 
                     next();
-                }
+                },
             },
             {
                 name: 'add_history_record',
@@ -67,14 +68,28 @@ const routes = [
         ],
     },
     {
-      name: 'statistics',
-      path: '/statistics',
-      component: Statistics,
+        name: 'statistics',
+        path: '/statistics',
+        meta: {
+            auth: true,
+        },
+        component: Statistics,
     },
     {
         name: 'fuel_charts',
         path: '/fuel_charts',
+        meta: {
+            auth: true,
+        },
         component: FuelCharts,
+    },
+    {
+        name: 'garage',
+        path: '/garage',
+        meta: {
+            auth: true,
+        },
+        component: Garage,
     },
 ];
 

@@ -6,7 +6,7 @@ import {
 
 import {VTimelineItem } from 'vuetify/components';
 
-import { formatDistance, formatDate } from '@/formatting.js';
+import { formatDistance, formatDateShort } from '@/formatting.js';
 
 import HistoryRecordCard from '@/components/HistoryRecordCard.vue';
 import { round } from 'lodash';
@@ -66,7 +66,7 @@ const mileage = computed(() => {
   return formatDistance(props.record.mileage);
   const rounded = round(props.record.mileage, 1)
 });
-const date = computed(() => formatDate(props.record.date));
+const date = computed(() => formatDateShort(props.record.date));
 
 </script>
 
