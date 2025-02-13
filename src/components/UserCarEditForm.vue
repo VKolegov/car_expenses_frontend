@@ -1,5 +1,5 @@
 <script setup>
-import { VAutocomplete } from 'vuetify/components';
+import { VAutocomplete, VSelect } from 'vuetify/components';
 import { ref, watch } from 'vue';
 import { fetchBrandModels, fetchCarBrands, fetchGenerationModifications, fetchModelGenerations } from '@/api/db.js';
 import SelectorWithIcon from '@/components/SelectorWithIcon.vue';
@@ -71,7 +71,7 @@ watch(generation, (selectedGeneration) => {
       :item-title="m => m.short_name"
   />
 
-  <v-autocomplete
+  <v-select
       v-if="model"
       v-model="generation"
       :items="generations"
@@ -80,7 +80,7 @@ watch(generation, (selectedGeneration) => {
       :item-title="g => g.short_name"
   />
 
-  <v-autocomplete
+  <v-select
       v-if="generation"
       v-model="modification"
       :items="modifications"
