@@ -24,7 +24,7 @@ const cars = computed(() => store.userCars);
         {{ car.brand_info.name }} {{ car.model_info.short_name }}
       </div>
       <div>Поколение: {{ car.generation_info.short_name }}</div>
-      <div>Модификация: {{ car.modification_info.name_ru }}</div>
+      <div>Модификация: {{ car.modification_info.name }}</div>
       <div v-if="car.vin">VIN: {{ car.vin }}</div>
       <div v-if="car.chassis_number">Номер кузова: {{ car.chassis_number }}</div>
       <div>Гос. номер: {{ car.registration_number }}</div>
