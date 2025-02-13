@@ -68,8 +68,12 @@ export const useUserStore = defineStore('user', () => {
         return false;
     }
 
+    /** @type {import('vue').Ref<UserCar[]>} */
     const userCars = ref([]);
 
+    /**
+     * @param {UserCar[]} cars
+     */
     function setCars (cars = []) {
         userCars.value = cars;
     }

@@ -9,6 +9,10 @@ export async function fetchMe() {
     return await getRequest(`${baseURL}/users/me`);
 }
 
+/**
+ *
+ * @returns {Promise<UserCar[]>}
+ */
 export async function fetchUserCars() {
     return await getRequest(`${baseURL}/cars`);
 }
