@@ -1,56 +1,26 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { VSelect, VListItem } from 'vuetify/components';
+import { computed } from 'vue';
 
 import { useUserStore } from '@/store.js';
+import SelectorWithIcon from '@/components/SelectorWithIcon.vue';
 
 const store = useUserStore();
 const model = defineModel({
-  default: null
+  default: null,
 });
 
 const cars = computed(() => store.userCars);
-onMounted(async () => {
-  if (cars.value.length === 1) {
-    model.value = cars.value[0];
-  }
-});
 </script>
 
 <template>
-  <v-select
+  <selector-with-icon
       v-model="model"
-      return-object
       label="Автомобиль"
       :items="cars"
-      :item-title="car => `${car.brand} ${car.model} ${car.generation_info.short_name}`"
-  >
-    <template v-slot:item="{ props, item }">
-      <v-list-item v-bind="props">
-        <template v-slot:prepend>
-          <img
-              :src="item.raw.brand_info.logo_image"
-              class="car-list-item__brand-logo"
-          >
-        </template>
-      </v-list-item>
-    </template>
-    <template v-slot:selection="{ item, index }">
-      <div style="display: flex; align-items: center;">
-        <img
-            :src="item.raw.brand_info.logo_image"
-            class="car-list-item__brand-logo"
-        >
-        <span>{{ `${item.raw.model} ${item.raw.generation_info.short_name}` }}</span>
-      </div>
-    </template>
-  </v-select>
+      :item-title="car => `${car.model} ${car.generation_info.short_name}`"
+      icon-url-property-path="brand_info.logo_image"
+  />
 </template>
 
 <style scoped>
-.car-list-item__brand-logo {
-  margin-right: 5px;
-  width: 16px;
-  height: 16px;
-}
 </style>

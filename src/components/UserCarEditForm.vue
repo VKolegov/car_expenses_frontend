@@ -1,8 +1,8 @@
 <script setup>
-import { VSelect, VAutocomplete } from 'vuetify/components';
-import { onMounted, ref, watch } from 'vue';
+import { VAutocomplete } from 'vuetify/components';
+import { ref, watch } from 'vue';
 import { fetchBrandModels, fetchCarBrands, fetchGenerationModifications, fetchModelGenerations } from '@/api/db.js';
-import BrandSelector from '@/components/BrandSelector.vue';
+import SelectorWithIcon from '@/components/SelectorWithIcon.vue';
 
 const props = defineProps({
   /** @type {UserCar} */
@@ -53,10 +53,13 @@ watch(generation, (selectedGeneration) => {
 <template>
   <h1>{{ car ? 'Редактирование автомобиля' : 'Новый автомобиль' }}</h1>
 
-
-  <brand-selector
+  <selector-with-icon
       v-model="brand"
-      :brands="brands"
+      label="Бренд"
+      :items="brands"
+      :item-title="b => b.name"
+      icon-url-property-path="logo_image"
+      autocomplete
   />
 
   <v-autocomplete
