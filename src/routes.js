@@ -1,12 +1,17 @@
 import { fetchHistoryRecord } from '@/api/history_records.js';
 
 import TheWelcome from '@/pages/TheWelcome.vue';
+
 import History from '@/pages/History.vue';
 import VehicleHistory from '@/components/VehicleHistory.vue';
+
 import FuelCharts from '@/components/FuelCharts.vue';
+
 import Statistics from '@/pages/Statistics.vue';
+
 import Garage from '@/pages/Garage.vue';
 import UserCars from '@/components/UserCars.vue';
+import UserCarEditForm from '@/components/UserCarEditForm.vue';
 
 const Login = () => import('@/pages/Login.vue');
 
@@ -97,6 +102,11 @@ const routes = [
                 path: '',
                 component: UserCars,
             },
+            {
+                name: 'add_user_car',
+                path: 'add',
+                component: UserCarEditForm,
+            }
         ]
     },
 ];
