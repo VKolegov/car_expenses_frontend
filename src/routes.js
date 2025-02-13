@@ -6,6 +6,7 @@ import VehicleHistory from '@/components/VehicleHistory.vue';
 import FuelCharts from '@/components/FuelCharts.vue';
 import Statistics from '@/pages/Statistics.vue';
 import Garage from '@/pages/Garage.vue';
+import UserCars from '@/components/UserCars.vue';
 
 const Login = () => import('@/pages/Login.vue');
 
@@ -85,12 +86,18 @@ const routes = [
         component: FuelCharts,
     },
     {
-        name: 'garage',
         path: '/garage',
         meta: {
             auth: true,
         },
         component: Garage,
+        children: [
+            {
+                name: 'garage',
+                path: '',
+                component: UserCars,
+            },
+        ]
     },
 ];
 
