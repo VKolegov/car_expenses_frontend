@@ -41,6 +41,7 @@ if (window.Telegram?.WebApp) {
         <span>Гараж</span>
       </v-btn>
       <v-btn
+          v-if="store.userCars.length > 0"
           value="statistics"
           :to="{name: 'statistics'}"
       >
@@ -49,6 +50,7 @@ if (window.Telegram?.WebApp) {
         <span>Статистика</span>
       </v-btn>
       <v-btn
+          v-if="store.userCars.length > 0"
           value="history"
           :to="{name: 'history'}"
       >
@@ -57,6 +59,7 @@ if (window.Telegram?.WebApp) {
         <span>История</span>
       </v-btn>
       <v-btn
+          v-if="store.userCars.length > 0"
           value="charts"
           :to="{name: 'fuel_charts'}"
       >
