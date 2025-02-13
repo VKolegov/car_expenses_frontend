@@ -2,6 +2,7 @@
 import { VSelect, VAutocomplete } from 'vuetify/components';
 import { onMounted, ref, watch } from 'vue';
 import { fetchBrandModels, fetchCarBrands, fetchGenerationModifications, fetchModelGenerations } from '@/api/db.js';
+import BrandSelector from '@/components/BrandSelector.vue';
 
 const props = defineProps({
   /** @type {UserCar} */
@@ -53,13 +54,9 @@ watch(generation, (selectedGeneration) => {
   <h1>{{ car ? 'Редактирование автомобиля' : 'Новый автомобиль' }}</h1>
 
 
-  <v-autocomplete
+  <brand-selector
       v-model="brand"
-      :items="brands"
-      label="Бренд"
-      return-object
-      :disabled="car !== null"
-      :item-title="b => b.name"
+      :brands="brands"
   />
 
   <v-autocomplete
