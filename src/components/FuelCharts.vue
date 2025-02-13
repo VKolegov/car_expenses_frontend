@@ -17,12 +17,12 @@ import {
 } from 'chart.js';
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { fetchHistoryRecords } from '@/api.js';
 import { formatCurrency, formatDistance, formatFuel } from '@/formatting.js';
 
 import LineGradientChart from '@/components/charts/LineGradientChart.vue';
 import BarGradientChart from '@/components/charts/BarGradientChart.vue';
 import CarSelector from '@/components/CarSelector.vue';
+import { fetchHistoryRecords } from '@/api/history_records.js';
 
 ChartJS.register(
     CategoryScale,

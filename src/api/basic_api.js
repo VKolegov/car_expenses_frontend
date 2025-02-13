@@ -8,7 +8,7 @@ const basicHeaders = {
     'Accept': 'application/json',
 };
 
-export async function makeRequest (method, url, data) {
+export async function makeRequest(method, url, data) {
 
     const isGetRequest = method === 'GET';
 
@@ -41,31 +41,32 @@ export async function makeRequest (method, url, data) {
     let responseBody = null;
 
     try {
-        const contentType = response.headers.get("Content-Type") || "";
-        if (contentType.includes("application/json")) {
+        const contentType = response.headers.get('Content-Type') || '';
+        if (contentType.includes('application/json')) {
             responseBody = await response.json();
         } else {
             errorDetails = await response.text();
         }
     } catch (error) {
-        console.error("Ошибка обработки ответа:", error);
+        console.error('Ошибка обработки ответа:', error);
     }
 
-    throw new HttpError(response.status, url, response.statusText, errorDetails, responseBody);
+    throw new HttpError(response.status, url, response.statusText, errorDetails,
+        responseBody);
 }
 
-export async function getRequest (url, params) {
+export async function getRequest(url, params) {
     return await makeRequest('GET', url, params);
 }
 
-export async function postRequest (url, data) {
+export async function postRequest(url, data) {
     return await makeRequest('POST', url, data);
 }
 
-export async function patchRequest (url, data) {
+export async function patchRequest(url, data) {
     return await makeRequest('PATCH', url, data);
 }
 
-export async function putRequest (url, data) {
+export async function putRequest(url, data) {
     return await makeRequest('PUT', url, data);
 }

@@ -6,11 +6,10 @@ import { ru } from 'date-fns/locale';
 
 import { mdiPlus } from '@mdi/js';
 
-import { fetchHistoryRecords } from '@/api.js';
-
 import { VTimeline, VTimelineItem } from 'vuetify/components';
 import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
 import CarSelector from '@/components/CarSelector.vue';
+import { fetchHistoryRecords } from '@/api/history_records.js';
 
 const router = useRouter();
 

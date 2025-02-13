@@ -1,11 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import {
-    login,
-    fetchUserCars,
-    fetchMe,
-    authUsingTelegram,
-} from '@/api.js';
+
+import { authUsingTelegram, login } from '@/api/auth.js';
+import { fetchMe, fetchUserCars } from '@/api/user.js';
 
 import storageHelper, { TOKEN_KEY } from '@/local_storage.js';
 

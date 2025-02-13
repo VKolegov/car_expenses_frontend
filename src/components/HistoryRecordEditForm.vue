@@ -11,16 +11,13 @@ import { FUEL_TYPES, getFuelTypesByEngineType } from '@/constants/fuel.js';
 import { CURRENCY_SYMBOLS } from '@/constants/currency.js';
 import { HISTORY_RECORD_CATEGORY } from '@/constants/history_record_category.js';
 
-import {
-  fetchBeforeDate,
-  createHistoryRecord,
-  updateHistoryRecord, getAiItemsDescription,
-} from '@/api.js';
 import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
 import CarSelector from '@/components/CarSelector.vue';
 import { ENGINE_TYPES } from '@/constants/engine_types.js';
+import { createHistoryRecord, fetchBeforeDate, updateHistoryRecord } from '@/api/history_records.js';
+import { getAiItemsDescription } from '@/api/ai.js';
 
 const store = useUserStore();
 const router = useRouter();

@@ -2,10 +2,10 @@
 import { ref, watch } from 'vue';
 import { VTable } from 'vuetify/components';
 
-import { fetchCarStats } from '@/api.js';
 import { formatCurrency, formatDistance, formatFuel } from '../formatting.js';
 
 import CarSelector from '@/components/CarSelector.vue';
+import { fetchCarStats } from '@/api/stats.js';
 
 const selectedCar = ref(null);
 

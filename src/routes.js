@@ -1,4 +1,5 @@
-import { fetchHistoryRecord } from '@/api.js';
+import { fetchHistoryRecord } from '@/api/history_records.js';
+
 import TheWelcome from '@/pages/TheWelcome.vue';
 import History from '@/pages/History.vue';
 import VehicleHistory from '@/components/VehicleHistory.vue';
