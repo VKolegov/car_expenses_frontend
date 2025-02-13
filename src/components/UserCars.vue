@@ -3,11 +3,16 @@ import { computed } from 'vue';
 import { useUserStore } from '@/store.js';
 import { formatDate, formatDistance } from '@/formatting.js';
 import { useRouter } from 'vue-router';
+import { mdiPlus } from '@mdi/js';
 
 const router = useRouter();
 
 const store = useUserStore();
 const cars = computed(() => store.userCars);
+
+function onAddClick() {
+  router.push({ name: 'add_user_car' });
+}
 </script>
 
 <template>
@@ -17,7 +22,6 @@ const cars = computed(() => store.userCars);
     <div
         v-for="car in cars"
         class="user-car-card"
-        @click="router.push({name: 'add_user_car'})"
     >
       <div class="user-car-card__model-name">
         <img :src="car.brand_info.logo_image" width="16px" height="16px">
@@ -34,6 +38,14 @@ const cars = computed(() => store.userCars);
       </div>
       <div>Дата покупки: {{ formatDate(car.added_at) }}</div>
       <div>Пробег при покупке: {{ formatDistance(car.mileage) }}</div>
+    </div>
+    <div
+        class="user-car-card"
+        @click="onAddClick"
+    >
+      <span>
+      <v-icon :icon="mdiPlus"/> Добавить
+      </span>
     </div>
   </div>
 </template>
