@@ -18,7 +18,8 @@ export interface UserCar {
     year_of_manufacture: number;
     color: string;
     mileage: number;
-    added_at?: string;
+    purchased_at: string;
+    created_at: string;
     updated_at?: string;
     deleted_at?: string | null;
 }

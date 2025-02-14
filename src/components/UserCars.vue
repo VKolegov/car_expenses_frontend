@@ -27,16 +27,16 @@ function onAddClick() {
         <img :src="car.brand_info.logo_image" width="16px" height="16px">
         {{ car.brand_info.name }} {{ car.model_info.short_name }}
       </div>
-      <div>Поколение: {{ car.generation_info.short_name }}</div>
-      <div>Модификация: {{ car.modification_info.name }}</div>
+      <div v-if="car.generation_info">Поколение: {{ car.generation_info.short_name }}</div>
+      <div v-if="car.modification_info">Модификация: {{ car.modification_info.name }}</div>
       <div v-if="car.vin">VIN: {{ car.vin }}</div>
       <div v-if="car.chassis_number">Номер кузова: {{ car.chassis_number }}</div>
-      <div>Гос. номер: {{ car.registration_number }}</div>
-      <div>Привод: {{ car.modification_info.drivetrain }}</div>
-      <div>Мощность: {{ car.modification_info.engine_horsepower }} л.с., {{ car.modification_info.engine_torque }} Н*м
+      <div>Гос. номер: {{ car.registration_number ?? 'Не указан' }}</div>
+      <div v-if="car.modification_info">Привод: {{ car.modification_info.drivetrain }}</div>
+      <div v-if="car.modification_info">Мощность: {{ car.modification_info.engine_horsepower }} л.с., {{ car.modification_info.engine_torque }} Н*м
         @ {{ car.modification_info.engine_horsepower_rpm }} Об/мин
       </div>
-      <div>Дата покупки: {{ formatDate(car.added_at) }}</div>
+      <div>Дата покупки: {{ formatDate(car.purchased_at) }}</div>
       <div>Пробег при покупке: {{ formatDistance(car.mileage) }}</div>
     </div>
     <div
