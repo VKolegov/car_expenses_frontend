@@ -6,11 +6,17 @@ export default class HttpError extends Error {
      * @param {any} [details] - Дополнительные данные об ошибке (необязательно).
      * @param {any} [responseBody] - Тело ответа (если доступно, может быть JSON).
      */
-    constructor(status, url, message = "HTTP Error", details = null, responseBody = null) {
+    constructor(
+        status,
+        url,
+        message = 'HTTP Error',
+        details = null,
+        responseBody = null,
+    ) {
         super(message);
 
         // Устанавливаем имя класса для ошибки
-        this.name = "HttpError";
+        this.name = 'HttpError';
 
         // HTTP статус-код
         this.status = status;
@@ -30,6 +36,14 @@ export default class HttpError extends Error {
         }
     }
 
+    getError() {
+        if (this.status < 400) {
+            return '';
+        }
+
+        return this.responseBody.error ?? '';
+    }
+
     /**
      * Собирает ошибки в карту (Map) по полям (path -> msg).
      * @returns {Map<string, string>} Карта ошибок.
@@ -37,6 +51,11 @@ export default class HttpError extends Error {
     getFieldErrors() {
         const fieldErrors = new Map();
 
+        if (this.status !== 422) {
+            return fieldErrors;
+        }
+
+        // nodejs validation errors
         if (Array.isArray(this.responseBody.errors)) {
             for (const errorObj of this.responseBody.errors) {
                 if (errorObj.path && errorObj.msg) {
@@ -52,6 +71,11 @@ export default class HttpError extends Error {
                     fieldErrors.set(errorObj.path, msg);
                 }
             }
+        } else if (typeof this.responseBody.errors === 'object') {
+            // golang errors
+            for (const [k, v] of Object.entries(this.responseBody.errors)) {
+                fieldErrors.set(k, v);
+            }
         }
 
         // TODO: cache
@@ -62,10 +86,13 @@ export default class HttpError extends Error {
     getErrorsAsText() {
         const map = this.getFieldErrors();
 
-        let text = '';
+        let text = this.getError();
 
         map.forEach((value, key) => {
-           text += `;\n${key}: ${value}`;
+            if (text) {
+                text += ';\n';
+            }
+            text += `${key}: ${value}`;
         });
 
         return text;
