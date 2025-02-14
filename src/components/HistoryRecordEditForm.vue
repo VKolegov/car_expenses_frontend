@@ -18,6 +18,7 @@ import CarSelector from '@/components/CarSelector.vue';
 import { ENGINE_TYPES } from '@/constants/engine_types.js';
 import { createHistoryRecord, fetchBeforeDate, updateHistoryRecord } from '@/api/history_records.js';
 import { getAiItemsDescription } from '@/api/ai.js';
+import HttpError from '@/errors.js';
 
 const store = useUserStore();
 const router = useRouter();
@@ -149,11 +150,18 @@ watch(selectedCar, (newValue) => {
 }, { immediate: true });
 
 async function updateMileageFromLastRecord() {
-  const lastHistoryRecord = await fetchBeforeDate(selectedCar.value.id, date.value);
+  try {
+    const lastHistoryRecord = await fetchBeforeDate(selectedCar.value.id, date.value);
 
-  if (lastHistoryRecord) {
-    mileage.value = lastHistoryRecord.mileage;
+    if (lastHistoryRecord) {
+      mileage.value = lastHistoryRecord.mileage;
+      return;
+    }
+  } catch (e) {
+    console.error(e);
   }
+
+  mileage.value = selectedCar.value.mileage;
 }
 
 const generatingDescription = ref(false);
