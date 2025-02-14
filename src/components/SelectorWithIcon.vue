@@ -27,6 +27,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  autoSelectFirst: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const model = defineModel({
@@ -35,6 +39,10 @@ const model = defineModel({
 
 onMounted(async () => {
   if (props.items.length === 1) {
+    model.value = props.items[0];
+  }
+
+  if (!model.value && props.items.length > 0 && props.autoSelectFirst) {
     model.value = props.items[0];
   }
 });
