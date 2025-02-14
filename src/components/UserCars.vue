@@ -16,36 +16,39 @@ function onAddClick() {
 </script>
 
 <template>
-  <h1>Гараж</h1>
+  <div class="user-cars">
+    <h1>Гараж</h1>
 
-  <div class="user-cars-list user-car-cards">
-    <div
-        v-for="car in cars"
-        class="user-car-card"
-    >
-      <div class="user-car-card__model-name">
-        <img :src="car.brand_info.logo_image" width="16px" height="16px">
-        {{ car.brand_info.name }} {{ car.model_info.short_name }}
+    <div class="user-cars-list user-car-cards">
+      <div
+          v-for="car in cars"
+          class="user-car-card"
+      >
+        <div class="user-car-card__model-name">
+          <img :src="car.brand_info.logo_image" width="16px" height="16px">
+          {{ car.brand_info.name }} {{ car.model_info.short_name }}
+        </div>
+        <div v-if="car.generation_info">Поколение: {{ car.generation_info.short_name }}</div>
+        <div v-if="car.modification_info">Модификация: {{ car.modification_info.name }}</div>
+        <div v-if="car.vin">VIN: {{ car.vin }}</div>
+        <div v-if="car.chassis_number">Номер кузова: {{ car.chassis_number }}</div>
+        <div>Гос. номер: {{ car.registration_number ?? 'Не указан' }}</div>
+        <div v-if="car.modification_info">Привод: {{ car.modification_info.drivetrain }}</div>
+        <div v-if="car.modification_info">Мощность: {{ car.modification_info.engine_horsepower }} л.с.,
+          {{ car.modification_info.engine_torque }} Н*м
+          @ {{ car.modification_info.engine_horsepower_rpm }} Об/мин
+        </div>
+        <div>Дата покупки: {{ formatDate(car.purchased_at) }}</div>
+        <div>Пробег при покупке: {{ formatDistance(car.mileage) }}</div>
       </div>
-      <div v-if="car.generation_info">Поколение: {{ car.generation_info.short_name }}</div>
-      <div v-if="car.modification_info">Модификация: {{ car.modification_info.name }}</div>
-      <div v-if="car.vin">VIN: {{ car.vin }}</div>
-      <div v-if="car.chassis_number">Номер кузова: {{ car.chassis_number }}</div>
-      <div>Гос. номер: {{ car.registration_number ?? 'Не указан' }}</div>
-      <div v-if="car.modification_info">Привод: {{ car.modification_info.drivetrain }}</div>
-      <div v-if="car.modification_info">Мощность: {{ car.modification_info.engine_horsepower }} л.с., {{ car.modification_info.engine_torque }} Н*м
-        @ {{ car.modification_info.engine_horsepower_rpm }} Об/мин
-      </div>
-      <div>Дата покупки: {{ formatDate(car.purchased_at) }}</div>
-      <div>Пробег при покупке: {{ formatDistance(car.mileage) }}</div>
-    </div>
-    <div
-        class="user-car-card"
-        @click="onAddClick"
-    >
+      <div
+          class="user-car-card"
+          @click="onAddClick"
+      >
       <span>
       <v-icon :icon="mdiPlus"/> Добавить
       </span>
+      </div>
     </div>
   </div>
 </template>

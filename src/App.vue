@@ -15,7 +15,11 @@ if (window.Telegram?.WebApp) {
   <v-app>
     <v-main class="app-main">
       <v-container fluid>
-        <router-view></router-view>
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component"/>
+          </transition>
+        </router-view>
       </v-container>
       <v-snackbar
           v-model="store.notificationDisplayed"

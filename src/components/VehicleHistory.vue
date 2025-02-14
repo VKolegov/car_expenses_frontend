@@ -79,29 +79,31 @@ function onPlusClick() {
 </script>
 
 <template>
-  <h1>История</h1>
+  <div class="vehicle-history">
+    <h1>История</h1>
 
-  <car-selector/>
+    <car-selector/>
 
-  <v-timeline
-      v-if="selectedCar"
-      side="end"
-      truncate-line="end"
-  >
-    <v-timeline-item
-        :icon="mdiPlus"
-        dot-color="transparent"
-        @click.native="onPlusClick"
+    <v-timeline
+        v-if="selectedCar"
+        side="end"
+        truncate-line="end"
     >
-      Новая запись
-    </v-timeline-item>
+      <v-timeline-item
+          :icon="mdiPlus"
+          dot-color="transparent"
+          @click.native="onPlusClick"
+      >
+        Новая запись
+      </v-timeline-item>
 
-    <history-timeline-item
-        v-for="record in historyTimeline"
-        :record="record"
-        @click="onClick"
-    ></history-timeline-item>
-  </v-timeline>
+      <history-timeline-item
+          v-for="record in historyTimeline"
+          :record="record"
+          @click="onClick"
+      ></history-timeline-item>
+    </v-timeline>
+  </div>
 </template>
 
 <style scoped>
