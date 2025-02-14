@@ -19,6 +19,7 @@ import { ENGINE_TYPES } from '@/constants/engine_types.js';
 import { createHistoryRecord, fetchBeforeDate, updateHistoryRecord } from '@/api/history_records.js';
 import { getAiItemsDescription } from '@/api/ai.js';
 import HttpError from '@/errors.js';
+import SaveBtn from '@/components/SaveBtn.vue';
 
 const store = useUserStore();
 const router = useRouter();
@@ -264,8 +265,8 @@ function onSaveClick () {
 
 <template>
   <v-form
-      class="fuel-expense-form"
-      @submit.prevent
+      class="fuel-expense-form ios-keyboard-form-fix"
+      @submit.prevent="onSaveClick"
   >
     <h1>{{ record ? 'Редактирование записи' : 'Новая запись' }}</h1>
 
@@ -375,14 +376,11 @@ function onSaveClick () {
       Сгенерировать с помощью AI
     </v-btn>
 
-    <v-btn
+    <save-btn
         v-if="selectedCar"
-        @click="onSaveClick"
-        :disabled="!canBeSaved"
-        style="width: 100%"
-    >
-      Сохранить
-    </v-btn>
+        :mode="record ? 'update' : 'create'"
+        :disabled="canBeSaved"
+    />
 
   </v-form>
 </template>

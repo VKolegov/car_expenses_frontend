@@ -11,6 +11,7 @@ import { createUserCar } from '@/api/user.js';
 import HttpError from '@/errors.js';
 
 import SelectorWithIcon from '@/components/SelectorWithIcon.vue';
+import SaveBtn from '@/components/SaveBtn.vue';
 
 const props = defineProps({
   /** @type {UserCar} */
@@ -216,7 +217,7 @@ async function handleError(e) {
 
 <template>
   <v-form
-      class="car-edit-form"
+      class="car-edit-form ios-keyboard-form-fix"
       @submit.prevent="onSubmit"
   >
     <h1>{{ car ? 'Редактирование автомобиля' : 'Новый автомобиль' }}</h1>
@@ -328,45 +329,12 @@ async function handleError(e) {
         :error-messages="errors.get('purchased_at')"
     />
 
-    <v-btn
-        type="submit"
-        :icon="mdiContentSave"
-        color="primary"
-        class="save-btn-mobile"
-    ></v-btn>
-
-    <v-btn
-        type="submit"
-        class="save-btn"
-    >
-      {{ car ? 'Сохранить' : 'Добавить' }}
-    </v-btn>
+    <save-btn
+        :mode="car ? 'update' : 'create'"
+    />
 
   </v-form>
-
 </template>
 
 <style>
-.save-btn {
-  width: 100%;
-}
-
-.save-btn-mobile {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  .save-btn {
-    display: none;
-  }
-
-  .save-btn-mobile {
-    display: block;
-    bottom: 85px;
-    right: 10px;
-    position: fixed;
-  }
-}
-
-
 </style>

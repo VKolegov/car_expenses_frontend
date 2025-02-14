@@ -28,6 +28,13 @@ a,
     }
 }
 
+
+@media screen and (max-width: 768px) {
+    .ios-keyboard-form-fix {
+        padding-bottom: 100%;
+    }
+}
+
 /* vuetify 3 v-text-field custom density (unused for now) */
 
 .v-input--density-32 .v-field--variant-plain,
