@@ -15,11 +15,13 @@ if (window.Telegram?.WebApp) {
   <v-app>
     <v-main class="app-main">
       <v-container fluid>
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component"/>
-          </transition>
-        </router-view>
+<!--        TODO: flickering, not showing coming from root page-->
+<!--        <router-view v-slot="{ Component }">-->
+<!--          <transition name="fade" mode="out-in">-->
+<!--            <component :is="Component"/>-->
+<!--          </transition>-->
+<!--        </router-view>-->
+        <router-view/>
       </v-container>
       <v-snackbar
           v-model="store.notificationDisplayed"
