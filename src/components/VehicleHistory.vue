@@ -1,20 +1,22 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
+import { VTimeline, VTimelineItem } from 'vuetify/components';
 import { mdiPlus } from '@mdi/js';
 
-import { VTimeline, VTimelineItem } from 'vuetify/components';
-import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
-import CarSelector from '@/components/CarSelector.vue';
+import { useUserStore } from '@/store.js';
 import { fetchHistoryRecords } from '@/api/history_records.js';
 
+import HistoryTimelineItem from '@/components/HistoryTimelineItem.vue';
+import CarSelector from '@/components/CarSelector.vue';
+
+const store = useUserStore();
 const router = useRouter();
 
-const selectedCar = ref(null);
-
+const selectedCar = computed(() => store.selectedCar);
 
 /** @type {import('vue').Ref<HistoryRecord[]>} */
 const historyRecords = ref([]);
@@ -26,7 +28,7 @@ watch(selectedCar, async (newValue) => {
 
   // order date desc
   historyRecords.value = await fetchHistoryRecords(selectedCar.value.id);
-});
+}, { immediate: true });
 
 const historyTimeline = computed(() => {
   const timeline = [];
@@ -35,7 +37,7 @@ const historyTimeline = computed(() => {
     return timeline;
   }
 
-  const monthFormatter = value => format(value, 'LLLL yyyy', {locale: ru});
+  const monthFormatter = value => format(value, 'LLLL yyyy', { locale: ru });
 
   let lastMonth = monthFormatter(historyRecords.value[0].date);
 
@@ -54,9 +56,9 @@ const historyTimeline = computed(() => {
   }
 
   return timeline;
-})
+});
 
-function onClick (item, event) {
+function onClick(item, event) {
   if (!item.id) {
     return;
   }
@@ -71,7 +73,7 @@ function onClick (item, event) {
 
 function onPlusClick() {
   router.push({
-    name: 'add_history_record'
+    name: 'add_history_record',
   });
 }
 </script>
@@ -79,12 +81,10 @@ function onPlusClick() {
 <template>
   <h1>История</h1>
 
-  <car-selector
-      v-model="selectedCar"
-  />
+  <car-selector/>
 
   <v-timeline
-      v-if="selectedCar && historyTimeline.length > 0"
+      v-if="selectedCar"
       side="end"
       truncate-line="end"
   >

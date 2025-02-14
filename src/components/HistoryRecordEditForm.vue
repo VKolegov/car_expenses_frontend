@@ -30,7 +30,7 @@ const props = defineProps({
   },
 });
 
-const selectedCar = ref(null);
+const selectedCar = computed(() => store.selectedCar);
 
 /** @type {import('vue').Ref<HistoryRecordType>} */
 const recordType = ref(1);
@@ -146,7 +146,7 @@ watch(selectedCar, (newValue) => {
   }
 
   updateMileageFromLastRecord();
-});
+}, { immediate: true });
 
 async function updateMileageFromLastRecord() {
   const lastHistoryRecord = await fetchBeforeDate(selectedCar.value.id, date.value);
@@ -261,9 +261,7 @@ function onSaveClick () {
   >
     <h1>{{ record ? 'Редактирование записи' : 'Новая запись' }}</h1>
 
-    <car-selector
-        v-model="selectedCar"
-    />
+    <car-selector/>
 
     <vue-date-picker
         v-model="date"

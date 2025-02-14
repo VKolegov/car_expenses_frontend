@@ -68,6 +68,8 @@ export const useUserStore = defineStore('user', () => {
         return false;
     }
 
+    // TODO: separate store
+
     /** @type {import('vue').Ref<UserCar[]>} */
     const userCars = ref([]);
 
@@ -92,7 +94,17 @@ export const useUserStore = defineStore('user', () => {
         setCars(await fetchUserCars());
     }
 
+    /** @type {import('vue').Ref<UserCar|null>} */
+    const selectedCar = ref(null);
 
+    /**
+     * @param {UserCar} car
+     */
+    function setSelectedCar(car) {
+        selectedCar.value = car;
+    }
+
+    // TODO: event bus
     const notificationDisplayed = ref(false);
     const notificationColor = ref('success');
     const notificationText = ref('');
@@ -107,6 +119,7 @@ export const useUserStore = defineStore('user', () => {
         user, auth, telegramAuth, authIsLegit, setUser,
 
         userCars, fetchCurrentUserCars, addUserCar,
+        selectedCar, setSelectedCar,
 
         displayNotification, notificationDisplayed, notificationText, notificationColor
     };

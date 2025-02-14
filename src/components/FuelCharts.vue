@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { round } from 'lodash';
 import { VCarousel, VCarouselItem } from 'vuetify/components';
 
@@ -23,6 +23,7 @@ import LineGradientChart from '@/components/charts/LineGradientChart.vue';
 import BarGradientChart from '@/components/charts/BarGradientChart.vue';
 import CarSelector from '@/components/CarSelector.vue';
 import { fetchHistoryRecords } from '@/api/history_records.js';
+import { useUserStore } from '@/store.js';
 
 ChartJS.register(
     CategoryScale,
@@ -38,7 +39,9 @@ ChartJS.register(
 
 /* end chart.js */
 
-const selectedCar = ref(null);
+const store = useUserStore();
+
+const selectedCar = computed(() => store.selectedCar);
 
 /** @type {import('vue').Ref<HistoryRecord[]>} */
 const fuelExpensesHistory = ref([]);
@@ -50,7 +53,7 @@ watch(selectedCar, async (newValue) => {
 
   // order date desc
   fuelExpensesHistory.value = await fetchHistoryRecords(selectedCar.value.id);
-});
+}, { immediate: true });
 
 // --------------
 
@@ -129,9 +132,7 @@ watch(fuelExpensesHistory, newVal => {
 </script>
 
 <template>
-  <car-selector
-      v-model="selectedCar"
-  />
+  <car-selector/>
 
   <v-carousel
       height="auto"
