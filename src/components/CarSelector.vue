@@ -18,7 +18,7 @@ const cars = computed(() => store.userCars);
       label="Автомобиль"
       :items="cars"
       :item-title="car => `${car.model} ${car.generation_info ? car.generation_info.short_name : ''}`"
-      icon-url-property-path="brand_info.logo_image"
+      :icon-url-resolver="car => car.brand_info.logo_image"
   />
 </template>
 
