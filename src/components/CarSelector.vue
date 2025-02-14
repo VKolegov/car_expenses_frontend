@@ -22,7 +22,7 @@ function onCarSelected(car) {
       @update:model-value="onCarSelected"
       label="Автомобиль"
       :items="cars"
-      :item-title="car => `${car.model} ${car.generation_info ? car.generation_info.short_name : ''}`"
+      :item-title="car => `${car.brand} ${car.model} ${car.year_of_manufacture} г.`"
       :icon-url-resolver="car => car.brand_info.logo_image"
       auto-select-first
   />
