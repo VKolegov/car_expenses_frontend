@@ -78,6 +78,16 @@ export const useUserStore = defineStore('user', () => {
         userCars.value = cars;
     }
 
+    /**
+     * @param {UserCar} car
+     */
+    function addUserCar(car) {
+        userCars.value.push(car);
+        userCars.value.sort(
+            (c1, c2) => c2.id - c1.id
+        );
+    }
+
     async function fetchCurrentUserCars () {
         setCars(await fetchUserCars());
     }
@@ -96,7 +106,7 @@ export const useUserStore = defineStore('user', () => {
     return {
         user, auth, telegramAuth, authIsLegit, setUser,
 
-        userCars, fetchCurrentUserCars,
+        userCars, fetchCurrentUserCars, addUserCar,
 
         displayNotification, notificationDisplayed, notificationText, notificationColor
     };

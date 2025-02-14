@@ -3,7 +3,7 @@
  * @property {string} token
  * @property {Object} user
  */
-import { baseURL, getRequest } from '@/api/basic_api.js';
+import { baseURL, getRequest, postRequest } from '@/api/basic_api.js';
 
 export async function fetchMe() {
     return await getRequest(`${baseURL}/users/me`);
@@ -15,4 +15,12 @@ export async function fetchMe() {
  */
 export async function fetchUserCars() {
     return await getRequest(`${baseURL}/cars`);
+}
+
+/**
+ * @param {Object} carData TODO type
+ * @returns {Promise<UserCar>}
+ */
+export async function createUserCar(carData) {
+    return await postRequest(`${baseURL}/cars`, carData);
 }
