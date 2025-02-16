@@ -230,17 +230,30 @@ function generationTitle(g)  {
 
 /**
  *
- * @param {CarGenerationModification }m
+ * @param {CarGenerationModification} m
  */
 function modificationTitle(m) {
 
-  const engineType = m.engine_type ? ENGINE_TYPE_OBJ[m.engine_type].title : '';
+  const info = [];
 
-  const hp = m.engine_horsepower ? `${m.engine_horsepower} л.с.` : '';
+  if (m.engine_type) {
+    info.push(ENGINE_TYPE_OBJ[m.engine_type].title);
+  }
 
-  const drivetrain = m.drivetrain ? DRIVETRAIN_OBJ[m.drivetrain].title : '';
+  if (m.engine_horsepower) {
+    info.push(`${m.engine_horsepower} л.с.`);
+  }
 
-  return `${m.name} (${engineType}, ${hp}, ${drivetrain})`;
+  if (m.drivetrain) {
+    info.push(DRIVETRAIN_OBJ[m.drivetrain].title);
+  }
+
+  if (info.length === 0) {
+    return m.name;
+  }
+
+  const infoStr = info.join(", ");
+  return `${m.name} (${infoStr})`;
 }
 </script>
 
