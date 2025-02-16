@@ -5,6 +5,7 @@ export interface CarModelGeneration {
     name: string;
     short_name: string;
     start_year: number;
+    body_type: string;
     end_year?: number;
     sort_position: number;
 }

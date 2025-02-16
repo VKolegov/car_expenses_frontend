@@ -213,6 +213,18 @@ async function handleError(e) {
     }
   }
 }
+
+
+// formatting
+/**
+ *
+ * @param {CarModelGeneration} g
+ * @returns {string}
+ */
+function generationTitle(g)  {
+  const endYear = g.end_year ? `${g.end_year}` : 'н.в.';
+  return `${g.short_name} (${g.body_type}, ${g.start_year} - ${endYear})`;
+}
 </script>
 
 <template>
@@ -265,7 +277,7 @@ async function handleError(e) {
         label="Поколение"
         return-object
         clearable
-        :item-title="g => g.short_name"
+        :item-title="generationTitle"
         :error-messages="errors.get('generation_id')"
     />
 
