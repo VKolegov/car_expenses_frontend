@@ -1,5 +1,5 @@
 import { omit, pick } from 'lodash';
-import { ENGINE_TYPES } from '@/constants/engine_types.js';
+import { ENGINE_TYPE } from '@/constants/engine_type.js';
 
 export const FUEL_TYPES = {
     GASOLINE_80: {
@@ -37,15 +37,15 @@ export const FUEL_TYPES_MAP = {
 
 export function getFuelTypesByEngineType(engineType) {
     switch (engineType) {
-        case ENGINE_TYPES.PETROL:
-        case ENGINE_TYPES.GAS_PETROL:
-        case ENGINE_TYPES.HYBRID:
+        case ENGINE_TYPE.PETROL:
+        case ENGINE_TYPE.GAS_PETROL:
+        case ENGINE_TYPE.HYBRID:
             return omit(FUEL_TYPES, 'DIESEL');
-        case ENGINE_TYPES.DIESEL:
+        case ENGINE_TYPE.DIESEL:
             return pick(FUEL_TYPES, 'DIESEL');
-        case ENGINE_TYPES.ELECTRO:
+        case ENGINE_TYPE.ELECTRO:
             return {}; // TODO
-        case ENGINE_TYPES.GAS:
+        case ENGINE_TYPE.GAS:
             return {}; // TODO
         default:
             return FUEL_TYPES;

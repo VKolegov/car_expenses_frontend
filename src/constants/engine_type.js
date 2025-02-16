@@ -1,4 +1,4 @@
-export const ENGINE_TYPES = {
+export const ENGINE_TYPE = {
     PETROL: 'petrol',
     DIESEL: 'diesel',
     HYBRID: 'hybrid',
@@ -7,23 +7,23 @@ export const ENGINE_TYPES = {
     GAS: 'gas',
 };
 
-export const ENGINE_TYPES_OBJ = {
-    PETROL: {
+export const ENGINE_TYPE_OBJ = {
+    petrol: {
         title: 'Бензиновый', value: 'petrol',
     },
-    DIESEL: {
+    diesel: {
         title: 'Дизельный', value: 'diesel',
     },
-    HYBRID: {
+    hybrid: {
         title: 'Гибрид', value: 'hybrid',
     },
-    ELECTRO: {
+    electro: {
         title: 'Электро', value: 'electro',
     },
-    GAS_PETROL: {
+    gas_petrol: {
         title: 'Газ/Бензин', value: 'gas_petrol',
     },
-    GAS: {
+    gas: {
         title: 'Газ', value: 'gas',
     },
 };

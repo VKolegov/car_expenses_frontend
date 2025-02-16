@@ -12,6 +12,8 @@ import HttpError from '@/errors.js';
 
 import SelectorWithIcon from '@/components/SelectorWithIcon.vue';
 import SaveBtn from '@/components/SaveBtn.vue';
+import { ENGINE_TYPE_OBJ } from '@/constants/engine_type.js';
+import { DRIVETRAIN_OBJ } from '@/constants/drivetrain.js';
 
 const props = defineProps({
   /** @type {UserCar} */
@@ -225,6 +227,21 @@ function generationTitle(g)  {
   const endYear = g.end_year ? `${g.end_year}` : 'н.в.';
   return `${g.short_name} (${g.body_type}, ${g.start_year} - ${endYear})`;
 }
+
+/**
+ *
+ * @param {CarGenerationModification }m
+ */
+function modificationTitle(m) {
+
+  const engineType = m.engine_type ? ENGINE_TYPE_OBJ[m.engine_type].title : '';
+
+  const hp = m.engine_horsepower ? `${m.engine_horsepower} л.с.` : '';
+
+  const drivetrain = m.drivetrain ? DRIVETRAIN_OBJ[m.drivetrain].title : '';
+
+  return `${m.name} (${engineType}, ${hp}, ${drivetrain})`;
+}
 </script>
 
 <template>
@@ -288,7 +305,7 @@ function generationTitle(g)  {
         label="Модификация"
         return-object
         clearable
-        :item-title="m => `${m.name} ${m.engine_type}`"
+        :item-title="modificationTitle"
         :error-messages="errors.get('modification_id')"
     />
 

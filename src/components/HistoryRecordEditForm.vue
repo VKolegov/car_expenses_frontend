@@ -15,7 +15,7 @@ import { formatCost } from '@/formatting.js';
 
 import InvoiceItems from '@/components/InvoiceItems.vue';
 import CarSelector from '@/components/CarSelector.vue';
-import { ENGINE_TYPES } from '@/constants/engine_types.js';
+import { ENGINE_TYPE } from '@/constants/engine_type.js';
 import { createHistoryRecord, fetchBeforeDate, updateHistoryRecord } from '@/api/history_records.js';
 import { getAiItemsDescription } from '@/api/ai.js';
 import HttpError from '@/errors.js';
@@ -93,7 +93,7 @@ watch(fuelType, (selectedFuelType) => {
     return;
   }
 
-  if ([ENGINE_TYPES.PETROL, ENGINE_TYPES.HYBRID, ENGINE_TYPES.GAS_PETROL].includes(engineType)) { // TODO: hybrid, gas_petrol
+  if ([ENGINE_TYPE.PETROL, ENGINE_TYPE.HYBRID, ENGINE_TYPE.GAS_PETROL].includes(engineType)) {
     const recommendedFuelOctaneNumber = parseInt(recommendedFuelType);
 
     const octaneDiff = parseInt(selectedFuelType.replace('gasoline-', '')) - recommendedFuelOctaneNumber;
